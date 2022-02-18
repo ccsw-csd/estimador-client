@@ -1,1 +1,49 @@
-<p>estimation-list works!</p>
+<div class="container">
+    <h1>Listado de estimaciones</h1>
+    <mat-table [dataSource]="dataSource" matSort (matSortChange)="sortPage($event)" >
+        <ng-container matColumnDef="project.customer.name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header="cliente">Cliente</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.project.customer.name}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="project.name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header="nombre">Nombre</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.project.name}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="created">
+            <mat-header-cell *matHeaderCellDef mat-sort-header="fecha">Fecha</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.created | date:'dd/MM/yyyy hh:mm:ss'}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="estVersion">
+            <mat-header-cell *matHeaderCellDef mat-sort-header="version">Version</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.estVersion}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="totalDays">
+            <mat-header-cell *matHeaderCellDef mat-sort-header="jornadas">Jornadas</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.totalDays}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="totalCost">
+            <mat-header-cell *matHeaderCellDef mat-sort-header="revenue">Revenue</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.totalCost}}€</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-icon-button color="grey">
+                    <mat-icon>create</mat-icon>
+                </button>
+                <button mat-icon-button color="grey">
+                    <mat-icon>file_copy</mat-icon>
+                </button>
+                <button mat-icon-button color="grey" disabled>
+                    <mat-icon>history</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator (page)="loadPage($event)" [pageIndex]="pageNumber" [pageSize]="pageSize" [length]="totalElements" showFirstLastButtons></mat-paginator>
+
+</div>

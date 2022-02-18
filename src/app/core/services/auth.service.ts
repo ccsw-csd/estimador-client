@@ -73,7 +73,7 @@ export class AuthService {
 
   isAdmin() : boolean {
     if (this.user == null || this.user.role == null) return false;
-    return this.user.role == 'ADMIN';
+    return this.user.role.name == 'ADMIN';
   }
 
 
