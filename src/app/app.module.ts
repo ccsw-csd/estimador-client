@@ -19,7 +19,9 @@ import { AgGridModule } from 'ag-grid-angular';
 import { LoginModule } from './login/login.module';
 import { MatTableModule } from '@angular/material/table';
 import { EstimationModule } from './estimation/estimation.module';
-
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es'
+registerLocaleData(localeEs,'es');
 @NgModule({
   declarations: [
     AppComponent

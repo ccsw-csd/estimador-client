@@ -21,7 +21,7 @@ export class EstimationListComponent implements OnInit {
   direction: string= 'asc';
 
   dataSource = new MatTableDataSource<Estimation>();
-  displayedColumns: string[] = ['project.customer.name', 'project.name', 'created', 'estVersion', 'totalDays', 'totalCost', 'action'];
+  displayedColumns: string[] = ['cliente', 'nombre', 'fecha', 'version', 'jornadas', 'revenue', 'action'];
 
   constructor(
     private estimationService: EstimationService,
@@ -52,6 +52,7 @@ export class EstimationListComponent implements OnInit {
         this.pageNumber = data.pageable.pageNumber;
         this.pageSize = data.pageable.pageSize;
         this.totalElements = data.totalElements;
+        console.log(data.content)
     });
   }
 

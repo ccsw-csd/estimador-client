@@ -1,29 +1,29 @@
 <div class="container">
     <h1>Listado de estimaciones</h1>
     <mat-table [dataSource]="dataSource" matSort (matSortChange)="sortPage($event)" >
-        <ng-container matColumnDef="project.customer.name">
+        <ng-container matColumnDef="cliente">
             <mat-header-cell *matHeaderCellDef mat-sort-header="cliente">Cliente</mat-header-cell>
             <mat-cell *matCellDef="let element">{{element.project.customer.name}}</mat-cell>
         </ng-container>
-        <ng-container matColumnDef="project.name">
+        <ng-container matColumnDef="nombre">
             <mat-header-cell *matHeaderCellDef mat-sort-header="nombre">Nombre</mat-header-cell>
             <mat-cell *matCellDef="let element">{{element.project.name}}</mat-cell>
         </ng-container>
-        <ng-container matColumnDef="created">
+        <ng-container matColumnDef="fecha">
             <mat-header-cell *matHeaderCellDef mat-sort-header="fecha">Fecha</mat-header-cell>
             <mat-cell *matCellDef="let element">{{element.created | date:'dd/MM/yyyy hh:mm:ss'}}</mat-cell>
         </ng-container>
-        <ng-container matColumnDef="estVersion">
+        <ng-container matColumnDef="version">
             <mat-header-cell *matHeaderCellDef mat-sort-header="version">Version</mat-header-cell>
             <mat-cell *matCellDef="let element">{{element.estVersion}}</mat-cell>
         </ng-container>
-        <ng-container matColumnDef="totalDays">
+        <ng-container matColumnDef="jornadas">
             <mat-header-cell *matHeaderCellDef mat-sort-header="jornadas">Jornadas</mat-header-cell>
             <mat-cell *matCellDef="let element">{{element.totalDays}}</mat-cell>
         </ng-container>
-        <ng-container matColumnDef="totalCost">
+        <ng-container matColumnDef="revenue">
             <mat-header-cell *matHeaderCellDef mat-sort-header="revenue">Revenue</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.totalCost}}€</mat-cell>
+            <mat-cell *matCellDef="let element">{{element.totalCost | number:'1.0-2':'es-ES'}}€</mat-cell>
         </ng-container>
         <ng-container matColumnDef="action">
             <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
