@@ -17,7 +17,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AgGridModule } from 'ag-grid-angular';
 import { LoginModule } from './login/login.module';
-
+import { MatTableModule } from '@angular/material/table';
+import { EstimationModule } from './estimation/estimation.module';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es'
+registerLocaleData(localeEs,'es');
 @NgModule({
   declarations: [
     AppComponent
@@ -37,10 +41,12 @@ import { LoginModule } from './login/login.module';
     MatSortModule,
     MatRadioModule,
     MatSlideToggleModule,
+    MatTableModule,
     CoreModule,
     LoginModule,
     AgGridModule.withComponents([]),
     MatAutocompleteModule,
+    EstimationModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

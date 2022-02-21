@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
   getName() : string {
     if (this.user == null) return "";
 
-    let name : string = this.user.displayName;
+    let name : string = this.user.username;
 
     return name;
   }

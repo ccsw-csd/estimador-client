@@ -1,9 +1,10 @@
-export interface User {
+import { Role } from "./Role";
+export class User {
+    id: number;
     username: string; 
-    role: string;
+    role: Role;
     firstName: string; 
     lastName: string; 
-    displayName: string; 
     mail: string;
 }
   
