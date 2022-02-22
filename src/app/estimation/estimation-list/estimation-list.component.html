@@ -1,5 +1,35 @@
 <div class="container">
     <h1>Listado de estimaciones</h1>
+    <div class="filters">
+        <form>
+            <mat-form-field>
+                <mat-label>Cliente</mat-label>
+                <mat-select disableRipple [(ngModel)]="filterCustomer" name ="customer">
+                    <mat-option *ngFor="let customer of customers" [value]="customer">{{customer.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Nombre</mat-label>
+                <input matInput type="text" placeholder="Nombre del proyecto" [(ngModel)]="filterProject" name="project">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Fecha inicio</mat-label>
+                <input matInput [matDatepicker]="picker" [formControl]="filterStartDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker ></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Fecha fin</mat-label>
+                <input matInput [matDatepicker]="picker2" [formControl]="filterEndDate">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2 ></mat-datepicker>
+              </mat-form-field>
+        </form>
+        <div class="buttons">
+            <button mat-stroked-button (click)="onCleanFilter()" >Limpiar</button> 
+            <button mat-stroked-button (click)="onSearch()">Filtrar</button> 
+        </div>
+    </div>
     <mat-table [dataSource]="dataSource" matSort (matSortChange)="sortPage($event)" >
         <ng-container matColumnDef="cliente">
             <mat-header-cell *matHeaderCellDef mat-sort-header="cliente">Cliente</mat-header-cell>

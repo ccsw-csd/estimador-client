@@ -1,5 +1,4 @@
 .container {
-  height: 100%;
     .mat-table::-webkit-scrollbar{
      width: 10px;
      height: 10px; 
@@ -14,7 +13,7 @@
     }
 
     .mat-table{
-        height: calc(100vh - 265px);
+        height: calc(100vh - 360px);
         max-width: 100%;
         overflow: auto;
 
@@ -69,4 +68,30 @@
     .mat-column-version{
       justify-content: center;
     }
+
+    .filters {
+      display: flex;
+
+      mat-form-field {
+          width: 20%;
+          margin-right: 20px;
+      }
+
+      .buttons {
+          flex: auto;
+          align-self: center;
+
+          button {
+              margin-left: 15px;
+              color:#12abdb;
+              border: 1px solid #12abdb;
+              border-radius: 0;
+          }
+      }
+    }
+
+      .buttons {
+        text-align: right;
+    }
+
   }
