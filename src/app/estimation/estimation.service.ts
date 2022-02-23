@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ESTIMATION_DATA } from './model/mock-estimations';
-import { Estimation } from '../core/model/Estimation';
 import { EstimationPage } from './model/EstimationPage';
 import { Pageable } from '../core/model/Pageable';
 import { HttpClient } from '@angular/common/http';
@@ -48,6 +46,5 @@ export class EstimationService {
 
   getEstimations(pageable: Pageable, customerId? :number, projectName?: string, startDate?: Date, endDate?: Date): Observable<EstimationPage>{
     return this.http.post<EstimationPage>(this.composeFindUrl(customerId, projectName, startDate, endDate),{pageable:pageable, customerId, projectName, startDate, endDate});
-    //return of(ESTIMATION_DATA);
   }
 }
