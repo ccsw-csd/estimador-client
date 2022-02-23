@@ -1,7 +1,7 @@
 <div class="container">
     <h1>Listado de estimaciones</h1>
     <div class="filters">
-        <form>
+        <form class="filtersform">
             <mat-form-field>
                 <mat-label>Cliente</mat-label>
                 <mat-select disableRipple [(ngModel)]="filterCustomer" name ="customer">
@@ -12,23 +12,21 @@
                 <mat-label>Nombre</mat-label>
                 <input matInput type="text" placeholder="Nombre del proyecto" [(ngModel)]="filterProject" name="project">
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field class="date">
                 <mat-label>Fecha inicio</mat-label>
                 <input matInput [matDatepicker]="picker" [formControl]="filterStartDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker ></mat-datepicker>
               </mat-form-field>
-              <mat-form-field>
+            <mat-form-field class="date">
                 <mat-label>Fecha fin</mat-label>
                 <input matInput [matDatepicker]="picker2" [formControl]="filterEndDate">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2 ></mat-datepicker>
-              </mat-form-field>
-        </form>
-        <div class="buttons">
+            </mat-form-field>
             <button mat-stroked-button (click)="onCleanFilter()" >Limpiar</button> 
             <button mat-stroked-button (click)="onSearch()">Filtrar</button> 
-        </div>
+        </form>
     </div>
     <mat-table [dataSource]="dataSource" matSort (matSortChange)="sortPage($event)" >
         <ng-container matColumnDef="cliente">

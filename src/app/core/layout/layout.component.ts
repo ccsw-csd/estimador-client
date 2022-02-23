@@ -27,7 +27,6 @@ export class LayoutComponent implements OnInit {
     this.activatedRoute.data.subscribe(response => { 
 
       if (response.user == null) {
-        console.log('entra if');
         this.authService.clearCredentials();
         this.router.navigate(['login']);
         return;
