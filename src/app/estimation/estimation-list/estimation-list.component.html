@@ -39,7 +39,7 @@
         </ng-container>
         <ng-container matColumnDef="fecha">
             <mat-header-cell *matHeaderCellDef mat-sort-header="fecha">Fecha</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.created | date:'dd/MM/yyyy hh:mm:ss'}}</mat-cell>
+            <mat-cell *matCellDef="let element">{{element.created | date:'dd/MM/yyyy HH:MM'}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="version">
             <mat-header-cell *matHeaderCellDef mat-sort-header="version">Version</mat-header-cell>
@@ -47,7 +47,7 @@
         </ng-container>
         <ng-container matColumnDef="jornadas">
             <mat-header-cell *matHeaderCellDef mat-sort-header="jornadas">Jornadas</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.totalDays}}</mat-cell>
+            <mat-cell *matCellDef="let element">{{element.totalDays | number: '1.0': 'es-ES'}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="revenue">
             <mat-header-cell *matHeaderCellDef mat-sort-header="revenue">Revenue</mat-header-cell>
