@@ -4,13 +4,14 @@ import { EstimationPage } from './model/EstimationPage';
 import { Pageable } from '../core/model/Pageable';
 import { HttpClient } from '@angular/common/http';
 import { formatDate } from '@angular/common';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EstimationService {
 
-  url: string = 'http://localhost:8080/estimation';
+  url: string = environment.server+'/estimation';
 
   constructor(
     private http: HttpClient
