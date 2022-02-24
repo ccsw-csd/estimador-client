@@ -6,6 +6,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 
@@ -20,6 +26,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatButtonModule,
     MatSortModule,
     MatPaginatorModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [{
     provide: LOCALE_ID,

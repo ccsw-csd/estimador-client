@@ -5,7 +5,9 @@ import { Estimation } from 'src/app/core/model/Estimation';
 import { PageEvent } from '@angular/material/paginator';
 import { Pageable } from 'src/app/core/model/Pageable';
 import { Sort } from '@angular/material/sort'
-
+import { Customer } from 'src/app/core/model/Customer';
+import { CustomerService } from '../customer.service';
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-estimation-list',
   templateUrl: './estimation-list.component.html',
@@ -23,11 +25,27 @@ export class EstimationListComponent implements OnInit {
   dataSource = new MatTableDataSource<Estimation>();
   displayedColumns: string[] = ['cliente', 'nombre', 'fecha', 'version', 'jornadas', 'revenue', 'action'];
 
+  customers: Customer[];
+  filterCustomer: Customer;
+  filterProject: string;
+  filterStartDate: FormControl = new FormControl();
+  filterEndDate: FormControl = new FormControl();
+
+  customerId: number;
+  projectName: string;
+  startDate: Date;
+  endDate: Date;
+
   constructor(
     private estimationService: EstimationService,
+    private customerService: CustomerService
   ) { }
 
   ngOnInit(): void {
+    this.customerService.getCustomers().subscribe(
+      customers => this.customers = customers
+    );
+
     this.loadPage();
   }
 
@@ -47,12 +65,11 @@ export class EstimationListComponent implements OnInit {
         pageable.pageNumber = event.pageIndex;
     }
 
-    this.estimationService.getEstimations(pageable).subscribe(data => {
+    this.estimationService.getEstimations(pageable, this.customerId, this.projectName, this.startDate, this.endDate).subscribe(data => {
         this.dataSource.data = data.content;
         this.pageNumber = data.pageable.pageNumber;
         this.pageSize = data.pageable.pageSize;
         this.totalElements = data.totalElements;
-        console.log(data.content)
     });
   }
 
@@ -64,61 +81,46 @@ export class EstimationListComponent implements OnInit {
 
     switch(sort.active){
       case 'cliente':
-          if(sort.direction =='')
-            this.direction = 'asc'
-          else{
-          this.direction = sort.direction;
           this.property = 'project.customer';
-          }
-          this.loadPage();
           break;
       case 'nombre':
-        if(sort.direction =='')
-            this.direction = 'asc'
-          else{
-          this.direction = sort.direction;
           this.property = 'project.name';
-          }
-          this.loadPage();
           break;
       case 'fecha':
-        if(sort.direction =='')
-            this.direction = 'asc'
-          else{
-          this.direction = sort.direction;
           this.property = 'created';
-          }
-          this.loadPage();
           break;
       case 'version':
-        if(sort.direction =='')
-            this.direction = 'asc'
-          else{
-          this.direction = sort.direction;
           this.property = 'estVersion';
-          }
-          this.loadPage();
           break;
       case 'jornadas':
-        if(sort.direction =='')
-            this.direction = 'asc'
-          else{
-          this.direction = sort.direction;
           this.property = 'totalDays';
-          }
-          this.loadPage();
           break;
-      case 'revenue':
-        if(sort.direction =='')
-            this.direction = 'asc'
-          else{
-          this.direction = sort.direction;
+      case 'revenue':      
           this.property = 'totalCost';
-          }
-          this.loadPage();
           break;
       default:
-        this.loadPage();
+        this.property = 'id';
     }
+
+    this.direction = sort.direction;
+    this.loadPage();
+  }
+
+  onCleanFilter(): void{
+    this.filterCustomer = null;
+    this.filterProject = null;
+    this.filterStartDate.setValue(null);
+    this.filterEndDate.setValue(null);
+
+    this.onSearch();
+  }
+
+  onSearch(): void{
+    this.customerId = this.filterCustomer != null ? this.filterCustomer.id: null;
+    this.projectName = this.filterProject;
+    this.startDate = this.filterStartDate.value;
+    this.endDate = this.filterEndDate.value;
+
+    this.loadPage();
   }
 }

@@ -1,5 +1,10 @@
 .container {
-  height: 100%;
+    h1{
+    color: #838383;
+    font-size: 20px;
+    font-weight: 700;
+    }
+
     .mat-table::-webkit-scrollbar{
      width: 10px;
      height: 10px; 
@@ -14,7 +19,7 @@
     }
 
     .mat-table{
-        height: calc(100vh - 265px);
+        height: calc(100vh - 380px);
         max-width: 100%;
         overflow: auto;
 
@@ -69,4 +74,32 @@
     .mat-column-version{
       justify-content: center;
     }
+
+    .filtersform {
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
+      flex-wrap: wrap;
+
+      mat-form-field {
+        width: 280px;
+      }
+
+      mat-form-field.date{
+        width: 160px;
+      }
+
+      button {
+        width: 150px;
+
+        align-self: center;
+        
+        color:#12abdb;
+        border: 1px solid #12abdb;
+        border-radius: 0;
+      }
+      
+    
+  }
+
   }

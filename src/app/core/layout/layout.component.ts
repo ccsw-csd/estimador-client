@@ -14,7 +14,7 @@ export class LayoutComponent implements OnInit {
   @ViewChild('sidenav') 
   private sideNav?: MatSidenav;
 
-  openNav? : boolean = true;
+  openNav? : boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -26,9 +26,7 @@ export class LayoutComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.data.subscribe(response => { 
 
-      console.log('entra suscribe', response);
       if (response.user == null) {
-        console.log('entra if');
         this.authService.clearCredentials();
         this.router.navigate(['login']);
         return;
