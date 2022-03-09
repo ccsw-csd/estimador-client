@@ -1,6 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -11,15 +9,11 @@ import { AuthService } from '../services/auth.service';
 })
 export class LayoutComponent implements OnInit { 
 
-  @ViewChild('sidenav') 
-  private sideNav?: MatSidenav;
-
-  openNav? : boolean = false;
+  visibleSideBar = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    public dialog: MatDialog,
     public router: Router,
     ) { }
 
@@ -47,10 +41,6 @@ export class LayoutComponent implements OnInit {
   }
 
   public toggleMenu() : void {
-    this.sideNav?.toggle();
-    this.openNav = this.sideNav?.opened;
+    this.visibleSideBar = !this.visibleSideBar;
   }
-
-  
-  
 }

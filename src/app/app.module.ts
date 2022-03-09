@@ -5,19 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
-import { MatDatepickerModule} from '@angular/material/datepicker';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSelectModule } from '@angular/material/select';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSortModule } from '@angular/material/sort';
-import {MatRadioModule} from '@angular/material/radio';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AgGridModule } from 'ag-grid-angular';
 import { LoginModule } from './login/login.module';
-import { MatTableModule } from '@angular/material/table';
 import { EstimationModule } from './estimation/estimation.module';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es'
@@ -30,22 +19,11 @@ registerLocaleData(localeEs,'es');
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatDatepickerModule,
-    MatGridListModule,
     FormsModule,
-    MatSelectModule,
     ReactiveFormsModule,
-    MatPaginatorModule,
-    MatNativeDateModule,
-    MatProgressSpinnerModule,
-    MatSortModule,
-    MatRadioModule,
-    MatSlideToggleModule,
-    MatTableModule,
     CoreModule,
     LoginModule,
     AgGridModule.withComponents([]),
-    MatAutocompleteModule,
     EstimationModule,
   ],
   providers: [],

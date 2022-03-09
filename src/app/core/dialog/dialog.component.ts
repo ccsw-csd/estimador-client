@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-dialog',
@@ -8,13 +8,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DialogComponent implements OnInit {
 
+  data: {description: string};
+
   constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {title: string, description: string}
+    public dialogRef: DynamicDialogRef, public config: DynamicDialogConfig
   ) { }
 
   ngOnInit(): void {
-    
+    this.data = this.config.data;
   }
 
   yes(): void {

@@ -7,6 +7,10 @@
   flex-basis: 50%;
 }
 
+#login-card {
+  margin-top: 30px;
+}
+
 #login-left {
   width: 50%;
   height: 100%;
@@ -79,7 +83,6 @@
   }
 }
 
-
 .support {
   margin-top: 25px;
   width: 425px;
@@ -90,4 +93,117 @@
   a {
     color: #707099;
   }
+}
+
+::ng-deep {
+  p-progressSpinner {
+    position: absolute;
+    top: 45%;
+    left: 47.5%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .p-progress-spinner-circle {
+    stroke: $dark !important;
+  }
+
+  #login-right {
+
+  .p-button {
+    background-color: $primary;
+    border-radius: 0;
+    border:none;
+    width: 100%;
+    margin-top:20px;
+    font-family: Source Sans Pro,sans-serif;
+    font-size: 14px;
+    height: 40px;
+  }
+
+  .p-button:disabled {
+    background-color: $disabled;
+  }
+
+  .ng-touched.ng-invalid ~ .p-error {
+    opacity: 1;
+  }
+
+  .ng-touched.ng-invalid {
+    border-bottom: solid $error 2px;
+  }
+
+  .ng-touched.ng-invalid ~ label {
+    color: $error;
+  }
+
+  .p-float-label .p-inputtext:focus ~ label {
+    color: $primary !important;
+    top:0;
+    padding-left: 1px;
+
+    .red {
+      color: $error !important;
+    }
+  }
+
+  .p-float-label .p-inputtext.p-filled ~ label {
+    top:0;
+    padding-left: 1px;
+  }
+
+  .p-float-label .p-password ~ label {
+    color: $primary !important;
+    top:0;
+    padding-left: 1px;
+
+    .red {
+      color: $error !important;
+    }
+  }
+
+  .p-inputtext {
+    border:none;
+    border-bottom: solid $darkgrey 1px;
+    border-radius: 0;
+    width: 300px;
+    padding-left: 0;
+  }
+
+  .p-float-label label {
+    top: 35%;
+  }
+
+  span.p-float-label .p-inputtext:focus {
+    box-shadow: none;
+  }
+
+  .p-float-label {
+    height: 70px;
+  }
+
+  .p-inputtext:hover {
+    border-bottom: solid $darkgrey 2px;
+  }
+
+  .p-inputtext:focus {
+    border-bottom: solid $primary 2px !important;
+  }
+
+  input:focus::placeholder {
+    opacity: 1;
+  }
+
+  input::placeholder {
+    opacity: 0;
+  }
+
+  .p-float-label > label {
+    left:0;
+  }
+
+  .p-error {
+    opacity: 0;
+  }
+}
 }

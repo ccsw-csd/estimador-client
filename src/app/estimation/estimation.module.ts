@@ -1,17 +1,12 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EstimationListComponent } from './estimation-list/estimation-list.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import {TableModule} from 'primeng/table';
+import {DropdownModule} from 'primeng/dropdown';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 
@@ -21,19 +16,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
   ],
   imports: [
     CommonModule,
-    MatTableModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatInputModule,
-    MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
+    TableModule,
+    DropdownModule,
+    ButtonModule,
+    CalendarModule,
+    InputTextModule
   ],
   providers: [{
     provide: LOCALE_ID,

@@ -1,37 +1,18 @@
-<mat-toolbar class="container">
-
-    <mat-toolbar-row class="header-menu">
-      <button mat-icon-button (click)="toggleSideNav()" mat-button>
-        <i class="material-icons header-icon">menu</i>
-      </button>
-    </mat-toolbar-row>
-  
-    <mat-toolbar-row routerLink="/main">
+<p-toolbar class="container">
+  <div class="p-toolbar-group-left header-menu">
+    <button pButton pRipple type="button" icon="pi pi-bars" (click)="toggleSideNav()" id="menu-icon" class="p-button-rounded p-button-text"></button>
+    <div routerLink="/main">
       <img src="assets/images/logo.png" height="40px" alt="" />
-    </mat-toolbar-row>
-  
-    <mat-toolbar-row class="header-submenu">
+    </div>
+  </div>
 
-      <button mat-flat-button class="feedback-button" [matTooltip]="'Enviar feedback'" >
-        <a href="mailto:ccsw.support@capgemini.com?subject=[Estimador] Consulta / Feedback">
-          <mat-icon>feedback</mat-icon>
-        </a>
-      </button>
-
-      <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
-        <mat-divider class="divider">
-        </mat-divider>
-        <button mat-menu-item (click)="logout()">
-          <mat-icon class="dark">logout</mat-icon>
-          <span>Logout</span>
-        </button>
-      </mat-menu>
+  <div class="p-toolbar-group-right header-submenu">
+    <a pButton pRipple type="button" icon="pi pi-exclamation-circle" class="p-button-rounded p-button-text feedback-button" pTooltip="Send feedback" tooltipPosition="bottom" href="mailto:ccsw.support@capgemini.com?subject=[Estimador] Consulta / Feedback"></a>
+    <p-menu class="logout-menu" #menu [popup]="true" [model]="items"></p-menu>
+    <span class="p-buttonset" (click)="menu.toggle($event)">
+      <p-button id="user-button" icon="pi pi-user" class="p-button-rounded"></p-button>
+      <p-button label={{getName()}} icon="pi pi-sort-down" iconPos="right"></p-button>
+    </span>
+  </div>
+</p-toolbar>
   
-      <button mat-flat-button [matMenuTriggerFor]="menu" class="menu-button">
-        <i class="material-icons header-icon">account_circle</i>
-        <a> {{ getName() }} </a>
-        <mat-icon>arrow_drop_down</mat-icon>
-      </button>
-    </mat-toolbar-row>
-  
-  </mat-toolbar>

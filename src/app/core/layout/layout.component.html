@@ -1,16 +1,14 @@
 <div class="private-layout">
     <app-header (navOpenEvent)="toggleMenu()">
     </app-header>
-  
-    <mat-sidenav-container class="container">
-  
-      <mat-sidenav #sidenav mode="side">
+
+    <div class="container">
+      <p-sidebar [(visible)]="visibleSideBar" [baseZIndex]="10000" [modal]="false" [showCloseIcon]="false">
         <app-nav></app-nav>
-      </mat-sidenav>
-        
-      <mat-sidenav-content class="content" [ngClass]="{'content-opennav' : openNav}"> 
+      </p-sidebar>
+
+      <div class="content"> 
         <router-outlet></router-outlet>
-      </mat-sidenav-content>
-  
-    </mat-sidenav-container>
-  </div>
+      </div>
+    </div>
+</div>

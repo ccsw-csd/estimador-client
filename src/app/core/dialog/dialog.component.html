@@ -1,9 +1,11 @@
 <div class="column-container" style="height: 100%">
-
-    <h1>{{data.title}}</h1>
     <p [innerHTML]="data.description"></p>
     <div class="button-container">
-        <button secondary mat-button (click)="no()">No</button>&nbsp;&nbsp;
-        <button primary mat-button (click)="yes()">Sí</button>
+        <p-button label="Close" (click)="no()"></p-button>
     </div>
+    
+    <!--<div class="button-container">
+        <p-button class="p-button-outlined" label="No" (click)="no()"></p-button>&nbsp;&nbsp;
+        <p-button label="Yes" (click)="yes()"></p-button>
+    </div>-->
 </div>

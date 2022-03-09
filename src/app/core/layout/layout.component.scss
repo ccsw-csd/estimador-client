@@ -8,22 +8,43 @@
   .container {
     height: 100%;
     background-color: rgb(245, 245, 245);
+    display: flex;
   }
 
   .content {
     padding: 1em 3em;
     box-sizing: border-box;
-    background-color: white; 
+    background-color: white;
     height: calc(100vh - 106px);
     margin: 25px;
+    width: 100%;
+    overflow: auto;
   }
 
-  .content-opennav {
-    margin-left: 225px !important;
+  ::ng-deep {
+
+    .p-sidebar {
+      position: relative;
+      box-shadow: none;
+      background-color: $primary;
+
+      .p-sidebar-content {
+        padding: 0px;
+        height: 100%;
+      }
+      
+      .p-sidebar-header {
+        display: none;
+      }
+    }
+
+    .p-sidebar-left {
+      width: 200px;
+      height: calc(100vh - 56px);
+      top:auto;
+    }
   }
 }
 
-::ng-deep .mat-sidenav{
-  max-width: 200px;
-  width: 200px;
-}
+
+
