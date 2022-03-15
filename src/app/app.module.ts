@@ -8,6 +8,7 @@ import { CoreModule } from './core/core.module';
 import { AgGridModule } from 'ag-grid-angular';
 import { LoginModule } from './login/login.module';
 import { EstimationModule } from './estimation/estimation.module';
+import { EstimationEditModule } from './estimation-edit/estimation-edit.module';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es'
 registerLocaleData(localeEs,'es');
@@ -25,6 +26,7 @@ registerLocaleData(localeEs,'es');
     LoginModule,
     AgGridModule.withComponents([]),
     EstimationModule,
+    EstimationEditModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,6 +5,7 @@ import { Pageable } from 'src/app/core/model/Pageable';
 import { Customer } from 'src/app/core/model/Customer';
 import { CustomerService } from '../customer.service';
 import { LazyLoadEvent } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-estimation-list',
@@ -36,7 +37,8 @@ export class EstimationListComponent implements OnInit {
 
   constructor(
     private estimationService: EstimationService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +47,6 @@ export class EstimationListComponent implements OnInit {
     );
 
     this.loading = true;
-    this.loadPage();
   }
 
   loadPage(event?: LazyLoadEvent) {
@@ -60,7 +61,7 @@ export class EstimationListComponent implements OnInit {
             direction: this.direction,
         }]
     }
-
+    
     if (event != null) {
         pageable.pageSize = event.rows;
         pageable.pageNumber = event.first/event.rows;
@@ -73,7 +74,7 @@ export class EstimationListComponent implements OnInit {
         this.pageNumber = data.pageable.pageNumber;
         this.pageSize = data.pageable.pageSize;
         this.totalElements = data.totalElements;
-        this.loading = false;
+        this.loading = false; 
     });
   }
 
@@ -93,5 +94,13 @@ export class EstimationListComponent implements OnInit {
     this.endDate = this.filterEndDate;
 
     this.loadPage();
+  }
+
+  createEstimation() {
+    this.router.navigate(['/estimation-edit']);
+  }
+
+  editEstimation(id: number) {
+    this.router.navigate(['/estimation-edit/' + id]);
   }
 }

@@ -21,53 +21,57 @@
 
 ::ng-deep {
 
-  #menu-icon {
-    min-width: 0;
-    margin-right: 20px;
-  }
-
-  .header-submenu .p-menu .p-menuitem-link .p-menuitem-text {
-    color: $darkgrey !important;
-  }
-
   .p-toolbar {
     background-color: $primary;
     border:none;
     width: 100%;
-  }
 
-  .p-button {
-    background-color: $primary;
-    border:none;
-  }
-
-  #user-button {
-    background-color: white !important;
-    color: $primary;
-  }
-
-  .p-button.p-button-text {
-    color:white;
-  }
-
-  .p-button.p-button-text:enabled:hover {
-    color: white;
-  }
-
-  .p-button:focus {
-    box-shadow:none !important;
-  }
-
-  .p-buttonset {
-    margin-right: 10px;
-
-    .p-button {
-      margin: 0px;
-      padding: 0px;
+    .p-menu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
+      color: $darkgrey;
     }
 
-    .p-button:hover {
+    #menu-icon {
+      min-width: 0;
+      margin-right: 20px;
+    }
+
+    .p-button {
       background-color: $primary;
+      border:none;
+    }
+  
+    .p-button:focus {
+      box-shadow:none;
+    }
+  
+    .p-button.p-button-text {
+      color:white;
+    }
+  
+    .p-button.p-button-text:enabled:hover {
+      color: white;
+    }
+
+    .p-button-label{
+      background-color: $primary;
+      color: white;
+    }
+  
+    .p-buttonset {
+      margin-right: 10px;
+  
+      .p-button {
+        margin: 0px;
+        padding: 0px;
+      }
+  
+      .p-button:hover {
+        background-color: $primary;
+      }
+    }
+  
+    .header-submenu .p-menu .p-menuitem-link .p-menuitem-text {
+      color: $darkgrey;
     }
   }
 }
@@ -75,11 +79,6 @@
 a {
   text-decoration: none;
 }
-
-
-
-
-
 
 .dark {
   color: $icon;

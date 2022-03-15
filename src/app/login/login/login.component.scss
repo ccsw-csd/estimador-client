@@ -96,19 +96,11 @@
 }
 
 ::ng-deep {
-  p-progressSpinner {
-    position: absolute;
-    top: 45%;
-    left: 47.5%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .p-progress-spinner-circle {
-    stroke: $dark !important;
-  }
-
   #login-right {
+
+  .p-inputtext:focus {
+    box-shadow: 0 0 0px 1000px #fff inset;
+  }
 
   .p-button {
     background-color: $primary;
@@ -163,9 +155,6 @@
   }
 
   .p-inputtext {
-    border:none;
-    border-bottom: solid $darkgrey 1px;
-    border-radius: 0;
     width: 300px;
     padding-left: 0;
   }
@@ -188,6 +177,11 @@
 
   .p-inputtext:focus {
     border-bottom: solid $primary 2px !important;
+    
+  }
+
+  #username {
+    box-shadow: 0 0 0px 1000px #fff inset !important;
   }
 
   input:focus::placeholder {

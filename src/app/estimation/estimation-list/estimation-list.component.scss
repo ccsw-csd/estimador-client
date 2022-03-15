@@ -11,14 +11,15 @@
 
   ::ng-deep {
 
-    .p-calendar {
-      border:none;
-    }
+    .title {
+      display: flex;
+      align-items: center;
 
-    .p-calendar .p-element {
-      background-color: white;
-      color: $icon;
-      border:none;
+      h1{
+        margin-right: 20px;
+        margin-bottom: 0px;
+        margin-top: 0px;
+      }
     }
 
     #startDate, #endDate {
@@ -27,32 +28,11 @@
 
     .p-inputtext {
       width: 280px;
+      height: 33.5px;
     }
 
     .p-dropdown {
       width: 280px;
-    }
-
-    .p-button-outlined {
-      border: 1px solid $primary;
-      color: $primary;
-      border-radius: 0;
-      width: 150px;
-    }
-
-    .p-datatable-wrapper::-webkit-scrollbar{
-      width: 10px;
-      height: 10px; 
-    }
-
-    .p-datatable-wrapper::-webkit-scrollbar-thumb{
-      border-radius: 10px;
-      background-color: #bebebe;
-    }
-
-    .p-datatable-wrapper::-webkit-scrollbar-track{
-      box-shadow: inset 0 0 5px #eaeaea;
-      border-radius: 10px;
     }
    
     .p-paginator-left-content, .p-paginator-right-content, .p-paginator-pages {
@@ -78,43 +58,8 @@
       border-color: $primary;
     }
 
-    .filters .p-dropdown .p-dropdown-trigger {
-      display: none;
-    }
-
-    .filters .p-inputtext {
-      border: solid $lightgray;
-      border-width: 0 0 2px 0;
-      border-radius: 0;
-    }
-
-    .filters .p-float-label:focus {
-      border:none;
-    }
-
-    .filters .p-dropdown {
-      border: none;
-    }
-
-    span > .p-inputtext:focus {
-      box-shadow: none;
-    }
-
-    .p-inputtext {
-      height: 33.5px;
-    }
-
-    .p-float-label {
-      font-size: 16px;
-      color: $lightgray;
-    }
-
     .p-dropdown.ng-touched.ui-inputwrapper-focus:not(form) > div {
       box-shadow: none;
-    }
-
-    .p-dropdown {
-      box-shadow: none !important;
     }
 
     .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
@@ -123,6 +68,22 @@
 
     .p-paginator {
       justify-content: right;
+
+      .p-dropdown-trigger {
+        display:flex;
+      }
+
+      .p-dropdown .p-inputtext {
+        border:none;
+      }
+
+      button {
+        box-shadow: none;
+      }
+    }
+
+    .p-dropdown {
+      box-shadow: none;
     }
   }
 

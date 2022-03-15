@@ -1,5 +1,9 @@
 <div class="container">
-    <h1> Listado de estimaciones </h1>
+    <div class="title">
+        <h1> Listado de estimaciones </h1>
+        <p-button class="primary" label="Crear estimación" (click)="createEstimation()"></p-button>
+    </div>
+
     <div class="filters">
         <span class="p-float-label">
             <p-dropdown id="customer-drop" [options]="customers" [(ngModel)]="filterCustomer" optionLabel="name" placeholder="  "></p-dropdown>
@@ -18,14 +22,14 @@
             <label for="endDate">Fecha fin</label>
         </span>
         <div class="filterButtons">
-            <p-button styleClass="p-button-outlined" label="Limpiar" (click)="onCleanFilter()"></p-button>
-            <p-button styleClass="p-button-outlined" label="Filtrar" (click)="onSearch()"></p-button>
+            <p-button class="secondary" label="Limpiar" (click)="onCleanFilter()"></p-button>
+            <p-button class="secondary" label="Filtrar" (click)="onSearch()"></p-button>
         </div>
     </div>
 
-    <p-table [value]="estimations" [lazy]="true" (onLazyLoad)="loadPage($event)" [totalRecords]="totalElements" [loading]="loading" 
+    <p-table #table [value]="estimations" [lazy]="true" (onLazyLoad)="loadPage($event)" [totalRecords]="totalElements" [loading]="loading" 
     [scrollable]="true" responsiveLayout="scroll" scrollHeight="calc(100vh - 330px)" [paginator]="true" [rows]="25" [showCurrentPageReport]="true" 
-    currentPageReportTemplate="{first} - {last} of {totalRecords}" [rowsPerPageOptions]="[10,25,50]">>
+    currentPageReportTemplate="{first} - {last} of {totalRecords}" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="project.customer.name">Cliente <p-sortIcon field="project.customer.name"></p-sortIcon></th>
@@ -47,7 +51,7 @@
                 <td>{{estimation.totalCost | number:'1.2-2':'es-ES'}}€</td>
                 <td>
                     <div style="display:flex; justify-content:space-between; width:150px">
-                        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-plain icon"></button>
+                        <button pButton pRipple type="button" icon="pi pi-pencil" (click)="editEstimation(estimation.id)" class="p-button-rounded p-button-text p-button-plain icon"></button>
                         <button pButton pRipple type="button" icon="pi pi-copy" class="p-button-rounded p-button-text p-button-plain icon"></button>                    
                         <button pButton pRipple type="button" icon="pi pi-history" class="p-button-rounded p-button-text p-button-plain icon"></button>
                     </div>
