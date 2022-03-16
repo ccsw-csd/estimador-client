@@ -18,12 +18,7 @@ export class DialogComponent implements OnInit {
     this.data = this.config.data;
   }
 
-  yes(): void {
-    this.dialogRef.close(true);
+  close() : void {
+    this.dialogRef.close();
   }
-
-  no() : void {
-    this.dialogRef.close(false);
-  }
-
 }
