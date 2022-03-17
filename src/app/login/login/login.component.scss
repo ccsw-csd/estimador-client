@@ -14,9 +14,7 @@
 #login-left {
   width: 50%;
   height: 100%;
-  background-image: linear-gradient(to bottom right,
-      $fill-blue 0%,
-      $primary 0%);
+  background-image: linear-gradient(to bottom right, $fill-blue 0%, $primary 0%);
   display: flex;
   justify-content: center;
 
@@ -63,23 +61,7 @@
       flex-direction: column;
       justify-content: center;
       height: 100%;
-
-      mat-form-field{
-        width: 100%;
-      }
-      input:-moz-autofill {
-        box-shadow: 0 0 0px 1000px #fff inset;
-      }
-
-      input:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px #fff inset;
-      }
-
-      button {
-        margin-top: 20px;
-      }
-    
-    }  
+    }
   }
 }
 
@@ -98,106 +80,80 @@
 ::ng-deep {
   #login-right {
 
-  .p-inputtext:focus {
-    box-shadow: 0 0 0px 1000px #fff inset;
-  }
+    .p-inputtext:focus {
+      box-shadow: 0 0 0px 1000px #fff inset;
+    }
 
-  .p-button {
-    background-color: $primary;
-    border-radius: 0;
-    border:none;
-    width: 100%;
-    margin-top:20px;
-    font-family: Source Sans Pro,sans-serif;
-    font-size: 14px;
-    height: 40px;
-  }
+    .p-button {
+      width: 100%;
+    }
 
-  .p-button:disabled {
-    background-color: $disabled;
-  }
+    .ng-touched.ng-invalid {
+      border-bottom: solid $error 2px;
 
-  .ng-touched.ng-invalid ~ .p-error {
-    opacity: 1;
-  }
+      ~ .p-error {
+        opacity: 1;
+      }
 
-  .ng-touched.ng-invalid {
-    border-bottom: solid $error 2px;
-  }
+      ~ label {
+        color: $error;
+      }
+    }
 
-  .ng-touched.ng-invalid ~ label {
-    color: $error;
-  }
+    .p-float-label {
+      height: 70px;
 
-  .p-float-label .p-inputtext:focus ~ label {
-    color: $primary !important;
-    top:0;
-    padding-left: 1px;
+      > label {
+        left:0;
+      }
 
-    .red {
-      color: $error !important;
+      .p-inputtext:focus ~ label, .p-password ~ label {
+        color: $primary;
+        top:0;
+        padding-left: 1px;
+        .red {
+          color: $error;
+        }
+      }
+
+      .p-inputtext.p-filled ~ label {
+        top:0;
+        padding-left: 1px;
+      }
+
+      .p-inputtext:enabled:focus {
+        box-shadow: none;
+        border-bottom: solid $primary 2px;
+      }
+
+      .p-inputtext:hover {
+        border-bottom: solid $darkgrey 2px;
+      }
+
+      label {
+        top: 35%;
+      }
+    }
+
+    .p-inputtext {
+      width: 300px;
+      padding-left: 0;
+    }
+
+    #username {
+      box-shadow: 0 0 0px 1000px #fff inset;
+    }
+
+    input:focus::placeholder {
+      opacity: 1;
+    }
+
+    input::placeholder {
+      opacity: 0;
+    }
+
+    .p-error {
+      opacity: 0;
     }
   }
-
-  .p-float-label .p-inputtext.p-filled ~ label {
-    top:0;
-    padding-left: 1px;
-  }
-
-  .p-float-label .p-password ~ label {
-    color: $primary !important;
-    top:0;
-    padding-left: 1px;
-
-    .red {
-      color: $error !important;
-    }
-  }
-
-  .p-inputtext {
-    width: 300px;
-    padding-left: 0;
-  }
-
-  .p-float-label label {
-    top: 35%;
-  }
-
-  span.p-float-label .p-inputtext:focus {
-    box-shadow: none;
-  }
-
-  .p-float-label {
-    height: 70px;
-  }
-
-  .p-inputtext:hover {
-    border-bottom: solid $darkgrey 2px;
-  }
-
-  .p-inputtext:focus {
-    border-bottom: solid $primary 2px !important;
-    
-  }
-
-  #username {
-    box-shadow: 0 0 0px 1000px #fff inset !important;
-  }
-
-  input:focus::placeholder {
-    opacity: 1;
-  }
-
-  input::placeholder {
-    opacity: 0;
-  }
-
-  .p-float-label > label {
-    left:0;
-  }
-
-  .p-error {
-    opacity: 0;
-  }
-}
 }

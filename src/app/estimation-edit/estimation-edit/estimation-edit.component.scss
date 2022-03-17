@@ -1,45 +1,15 @@
 @import "./src/assets/scss/master";
 
-::ng-deep {
-
-    #edit-component {
-        position: relative;
-
-        .button-container {
-            text-align: right;
-            margin-top: 30px;
-    
-            .secondary {
-                margin-right: 20px;
-            }
+::ng-deep #edit-component {
+    position: relative;
+    .button-container {
+        text-align: right;
+        margin-top: 30px;
+        .secondary {
+            margin-right: 20px;
         }
-
-        .p-tabview {
-            
-            .p-tabview-panels {
-                height: calc(100vh - 270px);
-                overflow: auto;
-            }
-    
-            .p-tabview-nav li.p-highlight {
-    
-                .p-tabview-nav-link {
-                    border-color: $primary;
-                    color: $primary;
-                }
-    
-                .p-tabview-nav-link:focus {
-                    box-shadow: none;
-                }
-            }
-    
-            .p-tabview-nav-link:focus {
-                box-shadow: none ;
-            }
-        }
-
-        .loadWrapper {
-            background-color: transparent;
-        }
+    }
+    .loadWrapper {
+        background-color: transparent;
     }
 }

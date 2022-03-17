@@ -2,34 +2,6 @@
 
 @import "./color";
 
-* {
-  box-sizing: border-box;
-  font-family: "Source Sans Pro", sans-serif !important;
-  &::-webkit-scrollbar-track {
-    background-color: none;
-  }
-  &::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-    background-color: none;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: $scrollbar;    
-  }
-  
-  /* Handle on hover */
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: $scrollbar-hover;
-  }
-
-  &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px #eaeaea;
-    border-radius: 10px;
-  }
-}
-
 
 html,
 body,
@@ -75,16 +47,6 @@ button:active {
 .title-secondcolor {
   color: $selected;
   font-family: 'Source Sans Pro', sans-serif;
-}
-
-.spinner-container {
-  height: 100%;
-  position: absolute;
-  background-color: rgba(133, 133, 133, 0.4);
-  width: 100%;
-  z-index: 1000;
-  top: 0;
-  left: 0;
 }
 
 a[href] {
@@ -190,15 +152,6 @@ button[secondary] {
   background-color: rgba($secondary, 0.25);
 }
 
-.snackbar-green {
-  background: #00c853;
-  color: $white;
-}
-.snackbar-red {
-  background: #d50000;
-  color: $white;
-}
-
 
 /** Estilos para el texto de compilación **/
 span.text_grey {
@@ -293,10 +246,11 @@ span.text_red {
   outline: none !important;
 }
 
-/* Estilos cambio a PrimeNg */
+/* ESTILOS PRIMENG */
 ::ng-deep {
 
   * {
+    box-sizing: border-box;
     font-family: "Source Sans Pro", sans-serif;
   }
 
@@ -304,8 +258,18 @@ span.text_red {
     font-family: 'primeicons';
   }
 
-  /* Estilos de los botones */
+  /* ESTILO TITULO CON BOTÓN */
+  .title-button {
+    display: flex;
+    align-items: center;
+    h1 {
+      margin-right: 20px;
+      margin-bottom: 0px;
+      margin-top: 0px;
+    }
+  }
 
+  /* ESTILO DE LOS BOTONES */
   .p-button:hover, .p-button:focus {
     box-shadow: none;
   }
@@ -335,8 +299,18 @@ span.text_red {
     }
   }
 
-  /* Estilos de los dialogos */
+  p-button .p-button:disabled {
+    background: $button-disabled;
+    border-color: $button-disabled;
+  }
 
+  //Estilo botones con icono primarios, añadir la clase
+  .primary-icon .p-button-icon {
+    color: white;
+    background-color: $primary;
+  }
+
+  /* ESTILO DE LOS DIALOGOS */
   .p-dialog::before {
     overflow: hidden;
   }
@@ -360,8 +334,7 @@ span.text_red {
     }
   }
 
-  /* Estilos de los inputs */
-
+  /* ESTILO DE LOS INPUTS */
   .filters .p-calendar {
     border:none;
 
@@ -414,18 +387,105 @@ span.text_red {
     }
   }
 
-  ::-webkit-scrollbar{
+  .p-dropdown.ng-touched.ui-inputwrapper-focus:not(form) > div {
+    box-shadow: none;
+  }
+
+  .p-dropdown:not(.p-disabled).p-focus {
+    box-shadow: none;
+  }
+
+  /* ESTILO DEL PAGINADOR */
+  p-paginator .p-paginator {
+    background-color: $background;
+    justify-content: right;
+
+    .p-dropdown {
+      width: 75px;
+
+      .p-inputtext {
+        border:none;
+      }
+
+      .p-dropdown-trigger {
+        display:flex;
+      }
+    }
+
+    button.p-link {
+      box-shadow: none;
+    }
+
+    .p-paginator-left-content, .p-paginator-right-content, .p-paginator-pages {
+      display: none;
+    }
+  }
+
+  /* ESTILO DE LAS TABLAS */
+  .p-datatable {
+
+    .p-datatable-thead > tr > th {
+      background-color:$background;
+      border-color: $primary;
+      font-weight: bold;
+      color: $darkgrey;
+    }
+
+    .p-datatable-tbody > tr > td {
+      border-color: $primary;
+    }
+
+    .p-sortable-column.p-highlight .p-sortable-column-icon {
+      color: $primary;
+    }
+
+    td button {
+      min-width: 0px;
+    }
+
+    .p-sortable-column:not(.p-highlight):hover, .p-sortable-column.p-highlight, .p-sortable-column.p-highlight:hover  {
+      background-color: $background;
+      box-shadow: none;
+    }
+  }
+
+  /* ESTILO DE LA VISTA DE PESTAÑAS */
+  p-tabview .p-tabview {
+    .p-tabview-panels {
+        height: calc(100vh - 270px);
+        overflow: auto;
+    }
+    .p-tabview-nav li.p-highlight {
+      .p-tabview-nav-link {
+          border-color: $primary;
+          color: $primary;
+      }
+      .p-tabview-nav-link:focus {
+          box-shadow: none;
+      }
+    }
+    .p-tabview-nav li.ng-star-inserted .p-tabview-nav-link:focus {
+        box-shadow: none;
+    }
+  }
+
+  /* ESTILO DE LAS BARRAS DE SCROLL */
+  ::-webkit-scrollbar {
     width: 10px;
     height: 10px; 
   }
 
-  ::-webkit-scrollbar-thumb{
+  ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #bebebe;
   }
 
-  ::-webkit-scrollbar-track{
+  ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px #eaeaea;
     border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: $scrollbar-hover;
   }
 }

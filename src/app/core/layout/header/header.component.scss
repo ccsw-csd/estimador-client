@@ -1,7 +1,6 @@
 @import './src/assets/scss/master';
 
 .container {
-  background-color: $primary;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -9,107 +8,37 @@
   max-height: 56px;
   min-height: 56px;
   overflow:hidden;
-}  
 
-.header-menu {
-  background-color: $primary;
-  width: fit-content;
-  button {
-    color: white;
+  a {
+    text-decoration: none;
   }
 }
 
 ::ng-deep {
-
   .p-toolbar {
     background-color: $primary;
     border:none;
     width: 100%;
 
-    .p-menu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
-      color: $darkgrey;
+    p-menu.logout-menu .p-menu {
+      .p-menuitem-link .p-menuitem-text {
+        color: $darkgrey;
+      }
+
+      .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
+        color: $darkgrey;
+      }
     }
 
-    #menu-icon {
-      min-width: 0;
+    .primary-icon {
       margin-right: 20px;
+      min-width: 0;
     }
 
-    .p-button {
-      background-color: $primary;
-      border:none;
-    }
-  
-    .p-button:focus {
-      box-shadow:none;
-    }
-  
-    .p-button.p-button-text {
-      color:white;
-    }
-  
-    .p-button.p-button-text:enabled:hover {
-      color: white;
-    }
-
-    .p-button-label{
-      background-color: $primary;
-      color: white;
-    }
-  
-    .p-buttonset {
-      margin-right: 10px;
-  
-      .p-button {
-        margin: 0px;
-        padding: 0px;
+    .primary {
+      .p-button, .p-button:hover {
+        width: fit-content;
       }
-  
-      .p-button:hover {
-        background-color: $primary;
-      }
-    }
-  
-    .header-submenu .p-menu .p-menuitem-link .p-menuitem-text {
-      color: $darkgrey;
     }
   }
 }
-
-a {
-  text-decoration: none;
-}
-
-.dark {
-  color: $icon;
-}
-
-.feedback-button {
-  width: 50px;
-  min-width: 50px;
-}
-
-
-.menu-button {
-  color: white;
-
-  a {
-    vertical-align: super;
-  }
-}
-
-button {
-  background-color: transparent;
-}
-
-button:focus {
-  border: none;
-  outline: none;
-}
-
-.header-submenu {
-  display: flex;
-  justify-content: flex-end;
-
-}
-

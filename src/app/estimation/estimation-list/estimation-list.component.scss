@@ -1,100 +1,25 @@
 @import "./src/assets/scss/master";
 
-.container {
-
+::ng-deep {
   .filters {
     display:flex;
     justify-content: space-between; 
     margin-bottom: 20px; 
     margin-top: 30px;
-  }
-
-  ::ng-deep {
-
-    .title {
-      display: flex;
-      align-items: center;
-
-      h1{
-        margin-right: 20px;
-        margin-bottom: 0px;
-        margin-top: 0px;
-      }
+    height: 40px;
+    .filterButtons {
+      width: 320px;
+      display:flex;
+      justify-content: space-between;
     }
-
-    #startDate, #endDate {
-      width: 160px;
+    .p-calendar .p-inputtext {
+      min-width: 120px;
+      max-width: 160px;
     }
-
     .p-inputtext {
-      width: 280px;
-      height: 33.5px;
-    }
-
-    .p-dropdown {
-      width: 280px;
-    }
-   
-    .p-paginator-left-content, .p-paginator-right-content, .p-paginator-pages {
-      display: none;
-    }
-
-    .p-paginator {
-      background-color: $background;
-
-      .p-dropdown {
-        width: 75px;
-      }
-    }
-
-    .p-datatable .p-datatable-thead > tr > th {
-      background-color:$background;
-      border-color: $primary;
-      font-weight: bold;
-      color: $darkgrey;
-    }
-
-    .p-datatable .p-datatable-tbody > tr > td {
-      border-color: $primary;
-    }
-
-    .p-dropdown.ng-touched.ui-inputwrapper-focus:not(form) > div {
-      box-shadow: none;
-    }
-
-    .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
-      color: $primary;
-    }
-
-    .p-paginator {
-      justify-content: right;
-
-      .p-dropdown-trigger {
-        display:flex;
-      }
-
-      .p-dropdown .p-inputtext {
-        border:none;
-      }
-
-      button {
-        box-shadow: none;
-      }
-    }
-
-    .p-dropdown {
-      box-shadow: none;
+      min-width: 260px;
+      max-width: 260px;
+      min-height: 40px;
     }
   }
-
-  .filterButtons {
-    width: 320px;
-    display:flex;
-    justify-content: space-between;
-  }
-
-  td button {
-    min-width: 0px;
-  }
-
 }

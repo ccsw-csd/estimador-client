@@ -22,7 +22,7 @@
                     <label for="password">Contraseña <span class="red">*</span></label>
                     <small id="password-help" class="p-error">this field cannot be empty</small>
                 </span>
-                <p-button label="Login" [disabled]="user == '' || password == ''" (click)="login()"></p-button>   
+                <p-button label="Login" [disabled]="user == '' || password == ''" (click)="login()" class="primary"></p-button>   
             </div>
             <div class="support">Si necesita ayuda para resolver dudas o problemas técnicos, por favor envía un correo a <a href="mailto:ccsw.support@capgemini.com?subject=[CCSWManager] Soporte / Consulta">ccsw.support@capgemini.com</a>.</div>
             <div style="flex:1"></div>
