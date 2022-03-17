@@ -1,5 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
@@ -22,7 +21,6 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private snackbarService: SnackbarService,
-    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {

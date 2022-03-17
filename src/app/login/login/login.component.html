@@ -11,17 +11,18 @@
             </div>
 
             <div style="height:200px;width:300px;" id="login-card">
-                <mat-form-field appearance="standard">
-                    <mat-label>Username</mat-label>
-                    <input matInput name="user" [(ngModel)]="user" required matInput placeholder="Username" (keyup.enter)="login()"/>
-                    <mat-error>this field cannot be empty</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="standard">
-                    <mat-label>Contraseña</mat-label>
-                    <input matInput name="password" [(ngModel)]="password" required matInput type="password" placeholder="Password" (keyup.enter)="login()"/>
-                    <mat-error>this field cannot be empty</mat-error>
-                </mat-form-field>                
-                <button mat-button primary [disabled]="user == '' || password == ''" (click)="login()">Login</button>
+                <span class="p-float-label">
+                    <input id="username" type="username" aria-describedby="username-help" pInputText required [(ngModel)]="user" placeholder="Username" (keyup.enter)="login()"/>
+                    <label for="username">Username <span class="red">*</span></label>
+                    <small id="username-help" class="p-error">this field cannot be empty</small>
+                </span>
+
+                <span class="p-float-label" style="margin-top: 10px">
+                    <input id="password" type="password" aria-describedby="password-help" pInputText required [(ngModel)]="password" placeholder="Password" (keyup.enter)="login()"/>
+                    <label for="password">Contraseña <span class="red">*</span></label>
+                    <small id="password-help" class="p-error">this field cannot be empty</small>
+                </span>
+                <p-button label="Login" [disabled]="user == '' || password == ''" (click)="login()" class="primary"></p-button>   
             </div>
             <div class="support">Si necesita ayuda para resolver dudas o problemas técnicos, por favor envía un correo a <a href="mailto:ccsw.support@capgemini.com?subject=[CCSWManager] Soporte / Consulta">ccsw.support@capgemini.com</a>.</div>
             <div style="flex:1"></div>
@@ -29,6 +30,8 @@
     </div>
 </div>
 
+<p-toast position="bottom-center"></p-toast>
+
 <div class="loadWrapper" *ngIf="isloading">
-    <mat-spinner></mat-spinner>
-  </div>
+    <p-progressSpinner></p-progressSpinner>
+</div>

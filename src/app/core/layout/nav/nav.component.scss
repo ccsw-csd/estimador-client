@@ -6,61 +6,53 @@
   flex-direction: column;
   background-color: $primary;
   height: 100%;
-}
 
-.submenu {
-  background-color: #29b4df;
-  span {
+  nav {
+    height: 225px;
+  }
 
-    margin-left:15px;
-    font-size: 14px !important;
+  .space {
+    flex: 1;
+  }
+
+  .fixed-container {
+    height: 25px;
+    text-align: center;
+    font-size: smaller;
+    color: #bbc3df;
   }
 }
 
-nav {
-  height: 225px;
-  a {
-    span {
-      font-size: 16px;
-      padding: 0 20px 0 14px;
-      color: $background;
-      white-space: nowrap;
+::ng-deep {
+  .p-menu {
+    background-color: $primary;
+    border:none;
+    width: 200px;
+    margin-left: 0px;
+    padding-left: 0px;
+
+    .p-menuitem {
+      .p-menuitem-link {
+        box-shadow: none;
+
+        .p-menuitem-text {
+          color: white;
+          padding-left: 20px;
+        }
+      } 
+
+      .p-menuitem-link:not(.p-disabled):hover {
+        background-color: rgba(0,0,0,.04);
+
+        .p-menuitem-text {
+          color: white;
+        }
+      }
+      
+      .p-menuitem-link-active {
+        font-weight: bold;
+        border-left: 6px solid $background;
+      }
     }
-  }
-}
-
-.space {
-  flex: 1;
-}
-
-.fixed-container {
-  height: 25px;
-  width: 100%;
-  text-align: center;
-  font-size: smaller;
-  color: #bbc3df;
-}
-
-.item-active {
-  span {
-    font-weight: bolder;
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: inherit;
-    border-left: 6px solid $background;
-    box-sizing: border-box;
-  }
-}
-
-
-
-
-:host::ng-deep {
-  .mat-list-item {
-    height: 40px !important;
   }
 }

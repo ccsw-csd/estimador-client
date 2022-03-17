@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { CoreModule } from '../core/core.module';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {InputTextModule} from 'primeng/inputtext';
+import {ButtonModule} from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
 
 
 @NgModule({
@@ -15,9 +15,10 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     CoreModule,
     FormsModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatInputModule,
+    ProgressSpinnerModule,
+    InputTextModule,
+    ButtonModule,
+    ToastModule
   ]
 })
 export class LoginModule { }

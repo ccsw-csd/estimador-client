@@ -1,7 +1,6 @@
 @import './src/assets/scss/master';
 
 .container {
-  background-color: $primary;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -9,46 +8,37 @@
   max-height: 56px;
   min-height: 56px;
   overflow:hidden;
-}  
-
-.header-menu {
-  width: fit-content;
-  button {
-    color: white;
-  }
-}
-
-
-.dark {
-  color: $icon;
-}
-
-.feedback-button {
-  width: 50px;
-  min-width: 50px;
-}
-
-
-.menu-button {
-  color: white;
 
   a {
-    vertical-align: super;
+    text-decoration: none;
   }
 }
 
-button {
-  background-color: transparent;
+::ng-deep {
+  .p-toolbar {
+    background-color: $primary;
+    border:none;
+    width: 100%;
+
+    p-menu.logout-menu .p-menu {
+      .p-menuitem-link .p-menuitem-text {
+        color: $darkgrey;
+      }
+
+      .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
+        color: $darkgrey;
+      }
+    }
+
+    .primary-icon {
+      margin-right: 20px;
+      min-width: 0;
+    }
+
+    .primary {
+      .p-button, .p-button:hover {
+        width: fit-content;
+      }
+    }
+  }
 }
-
-button:focus {
-  border: none;
-  outline: none;
-}
-
-.header-submenu {
-  display: flex;
-  justify-content: flex-end;
-
-}
-

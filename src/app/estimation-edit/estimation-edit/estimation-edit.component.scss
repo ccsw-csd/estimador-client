@@ -1,0 +1,15 @@
+@import "./src/assets/scss/master";
+
+::ng-deep #edit-component {
+    position: relative;
+    .button-container {
+        text-align: right;
+        margin-top: 30px;
+        .secondary {
+            margin-right: 20px;
+        }
+    }
+    .loadWrapper {
+        background-color: transparent;
+    }
+}

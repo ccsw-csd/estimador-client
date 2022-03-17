@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { EstimationService } from '../estimation.service';
 import { Estimation } from 'src/app/core/model/Estimation';
-import { PageEvent } from '@angular/material/paginator';
 import { Pageable } from 'src/app/core/model/Pageable';
-import { Sort } from '@angular/material/sort'
 import { Customer } from 'src/app/core/model/Customer';
 import { CustomerService } from '../customer.service';
-import { FormControl } from '@angular/forms';
+import { LazyLoadEvent } from 'primeng/api';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-estimation-list',
   templateUrl: './estimation-list.component.html',
@@ -22,14 +21,14 @@ export class EstimationListComponent implements OnInit {
   property: string= 'id';
   direction: string= 'asc';
 
-  dataSource = new MatTableDataSource<Estimation>();
-  displayedColumns: string[] = ['cliente', 'nombre', 'fecha', 'version', 'jornadas', 'revenue', 'action'];
-
+  estimations: Estimation[];
+  loading: boolean;
+  
   customers: Customer[];
   filterCustomer: Customer;
   filterProject: string;
-  filterStartDate: FormControl = new FormControl();
-  filterEndDate: FormControl = new FormControl();
+  filterStartDate: Date;
+  filterEndDate: Date;
 
   customerId: number;
   projectName: string;
@@ -38,7 +37,8 @@ export class EstimationListComponent implements OnInit {
 
   constructor(
     private estimationService: EstimationService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -46,10 +46,12 @@ export class EstimationListComponent implements OnInit {
       customers => this.customers = customers
     );
 
-    this.loadPage();
+    this.loading = true;
   }
 
-  loadPage(event?: PageEvent) {
+  loadPage(event?: LazyLoadEvent) {
+
+    this.loading = true;
 
     let pageable : Pageable =  {
         pageNumber: this.pageNumber,
@@ -59,58 +61,28 @@ export class EstimationListComponent implements OnInit {
             direction: this.direction,
         }]
     }
-
+    
     if (event != null) {
-        pageable.pageSize = event.pageSize
-        pageable.pageNumber = event.pageIndex;
+        pageable.pageSize = event.rows;
+        pageable.pageNumber = event.first/event.rows;
+        if(event.sortField != null)
+          pageable.sort = [{property: event.sortField, direction: event.sortOrder == 1? "asc": "desc"}];
     }
 
     this.estimationService.getEstimations(pageable, this.customerId, this.projectName, this.startDate, this.endDate).subscribe(data => {
-        this.dataSource.data = data.content;
+        this.estimations = data.content;
         this.pageNumber = data.pageable.pageNumber;
         this.pageSize = data.pageable.pageSize;
         this.totalElements = data.totalElements;
+        this.loading = false; 
     });
-  }
-
-  sortPage(sort: Sort){
-    if(!sort.active || sort.direction ===''){
-      this.direction = 'asc';
-      this.property = 'id';
-    }
-
-    switch(sort.active){
-      case 'cliente':
-          this.property = 'project.customer';
-          break;
-      case 'nombre':
-          this.property = 'project.name';
-          break;
-      case 'fecha':
-          this.property = 'created';
-          break;
-      case 'version':
-          this.property = 'estVersion';
-          break;
-      case 'jornadas':
-          this.property = 'totalDays';
-          break;
-      case 'revenue':      
-          this.property = 'totalCost';
-          break;
-      default:
-        this.property = 'id';
-    }
-
-    this.direction = sort.direction;
-    this.loadPage();
   }
 
   onCleanFilter(): void{
     this.filterCustomer = null;
     this.filterProject = null;
-    this.filterStartDate.setValue(null);
-    this.filterEndDate.setValue(null);
+    this.filterStartDate = null;
+    this.filterEndDate = null;
 
     this.onSearch();
   }
@@ -118,9 +90,17 @@ export class EstimationListComponent implements OnInit {
   onSearch(): void{
     this.customerId = this.filterCustomer != null ? this.filterCustomer.id: null;
     this.projectName = this.filterProject;
-    this.startDate = this.filterStartDate.value;
-    this.endDate = this.filterEndDate.value;
+    this.startDate = this.filterStartDate;
+    this.endDate = this.filterEndDate;
 
     this.loadPage();
+  }
+
+  createEstimation() {
+    this.router.navigate(['/estimation-edit']);
+  }
+
+  editEstimation(id: number) {
+    this.router.navigate(['/estimation-edit/' + id]);
   }
 }

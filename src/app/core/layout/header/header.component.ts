@@ -1,9 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { LoginService } from 'src/app/login/services/login.service';
 import { AuthService } from '../../services/auth.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { User } from '../../model/User';
+import { DialogService } from 'primeng/dynamicdialog';
+import { MenuItem } from 'primeng/api';
+
 
 @Component({
   selector: 'app-header',
@@ -16,16 +18,24 @@ export class HeaderComponent implements OnInit {
   navOpen = true;
   isloading : boolean = false;
   @Output() navOpenEvent = new EventEmitter();
+  items: MenuItem[];
 
   constructor(
     public authService: AuthService,
     private loginService: LoginService,
     private snackbarService: SnackbarService,
-    public dialog: MatDialog
+    public dialog: DialogService
   ) { }
 
   ngOnInit(): void {
     this.user = this.authService.getUserInfo();
+    this.items = [{
+      label: "Logout",
+      icon: 'pi pi-sign-out',
+      command: () => {
+          this.logout();
+      }
+    }]
   }
 
   toggleSideNav() {
@@ -44,6 +54,4 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
-
-  
 }
