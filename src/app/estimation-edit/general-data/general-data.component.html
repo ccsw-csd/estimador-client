@@ -1,1 +1,73 @@
-<p>general-data works!</p>
+<div class="flex-container">
+    <div class="flex-content">
+        <h2>Datos generales</h2>
+        <div class="flex-content">
+            <span class="p-float-label">
+                <input required [disabled]="!nueva" id="name-input" type="text" pInputText [(ngModel)]="estimation.project.name"> 
+                <label for="name-input">Nombre del proyecto</label>
+            </span>
+
+            <span class="p-float-label">
+                <input *ngIf="!nueva" [disabled]="true" id="customer-input" type="text" pInputText [(ngModel)]="estimation.project.customer.name"> 
+                <p-autoComplete required *ngIf="nueva" id="customer-input" [(ngModel)]="customer" [suggestions]="customers" (completeMethod)="searchCustomers($event)" (onBlur)="updateCustomer()" field="name"></p-autoComplete> 
+                <label for="customer-input">Cliente</label>
+            </span>
+
+            <span class="p-float-label">
+                <input required [disabled]="!nueva" id="version-input" type="text" pInputText [(ngModel)]="estimation.estVersion"> 
+                <label for="version-input">Versión</label>
+            </span>
+
+            <span class="p-float-label">
+                <p-calendar [disabled]="true" [showIcon]="true" inputId="creationDate" dateFormat="dd/mm/yy" [(ngModel)]="estimation.created" showTime="true" [hourFormat]="24"></p-calendar>
+                <label for="creationDate">Fecha de creación</label>
+            </span>
+
+            <span class="p-float-label">
+                <p-calendar [disabled]="true" [showIcon]="true" inputId="updateDate" dateFormat="dd/mm/yy" [(ngModel)]="estimation.lastUpdate" showTime="true" [hourFormat]="24"></p-calendar>
+                <label for="updateDate">Última actualización</label>
+            </span>
+
+            <span class="p-float-label">
+                <input [disabled]="true" id="user-input" type="text" pInputText [(ngModel)]="estimation.createdBy.first_name + ' ' + estimation.createdBy.last_name " > 
+                <label for="user-input">Propietario</label>
+            </span>
+        </div>
+    </div>
+
+    <div class="flex-content">
+        <div id="collaborators">
+            <h2>Colaboradores</h2>
+            <span id="inputCollab" class="p-float-label">
+                <p-autoComplete id="collaborator-input" [suggestions]="users" (completeMethod)="searchCollaborator($event)" field="username" (onSelect)="addCollaborator($event)">
+                    <ng-template let-user pTemplate="item">
+                        <div class="ui-helper-clearfix">
+                            <div>{{user.first_name}} {{user.last_name}} <b>({{user.username}})</b></div>
+                        </div>
+                    </ng-template>
+                </p-autoComplete> 
+                <label for="collaborator-input">Añadir colaborador</label>
+            </span>
+            <p-table [value]="collaborators" [scrollable]="true" responsiveLayout="scroll" scrollHeight="calc(100vh - 450px)">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Username</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Acción</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-estcollab>
+                    <tr>
+                        <td>{{estcollab.collaborator.username}}</td>
+                        <td>{{estcollab.collaborator.first_name}}</td>
+                        <td>{{estcollab.collaborator.last_name}}</td>
+                        <td>
+                            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteCollaborator(estcollab)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

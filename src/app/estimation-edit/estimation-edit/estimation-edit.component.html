@@ -5,7 +5,7 @@
 
     <p-tabView>
         <p-tabPanel header="Datos generales">
-            <app-general-data [estimation]="estimation"></app-general-data>
+            <app-general-data *ngIf="!loading" [estimation]="estimation" [collaborators]="collaborators"></app-general-data>
         </p-tabPanel>
         <p-tabPanel header="Criterios">
             <app-criteria [estimation]="estimation"></app-criteria>
