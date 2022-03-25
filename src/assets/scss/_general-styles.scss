@@ -269,6 +269,13 @@ span.text_red {
     }
   }
 
+  /* ESTILO TITULOS */
+  h2.tabview-title {
+    font-size: 18px;
+    margin-bottom: 30px;
+    font-weight: bold;
+  }
+
   /* ESTILO DE LOS BOTONES */
   .p-button:hover, .p-button:focus {
     box-shadow: none;
@@ -335,10 +342,10 @@ span.text_red {
   }
 
   /* ESTILO DE LOS INPUTS */
-  .filters .p-calendar {
+  .p-calendar {
     border:none;
 
-    .p-element {
+    .p-datepicker-trigger:enabled:focus, .p-datepicker-trigger:enabled, .p-datepicker-trigger:disabled {
       background-color: white;
       color: $icon;
       border:none;
@@ -352,6 +359,18 @@ span.text_red {
   .p-float-label {
     font-size: 16px;
     color: $lightgray;
+
+    input:focus ~ label, input.p-filled ~ label, textarea:focus ~ label, textarea.p-filled ~ label, .p-inputwrapper-focus ~ label, .p-inputwrapper-filled ~ label {
+      top:0;
+    }
+
+    input:focus ~ label, textarea:focus ~ label, .p-inputwrapper-focus ~ label {
+      color: $primary;
+    }
+
+    .p-inputtext.ng-dirty.ng-invalid:focus, .p-inputtext.ng-dirty.ng-invalid:hover {
+      border-color: $error;
+    }
   }
 
   .p-float-label:focus {
@@ -368,9 +387,9 @@ span.text_red {
     border-color: $lightgray;
   }
 
-  .p-inputtext:enabled:focus {
+  .p-inputtext:enabled:focus, .p-dropdown.p-dropdown-open .p-dropdown-label, .p-dropdown.p-focus .p-dropdown-label{
     box-shadow: none;
-    border-color: $lightgray;
+    border-color: $primary;
   }
 
   .p-dropdown {

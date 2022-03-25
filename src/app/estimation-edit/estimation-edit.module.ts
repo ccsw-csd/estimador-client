@@ -7,9 +7,12 @@ import { GeneralDataComponent } from './general-data/general-data.component';
 import { CriteriaComponent } from './criteria/criteria.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { SummaryComponent } from './summary/summary.component';
-import { BlockUIModule } from 'primeng/blockui';
-import { PanelModule } from 'primeng/panel';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { FormsModule } from '@angular/forms';
+import { TableModule } from 'primeng/table';
 
 
 
@@ -25,9 +28,12 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     CommonModule,
     TabViewModule,
     ButtonModule,
-    BlockUIModule,
-    PanelModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    InputTextModule,
+    CalendarModule,
+    FormsModule,
+    AutoCompleteModule,
+    TableModule
   ]
 })
 export class EstimationEditModule { }
