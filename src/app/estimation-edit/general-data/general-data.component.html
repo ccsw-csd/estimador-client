@@ -1,43 +1,49 @@
 <div class="flex-container">
     <div class="flex-content">
-        <h2>Datos generales</h2>
-        <div class="flex-content">
-            <span class="p-float-label">
+        <h2 class="tabview-title">Datos generales</h2>
+        <div id="data" class="flex-content">
+            <span class="p-float-label big_input">
                 <input required [disabled]="!nueva" id="name-input" type="text" pInputText [(ngModel)]="estimation.project.name"> 
                 <label for="name-input">Nombre del proyecto</label>
             </span>
 
-            <span class="p-float-label">
-                <input *ngIf="!nueva" [disabled]="true" id="customer-input" type="text" pInputText [(ngModel)]="estimation.project.customer.name"> 
-                <p-autoComplete required *ngIf="nueva" id="customer-input" [(ngModel)]="customer" [suggestions]="customers" (completeMethod)="searchCustomers($event)" (onBlur)="updateCustomer()" field="name"></p-autoComplete> 
-                <label for="customer-input">Cliente</label>
-            </span>
+            <div class="input-container">
+                <div class="medium_input">
+                    <span class="p-float-label">
+                        <input *ngIf="!nueva" [disabled]="true" id="customer-input" type="text" pInputText [(ngModel)]="estimation.project.customer.name"> 
+                        <p-autoComplete required *ngIf="nueva" id="customer-input" [(ngModel)]="customer" [suggestions]="customers" (completeMethod)="searchCustomers($event)" (onBlur)="updateCustomer()" field="name"></p-autoComplete> 
+                        <label for="customer-input">Cliente</label>
+                    </span>
+                </div>
+ 
+                <span class="p-float-label small_input">
+                    <input required [disabled]="!nueva" id="version-input" type="text" pInputText [(ngModel)]="estimation.estVersion"> 
+                    <label for="version-input">Versión</label>
+                </span>
+            </div>
 
-            <span class="p-float-label">
-                <input required [disabled]="!nueva" id="version-input" type="text" pInputText [(ngModel)]="estimation.estVersion"> 
-                <label for="version-input">Versión</label>
-            </span>
-
-            <span class="p-float-label">
-                <p-calendar [disabled]="true" [showIcon]="true" inputId="creationDate" dateFormat="dd/mm/yy" [(ngModel)]="estimation.created" showTime="true" [hourFormat]="24"></p-calendar>
-                <label for="creationDate">Fecha de creación</label>
-            </span>
-
-            <span class="p-float-label">
-                <p-calendar [disabled]="true" [showIcon]="true" inputId="updateDate" dateFormat="dd/mm/yy" [(ngModel)]="estimation.lastUpdate" showTime="true" [hourFormat]="24"></p-calendar>
-                <label for="updateDate">Última actualización</label>
-            </span>
-
-            <span class="p-float-label">
-                <input [disabled]="true" id="user-input" type="text" pInputText [(ngModel)]="estimation.createdBy.firstName + ' ' + estimation.createdBy.lastName " > 
-                <label for="user-input">Propietario</label>
-            </span>
+            <div class="input-container">
+                <span class="p-float-label small_input">
+                    <p-calendar [disabled]="true" [showIcon]="true" inputId="creationDate" dateFormat="dd/mm/yy" [(ngModel)]="estimation.created" showTime="true" [hourFormat]="24"></p-calendar>
+                    <label for="creationDate">Fecha de creación</label>
+                </span>
+    
+                <span class="p-float-label small_input">
+                    <p-calendar [disabled]="true" [showIcon]="true" inputId="updateDate" dateFormat="dd/mm/yy" [(ngModel)]="estimation.lastUpdate" showTime="true" [hourFormat]="24"></p-calendar>
+                    <label for="updateDate">Última actualización</label>
+                </span>
+    
+                <span class="p-float-label small_input">
+                    <input [disabled]="true" id="user-input" type="text" pInputText [(ngModel)]="estimation.createdBy.firstName + ' ' + estimation.createdBy.lastName " > 
+                    <label for="user-input">Propietario</label>
+                </span>
+            </div>
         </div>
     </div>
 
     <div class="flex-content">
-        <div id="collaborators">
-            <h2>Colaboradores</h2>
+        <div>
+            <h2 class="tabview-title">Colaboradores</h2>
             <span id="inputCollab" class="p-float-label">
                 <p-autoComplete id="collaborator-input" [suggestions]="users" (completeMethod)="searchCollaborator($event)" field="username" (onSelect)="addCollaborator($event)">
                     <ng-template let-user pTemplate="item">
