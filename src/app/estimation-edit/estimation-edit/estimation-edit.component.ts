@@ -4,7 +4,9 @@ import { Collaborator } from 'src/app/core/model/Collaborator';
 import { Estimation } from 'src/app/core/model/Estimation';
 import { Project } from 'src/app/core/model/Project';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { CollaboratorService } from '../services/collaborator/collaborator.service';
 import { EstimationEditService } from '../services/estimation-edit.service';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-estimation-edit',
@@ -19,6 +21,8 @@ export class EstimationEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, 
     private estimationEditService: EstimationEditService,
+    private collaboratorService: CollaboratorService,
+    private userService: UserService,
     private authService: AuthService,
     private router: Router) { }
 
@@ -28,7 +32,8 @@ export class EstimationEditComponent implements OnInit {
     if(routeId == null) {
       this.estimation = new Estimation();
       this.estimation.project = new Project();
-      this.estimationEditService.getUserByUsername(this.authService.getUsername()).subscribe((user) => {
+      this.estimation.showhours = false;
+      this.userService.getUserByUsername(this.authService.getUsername()).subscribe((user) => {
         this.estimation.createdBy = user;
         this.loading = false;
       });
@@ -36,7 +41,7 @@ export class EstimationEditComponent implements OnInit {
     else {
       this.estimationEditService.getEstimation(+routeId).subscribe((estimation) => {
         this.estimation = estimation;
-        this.estimationEditService.findCollaborators(this.estimation).subscribe((data) => {
+        this.collaboratorService.findCollaborators(this.estimation).subscribe((data) => {
           this.collaborators = data;
           this.loading = false;
         });
@@ -46,7 +51,7 @@ export class EstimationEditComponent implements OnInit {
 
   close() {
     this.router.navigate(['/main']);
-
+    
   }
   
 }

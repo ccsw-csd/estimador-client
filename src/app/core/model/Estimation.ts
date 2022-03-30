@@ -1,4 +1,6 @@
 import { User } from "src/app/core/model/User";
+import { Criterion } from "./Criterion";
+import { ElementWeight } from "./ElementWeight";
 import { Project } from "./Project";
 
 export class Estimation{
@@ -12,4 +14,6 @@ export class Estimation{
     lastUpdate: Date;
     status: number;
     showhours: Boolean;
+    globalCriteria: Criterion[]; 
+    elementsWeights: ElementWeight[];
 }
