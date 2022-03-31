@@ -1,1 +1,175 @@
-<p>criteria works!</p>
+<div class="flex-container">
+    <p-confirmPopup></p-confirmPopup>
+    <div class="flex-content">
+        <div class="title-button criteria">
+            <h2 class="tabview-title">Criterios globales</h2>
+            <p-button class="secondary" label="Añadir fila" (click)="addCriterion()"></p-button>
+        </div>
+        
+        <p-table [value]="estimation.globalCriteria" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 400px)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Bloque</th>
+                    <th>Concepto</th>
+                    <th>Valor</th>
+                    <th>Tipo</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-criterion>
+                <tr>
+                    <td pEditableColumn>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-dropdown [options]="blocks" [(ngModel)]="criterion.block" optionLabel="name" [style]="{'width':'100%'}"></p-dropdown>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{criterion.block.name}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pEditableColumn>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="criterion.concept">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{criterion.concept}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pEditableColumn>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputNumber [(ngModel)]="criterion.value" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{criterion.value | number:'':'es'}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pEditableColumn>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-dropdown [options]="types" [(ngModel)]="criterion.type" [style]="{'width':'100%'}"></p-dropdown>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{criterion.type}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td>
+                        <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteCriterion(criterion)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="flex-content">
+        <div class="title">
+            <div class="title-button">
+                <h2 class="tabview-title">Pesos de los componentes</h2>
+                <p-button *ngIf="!estimation.showhours" class="secondary" label="Añadir fila" (click)="addElementWeight()"></p-button>
+            </div>
+            
+            <div class="checkButton">
+                <p-toggleButton [(ngModel)]="estimation.showhours" offIcon="pi pi-unlock" onIcon="pi pi-lock" iconPos="right"></p-toggleButton>
+                <p *ngIf="!estimation.showhours">Estimación basada en pesos</p>
+                <p *ngIf="estimation.showhours">Estimación basada en horas</p>
+            </div>
+        </div>
+
+        <p-table *ngIf="!estimation.showhours" [value]="estimation.elementsWeights" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 400px)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Elemento</th>
+                    <th>Muy fácil</th>
+                    <th>Fácil</th>
+                    <th>Medio</th>
+                    <th>Complejo</th>
+                    <th>Nivel</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-elementWeight>
+                <tr>
+
+                    <td pEditableColumn>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="elementWeight.element">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{elementWeight.element}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pEditableColumn>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputNumber [(ngModel)]="elementWeight.veryEasy" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{elementWeight.veryEasy | number:'':'es'}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pEditableColumn>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputNumber [(ngModel)]="elementWeight.easy" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{elementWeight.easy | number:'':'es'}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    
+                    <td pEditableColumn>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputNumber [(ngModel)]="elementWeight.medium" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{elementWeight.medium | number:'':'es'}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pEditableColumn>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputNumber [(ngModel)]="elementWeight.complex" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{elementWeight.complex | number:'':'es'}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pEditableColumn>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-dropdown [options]="levels" [(ngModel)]="elementWeight.level" optionLabel="name"></p-dropdown>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{elementWeight.level.name}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td>
+                        <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteElementWeight(elementWeight)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

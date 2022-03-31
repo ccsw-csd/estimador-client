@@ -13,6 +13,11 @@ import { CalendarModule } from 'primeng/calendar';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ConfirmationService } from 'primeng/api';
 
 
 
@@ -33,7 +38,12 @@ import { TableModule } from 'primeng/table';
     CalendarModule,
     FormsModule,
     AutoCompleteModule,
-    TableModule
-  ]
+    TableModule,
+    DropdownModule,
+    InputNumberModule,
+    ToggleButtonModule,
+    ConfirmPopupModule
+  ],
+  providers: [ConfirmationService]
 })
-export class EstimationEditModule { }
+export class EstimationEditModule {}

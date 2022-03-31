@@ -8,7 +8,7 @@
             <app-general-data *ngIf="!loading" [estimation]="estimation" [collaborators]="collaborators"></app-general-data>
         </p-tabPanel>
         <p-tabPanel header="Criterios">
-            <app-criteria [estimation]="estimation"></app-criteria>
+            <app-criteria *ngIf="!loading" [estimation]="estimation"></app-criteria>
         </p-tabPanel>
         <p-tabPanel header="Tareas">
             <app-tasks [estimation]="estimation"></app-tasks>

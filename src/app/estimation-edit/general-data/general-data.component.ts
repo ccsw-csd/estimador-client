@@ -4,6 +4,7 @@ import { Customer } from 'src/app/core/model/Customer';
 import { Estimation } from 'src/app/core/model/Estimation';
 import { User } from 'src/app/core/model/User';
 import { EstimationEditService } from '../services/estimation-edit.service';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-general-data',
@@ -19,7 +20,8 @@ export class GeneralDataComponent implements OnInit {
   nueva: boolean = false;
   customer: any;
 
-  constructor(private estimationEditService: EstimationEditService) { }
+  constructor(private estimationEditService: EstimationEditService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
 
@@ -48,7 +50,7 @@ export class GeneralDataComponent implements OnInit {
   }
 
   searchCollaborator(event) {
-    this.estimationEditService.findUsersByFilter(event.query).subscribe((data) => {
+    this.userService.findUsersByFilter(event.query).subscribe((data) => {
       this.users = data;
     })
   }

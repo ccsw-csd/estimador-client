@@ -262,7 +262,7 @@ span.text_red {
   .title-button {
     display: flex;
     align-items: center;
-    h1 {
+    h1, h2 {
       margin-right: 20px;
       margin-bottom: 0px;
       margin-top: 0px;
@@ -274,6 +274,19 @@ span.text_red {
     font-size: 18px;
     margin-bottom: 30px;
     font-weight: bold;
+  }
+
+  /* ESTILO CONTENEDORES */
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .flex-content {
+    flex-basis: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
   }
 
   /* ESTILO DE LOS BOTONES */
@@ -317,6 +330,25 @@ span.text_red {
     background-color: $primary;
   }
 
+  //Estilo toggle-button
+  .p-togglebutton.p-button.p-highlight, .p-togglebutton.p-button.p-highlight:hover {
+    color: $primary;
+    background-color: white;
+    border-color: $primary;
+    border-radius: 0;
+
+    .p-button-icon-left, .p-button-icon-right {
+        color: $primary;
+    }
+  }
+
+  .p-togglebutton.p-button, .p-togglebutton.p-button:not(.p-disabled):not(.p-highlight):hover {
+      color: $icon;
+      border-color: $icon;
+      border-radius:0;
+      background-color: white;
+  }
+
   /* ESTILO DE LOS DIALOGOS */
   .p-dialog::before {
     overflow: hidden;
@@ -339,6 +371,23 @@ span.text_red {
     p-button.secondary .p-button {
       width: 100px;
     }
+  }
+
+  /*ESTILO POPUP DE CONFIRMACIÓN*/
+  .p-confirm-popup-accept.p-button, .p-confirm-popup-accept.p-button:hover {
+    color: white;
+    background-color: $primary;
+    border-color: $primary;
+    border-radius: 0;
+    min-width: 50px;
+  }
+
+  .p-confirm-popup-reject.p-button, .p-confirm-popup-reject.p-button.p-button-text:enabled:hover {
+    border-color: $primary;
+    color: $primary;
+    border-radius: 0;
+    background-color: white;
+    min-width: 50px;
   }
 
   /* ESTILO DE LOS INPUTS */
@@ -458,13 +507,28 @@ span.text_red {
       color: $primary;
     }
 
-    td button {
-      min-width: 0px;
-    }
+    td {
+      button {
+        min-width: 0px;
+      }
 
+      input {
+        border: none;
+      }
+
+      .p-dropdown .p-dropdown-label {
+        border: none;
+      }
+    }
+    
     .p-sortable-column:not(.p-highlight):hover, .p-sortable-column.p-highlight, .p-sortable-column.p-highlight:hover  {
       background-color: $background;
       box-shadow: none;
+    }
+
+    p-celleditor .p-inputtext {
+      padding:0;
+      font-family: "Source Sans Pro", sans-serif;
     }
   }
 
