@@ -23,8 +23,6 @@ export class CriteriaComponent implements OnInit {
     private confirmationService: ConfirmationService) {}
 
   ngOnInit(): void {
-    this.estimation.globalCriteria = [];
-    this.estimation.elementsWeights = [];
 
     this.estimationEditService.findBlocks().subscribe((data) => {
       this.blocks = data;
