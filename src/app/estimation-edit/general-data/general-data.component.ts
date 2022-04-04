@@ -3,7 +3,9 @@ import { Collaborator } from 'src/app/core/model/Collaborator';
 import { Customer } from 'src/app/core/model/Customer';
 import { Estimation } from 'src/app/core/model/Estimation';
 import { User } from 'src/app/core/model/User';
+import { ElementWeightService } from '../services/elementWeight/element-weight.service';
 import { EstimationEditService } from '../services/estimation-edit.service';
+import { GlobalCriteriaService } from '../services/globalCriteria/global-criteria.service';
 import { UserService } from '../services/user/user.service';
 
 @Component({
@@ -21,7 +23,9 @@ export class GeneralDataComponent implements OnInit {
   customer: any;
 
   constructor(private estimationEditService: EstimationEditService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private globalCriteriaService: GlobalCriteriaService,
+    private elementWeightService: ElementWeightService) { }
 
   ngOnInit(): void {
 
@@ -43,10 +47,12 @@ export class GeneralDataComponent implements OnInit {
   }
 
   updateCustomer() {
-    if(typeof(this.customer) === "string")
-      this.estimation.project.customer = {id: null, name: this.customer};
-    else 
-      this.estimation.project.customer = this.customer;
+    if(typeof(this.customer) === "string") {
+      this.updateCustomerString();
+    }
+    else if(this.customer != null) {
+      this.updateCustomerObject();
+    }
   }
 
   searchCollaborator(event) {
@@ -67,5 +73,39 @@ export class GeneralDataComponent implements OnInit {
   deleteCollaborator(collaborator) {
     const index = this.collaborators.indexOf(collaborator, 0);
     this.collaborators.splice(index, 1);
+  }
+
+  updateCustomerString() {
+    this.estimation.project.customer = {id: null, name: this.customer};
+      this.globalCriteriaService.findGlobalCriteriaByEstimation(1).subscribe((criteria) => {
+        this.estimation.globalCriteria = criteria;
+      });
+      this.elementWeightService.findElementWeightsByEstimation(1).subscribe((weights) => {
+        this.estimation.elementsWeights = weights;
+      });
+  }
+
+  updateCustomerObject() {
+    this.estimation.project.customer = this.customer;
+    this.globalCriteriaService.findGlobalCriteriaByEstimationCustomer(this.estimation.project.customer).subscribe((criteria) => {
+      if(criteria == null || criteria == []) {
+        this.globalCriteriaService.findGlobalCriteriaByEstimation(1).subscribe((criteriaDefault) => {
+          this.estimation.globalCriteria = criteriaDefault;
+        });
+      }
+      else {
+        this.estimation.globalCriteria = criteria;
+      }
+      this.elementWeightService.findElementWeightsByEstimationCustomer(this.estimation.project.customer).subscribe((weights) => {
+        if(weights == null || weights == []) {
+          this.elementWeightService.findElementWeightsByEstimation(1).subscribe((weightsDefault) => {
+            this.estimation.elementsWeights = weightsDefault;
+          });
+        }
+        else {
+          this.estimation.elementsWeights = weights;
+        }
+      });
+    });
   }
 }

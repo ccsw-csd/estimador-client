@@ -78,7 +78,7 @@
             </div>
             
             <div class="checkButton">
-                <p-toggleButton [(ngModel)]="estimation.showhours" offIcon="pi pi-unlock" onIcon="pi pi-lock" iconPos="right"></p-toggleButton>
+                <p-toggleButton [(ngModel)]="estimation.showhours" offIcon="pi pi-unlock" [onIcon]="'pi pi-lock'" iconPos="right"></p-toggleButton>
                 <p *ngIf="!estimation.showhours">Estimación basada en pesos</p>
                 <p *ngIf="estimation.showhours">Estimación basada en horas</p>
             </div>
@@ -113,10 +113,10 @@
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="elementWeight.veryEasy" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="elementWeight.verySimple" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{elementWeight.veryEasy | number:'':'es'}}
+                                {{elementWeight.verySimple | number:'':'es'}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -124,10 +124,10 @@
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="elementWeight.easy" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="elementWeight.simple" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{elementWeight.easy | number:'':'es'}}
+                                {{elementWeight.simple | number:'':'es'}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
