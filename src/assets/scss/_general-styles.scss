@@ -371,6 +371,22 @@ span.text_red {
     p-button.secondary .p-button {
       width: 100px;
     }
+
+    .big-button-container {
+
+      display: flex;
+      justify-content: space-between;
+      width: 310px;
+      position: absolute;
+
+      p-button.secondary .p-button {
+        width: 150px;
+      }
+  
+      p-button.primary .p-button {
+        width: 150px;
+      }
+    }
   }
 
   /*ESTILO POPUP DE CONFIRMACIÓN*/
@@ -491,6 +507,33 @@ span.text_red {
 
   /* ESTILO DE LAS TABLAS */
   .p-datatable {
+
+    .p-datatable-tbody > tr > td.centered, .p-datatable-thead > tr > th.centered, .p-datatable-tfoot > tr > td.centered {
+      text-align: center;
+    }
+
+    .p-datatable-tbody > tr > td.centered {
+        input {
+            text-align: center;
+        }
+    }
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0px;
+    }
+
+    .read-only-cell {
+      background-color: $background;
+    }
+
+    .icon-cell {
+      width: 130px;
+    }
+  
+    .small-cell {
+        width: 250px;
+    }
 
     .p-datatable-thead > tr > th {
       background-color:$background;

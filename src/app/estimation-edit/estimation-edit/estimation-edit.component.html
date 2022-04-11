@@ -3,7 +3,7 @@
         <p-progressSpinner></p-progressSpinner>
     </div>
 
-    <p-tabView>
+    <p-tabView (onChange)="onChange($event)">
         <p-tabPanel header="Datos generales">
             <app-general-data *ngIf="!loading" [estimation]="estimation" [collaborators]="collaborators"></app-general-data>
         </p-tabPanel>
@@ -11,7 +11,7 @@
             <app-criteria *ngIf="!loading" [estimation]="estimation"></app-criteria>
         </p-tabPanel>
         <p-tabPanel header="Tareas">
-            <app-tasks [estimation]="estimation"></app-tasks>
+            <app-tasks #tasks *ngIf="!loading" [estimation]="estimation"></app-tasks>
         </p-tabPanel>
         <p-tabPanel header="Resumen">
             <app-summary [estimation]="estimation"></app-summary>
