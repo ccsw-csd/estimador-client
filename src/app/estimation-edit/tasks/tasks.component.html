@@ -33,7 +33,8 @@
             </td>
 
             <td class="centered icon-cell">
-                <button pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-text p-button-plain icon" (click)="openCommentDialog(task)"></button>
+                <button *ngIf="task.comment == null || task.comment == undefined || task.comment ==''" pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-text p-button-plain icon" (click)="openCommentDialog(task)"></button>
+                <button *ngIf="task.comment != null && task.comment != undefined && task.comment !=''" pButton pRipple type="button" icon="pi pi-comments" class="p-button-rounded p-button-text p-button-plain icon comment-icon-fill" (click)="openCommentDialog(task)"></button>
                 <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteArchitectureTask(task)"></button>
             </td>
         </tr>
@@ -41,8 +42,8 @@
 
     <ng-template pTemplate="footer">
         <tr class="footer">
-            <td>
-                <button pButton pRipple type="button" icon="pi pi-plus-circle" class="p-button-rounded p-button-text p-button-plain icon" (click)="addArchitectureTask()"></button>
+            <td class="add-button-cell">
+                <p-button class="secondary" label="Crear tarea" (click)="addArchitectureTask()"></p-button>
             </td>
             <td class="totalCell centered">{{architectureTotal | number:'':'es'}}</td>
             <td></td>
@@ -113,7 +114,8 @@
             <td class="read-only-cell centered">{{task.totalHours | number:'':'es'}}</td>
                         
             <td class="centered icon-cell">
-                <button pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-text p-button-plain icon" (click)="openCommentDialog(task)"></button>
+                <button *ngIf="task.comment == null || task.comment == undefined || task.comment ==''" pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-text p-button-plain icon" (click)="openCommentDialog(task)"></button>
+                <button *ngIf="task.comment != null && task.comment != undefined && task.comment !=''" pButton pRipple type="button" icon="pi pi-comments" class="p-button-rounded p-button-text p-button-plain icon comment-icon-fill" (click)="openCommentDialog(task)"></button>
                 <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteDevelopmentTask(task)"></button>
             </td>
         </tr>
@@ -121,8 +123,8 @@
 
     <ng-template pTemplate="footer">
         <tr class="footer">
-            <td>
-                <button pButton pRipple type="button" icon="pi pi-plus-circle" class="p-button-rounded p-button-text p-button-plain icon" (click)="addDevelopmentTask()"></button>
+            <td class="add-button-cell">
+                <p-button class="secondary" label="Crear tarea" (click)="addDevelopmentTask()"></p-button>
             </td>
             <td></td>
             <td></td>
@@ -181,8 +183,8 @@
 
     <ng-template pTemplate="footer">
         <tr class="footer">
-            <td>
-                <button pButton pRipple type="button" icon="pi pi-plus-circle" class="p-button-rounded p-button-text p-button-plain icon" (click)="addConsiderationComment()"></button>
+            <td class="add-button-cell">
+                <p-button class="secondary" label="Crear comentario" (click)="addConsiderationComment()"></p-button>
             </td>
         </tr>
     </ng-template>

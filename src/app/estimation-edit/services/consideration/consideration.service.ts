@@ -13,7 +13,7 @@ export class ConsiderationService {
 
   findConsiderationsByEstimation(id: number): Observable<Consideration[]> {
 
-    return this.http.post<Consideration[]>(environment.server + '/consideration', id);
+    return this.http.get<Consideration[]>(environment.server + '/consideration/' + id);
 
   }
 }

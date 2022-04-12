@@ -13,7 +13,7 @@ export class TaskArchitectureService {
 
   findTasksArchitectureByEstimation(id: number): Observable<TaskArchitecture[]> {
 
-    return this.http.post<TaskArchitecture[]>(environment.server + '/taskArchitecture', id);
+    return this.http.get<TaskArchitecture[]>(environment.server + '/taskArchitecture/' + id);
 
   }
 }

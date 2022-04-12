@@ -13,7 +13,7 @@ export class TaskDevelopmentService {
 
   findTasksDevelopmentByEstimation(id: number): Observable<TaskDevelopment[]> {
 
-    return this.http.post<TaskDevelopment[]>(environment.server + '/taskDevelopmentHours', id);
+    return this.http.get<TaskDevelopment[]>(environment.server + '/taskDevelopmentHours/' + id);
 
   }
 }

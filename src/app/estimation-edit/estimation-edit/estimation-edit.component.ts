@@ -42,45 +42,65 @@ export class EstimationEditComponent implements OnInit {
     var routeId = this.route.snapshot.paramMap.get('id');
     
     if(routeId == null) {
+      var dataTotal = 2;
       this.estimation = new Estimation();
       this.estimation.project = new Project();
       this.estimation.showhours = false;
       this.estimation.architectureTasks = [];
       this.estimation.considerations = [];
       this.estimation.developmentTasks = [];
+
       this.elementWeightService.findElementWeightsByEstimation(1).subscribe((data) => {
         this.estimation.elementsWeights = data;
-        this.userService.getUserByUsername(this.authService.getUsername()).subscribe((user) => {
-          this.estimation.createdBy = user;
-          this.globalCriteriaService.findGlobalCriteriaByEstimation(1).subscribe((data) => {
-            this.estimation.globalCriteria = data;
-            this.loading = false;
-          })
-        });
+        this.stopLoading(dataTotal--);
+      });
+
+      this.userService.getUserByUsername(this.authService.getUsername()).subscribe((user) => {
+        this.estimation.createdBy = user;
+        this.stopLoading(dataTotal--);
+      });
+
+      this.globalCriteriaService.findGlobalCriteriaByEstimation(1).subscribe((data) => {
+        this.estimation.globalCriteria = data;
+        this.stopLoading(dataTotal--);
       });
     }
     else {
+      var dataTotal = 5;
+      
       this.estimationEditService.getEstimation(+routeId).subscribe((estimation) => {
         this.estimation = estimation;
+
         this.collaboratorService.findCollaborators(this.estimation).subscribe((data) => {
           this.collaborators = data;
-          this.elementWeightService.findElementWeightsByEstimation(this.estimation.id).subscribe((data) => {
-            this.estimation.elementsWeights = data;
-            this.globalCriteriaService.findGlobalCriteriaByEstimation(this.estimation.id).subscribe((criteria) => {
-              this.estimation.globalCriteria = criteria;
-              this.taskArchitectureService.findTasksArchitectureByEstimation(this.estimation.id).subscribe((tasks) => {
-                this.estimation.architectureTasks = tasks;
-                this.taskDevelopmentService.findTasksDevelopmentByEstimation(this.estimation.id).subscribe((tasks) => {
-                  this.estimation.developmentTasks = tasks;
-                  this.considerationService.findConsiderationsByEstimation(this.estimation.id).subscribe((considerations) => {
-                    this.estimation.considerations = considerations;
-                    this.loading = false;
-                  });
-                });
-              });
-            });
-          })
+          this.stopLoading(dataTotal--);
         });
+
+        this.elementWeightService.findElementWeightsByEstimation(this.estimation.id).subscribe((data) => {
+          this.estimation.elementsWeights = data;
+          this.stopLoading(dataTotal--);
+        });
+
+        this.globalCriteriaService.findGlobalCriteriaByEstimation(this.estimation.id).subscribe((criteria) => {
+          this.estimation.globalCriteria = criteria;
+          this.stopLoading(dataTotal--);
+        });
+
+        this.taskArchitectureService.findTasksArchitectureByEstimation(this.estimation.id).subscribe((tasks) => {
+          this.estimation.architectureTasks = tasks;
+          this.stopLoading(dataTotal--);
+        });
+
+        this.taskDevelopmentService.findTasksDevelopmentByEstimation(this.estimation.id).subscribe((tasks) => {
+          this.estimation.developmentTasks = tasks;
+          this.stopLoading(dataTotal--);
+        });
+
+        this.considerationService.findConsiderationsByEstimation(this.estimation.id).subscribe((considerations) => {
+          this.estimation.considerations = considerations;
+          this.stopLoading(dataTotal--);
+        });
+
       });
     }
   }
@@ -92,6 +112,12 @@ export class EstimationEditComponent implements OnInit {
   onChange(event) {
     if(event.index == 2) {
       this.tasks.getGlobalTasks();
+    }
+  }
+
+  stopLoading(dataTotal: number) {
+    if(dataTotal == 0) {
+      this.loading = false;
     }
   }
   

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CriteriaCalculationGet } from 'src/app/core/model/CriteriaCalculationGet';
-import { CriteriaCalculationSend } from 'src/app/core/model/CriteriaCalculationSend';
+import { CriteriaCalculationResponse } from 'src/app/core/model/CriteriaCalculationResponse';
+import { CriteriaCalculationRequest } from 'src/app/core/model/CriteriaCalculationRequest';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class CriteriaCalculationService {
 
   constructor(private http: HttpClient) { }
 
-  calculateHoursWithCriteria(criteriaCalculationSend: CriteriaCalculationSend): Observable<CriteriaCalculationGet[]> {
-    return this.http.post<CriteriaCalculationGet[]>(environment.server + '/criteriacalculation/calculate', criteriaCalculationSend);
+  calculateHoursWithCriteria(criteriaCalculationRequest: CriteriaCalculationRequest): Observable<CriteriaCalculationResponse[]> {
+    return this.http.post<CriteriaCalculationResponse[]>(environment.server + '/criteriacalculation/calculate', criteriaCalculationRequest);
   }
 }

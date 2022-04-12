@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Consideration } from 'src/app/core/model/Consideration';
-import { CriteriaCalculationGet } from 'src/app/core/model/CriteriaCalculationGet';
-import { CriteriaCalculationSend } from 'src/app/core/model/CriteriaCalculationSend';
+import { CriteriaCalculationResponse } from 'src/app/core/model/CriteriaCalculationResponse';
+import { CriteriaCalculationRequest } from 'src/app/core/model/CriteriaCalculationRequest';
 import { Estimation } from 'src/app/core/model/Estimation';
 import { TaskArchitecture } from 'src/app/core/model/TaskArchitecture';
 import { TaskDevelopment } from 'src/app/core/model/TaskDevelopment';
@@ -19,7 +19,7 @@ export class TasksComponent implements OnInit {
   @Input() estimation: Estimation;
   architectureTotal: number = 0;
   developmentTotal: number = 0;
-  globalTasks: CriteriaCalculationGet[];
+  globalTasks: CriteriaCalculationResponse[];
 
   constructor(public criteriaCalculationService: CriteriaCalculationService,
     public dialogService: DialogService,) { }
@@ -32,7 +32,6 @@ export class TasksComponent implements OnInit {
 
     this.calculateTotalArchitecture();
     this.calculateTotalDevelopment();
-    this.getGlobalTasks();
   }
 
   addArchitectureTask() {
@@ -96,7 +95,7 @@ export class TasksComponent implements OnInit {
   }
 
   getGlobalTasks() {
-    var calculationInfo = new CriteriaCalculationSend();
+    var calculationInfo = new CriteriaCalculationRequest();
     calculationInfo.criteriaList = this.estimation.globalCriteria;
     calculationInfo.hours = this.developmentTotal;
 
@@ -115,9 +114,11 @@ export class TasksComponent implements OnInit {
       comment: task.comment}
     });
 
-    ref.onClose.subscribe((comment: String) => {
-      if (comment) {
-        task.comment = comment;
+    ref.onClose.subscribe((response: any) => {
+      if(response != false) {
+        task.comment = response;
+      } else if (response.length == 0) {
+        task.comment = "";
       }
     });
   }

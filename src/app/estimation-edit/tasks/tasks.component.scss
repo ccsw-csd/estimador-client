@@ -23,3 +23,13 @@ h2 {
 h2:first-child {
     margin-top: 20px;
 }
+
+::ng-deep {
+    .comment-icon-fill.p-button.p-button-text.p-button-plain, .comment-icon-fill.p-button.p-button-text.p-button-plain:hover {
+        color:$primary;
+    }
+
+    .p-datatable .p-datatable-tfoot > tr > td.add-button-cell {
+        padding-left: 0;
+    }
+}
