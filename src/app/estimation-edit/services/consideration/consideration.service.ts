@@ -11,9 +11,9 @@ export class ConsiderationService {
 
   constructor(private http: HttpClient) { }
 
-  findConsiderationsByEstimation(id: number): Observable<Consideration[]> {
+  findConsiderationsByEstimationId(id: number): Observable<Consideration[]> {
 
-    return this.http.get<Consideration[]>(environment.server + '/consideration/' + id);
+    return this.http.get<Consideration[]>(environment.server + '/consideration/estimation/' + id);
 
   }
 }

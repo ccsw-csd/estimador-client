@@ -12,8 +12,8 @@ export class GlobalCriteriaService {
 
   constructor(private http: HttpClient) { }
 
-  findGlobalCriteriaByEstimation(id: number ): Observable<Criterion[]> {
-    return this.http.post<Criterion[]>(environment.server + '/parameter/estimation', id);
+  findGlobalCriteriaByEstimationId(id: number): Observable<Criterion[]> {
+    return this.http.get<Criterion[]>(environment.server + '/parameter/estimation/' + id);
   }
 
   findGlobalCriteriaByEstimationCustomer(customer: Customer): Observable<Criterion[]> {

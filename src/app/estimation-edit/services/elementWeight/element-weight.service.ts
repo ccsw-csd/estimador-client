@@ -12,11 +12,11 @@ export class ElementWeightService {
 
   constructor(private http: HttpClient) { }
 
-  findElementWeightsByEstimation(id: number ): Observable<ElementWeight[]> {
-    return this.http.post<ElementWeight[]>(environment.server + '/elementWeight/estimation', id);
+  findElementWeightsByEstimationId(id: number): Observable<ElementWeight[]> {
+    return this.http.get<ElementWeight[]>(environment.server + '/elementWeight/estimation/' + id);
   }
 
-  findElementWeightsByEstimationCustomer(customer: Customer ): Observable<ElementWeight[]> {
+  findElementWeightsByEstimationCustomer(customer: Customer): Observable<ElementWeight[]> {
     return this.http.post<ElementWeight[]>(environment.server + '/elementWeight/customer', customer);
   }
 }

@@ -11,9 +11,9 @@ export class TaskArchitectureService {
 
   constructor(private http: HttpClient) { }
 
-  findTasksArchitectureByEstimation(id: number): Observable<TaskArchitecture[]> {
+  findTasksArchitectureByEstimationId(id: number): Observable<TaskArchitecture[]> {
 
-    return this.http.get<TaskArchitecture[]>(environment.server + '/taskArchitecture/' + id);
+    return this.http.get<TaskArchitecture[]>(environment.server + '/taskArchitecture/estimation/' + id);
 
   }
 }

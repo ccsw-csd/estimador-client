@@ -11,9 +11,9 @@ export class TaskDevelopmentService {
 
   constructor(private http: HttpClient) { }
 
-  findTasksDevelopmentByEstimation(id: number): Observable<TaskDevelopment[]> {
+  findTasksDevelopmentByEstimationId(id: number): Observable<TaskDevelopment[]> {
 
-    return this.http.get<TaskDevelopment[]>(environment.server + '/taskDevelopmentHours/' + id);
+    return this.http.get<TaskDevelopment[]>(environment.server + '/taskDevelopmentHours/estimation/' + id);
 
   }
 }

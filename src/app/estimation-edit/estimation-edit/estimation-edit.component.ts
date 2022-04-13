@@ -50,7 +50,7 @@ export class EstimationEditComponent implements OnInit {
       this.estimation.considerations = [];
       this.estimation.developmentTasks = [];
 
-      this.elementWeightService.findElementWeightsByEstimation(1).subscribe((data) => {
+      this.elementWeightService.findElementWeightsByEstimationId(1).subscribe((data) => {
         this.estimation.elementsWeights = data;
         this.stopLoading(dataTotal--);
       });
@@ -60,7 +60,7 @@ export class EstimationEditComponent implements OnInit {
         this.stopLoading(dataTotal--);
       });
 
-      this.globalCriteriaService.findGlobalCriteriaByEstimation(1).subscribe((data) => {
+      this.globalCriteriaService.findGlobalCriteriaByEstimationId(1).subscribe((data) => {
         this.estimation.globalCriteria = data;
         this.stopLoading(dataTotal--);
       });
@@ -71,32 +71,32 @@ export class EstimationEditComponent implements OnInit {
       this.estimationEditService.getEstimation(+routeId).subscribe((estimation) => {
         this.estimation = estimation;
 
-        this.collaboratorService.findCollaborators(this.estimation.id).subscribe((data) => {
+        this.collaboratorService.findCollaboratorsByEstimationId(this.estimation.id).subscribe((data) => {
           this.collaborators = data;
           this.stopLoading(dataTotal--);
         });
 
-        this.elementWeightService.findElementWeightsByEstimation(this.estimation.id).subscribe((data) => {
+        this.elementWeightService.findElementWeightsByEstimationId(this.estimation.id).subscribe((data) => {
           this.estimation.elementsWeights = data;
           this.stopLoading(dataTotal--);
         });
 
-        this.globalCriteriaService.findGlobalCriteriaByEstimation(this.estimation.id).subscribe((criteria) => {
+        this.globalCriteriaService.findGlobalCriteriaByEstimationId(this.estimation.id).subscribe((criteria) => {
           this.estimation.globalCriteria = criteria;
           this.stopLoading(dataTotal--);
         });
 
-        this.taskArchitectureService.findTasksArchitectureByEstimation(this.estimation.id).subscribe((tasks) => {
+        this.taskArchitectureService.findTasksArchitectureByEstimationId(this.estimation.id).subscribe((tasks) => {
           this.estimation.architectureTasks = tasks;
           this.stopLoading(dataTotal--);
         });
 
-        this.taskDevelopmentService.findTasksDevelopmentByEstimation(this.estimation.id).subscribe((tasks) => {
+        this.taskDevelopmentService.findTasksDevelopmentByEstimationId(this.estimation.id).subscribe((tasks) => {
           this.estimation.developmentTasks = tasks;
           this.stopLoading(dataTotal--);
         });
 
-        this.considerationService.findConsiderationsByEstimation(this.estimation.id).subscribe((considerations) => {
+        this.considerationService.findConsiderationsByEstimationId(this.estimation.id).subscribe((considerations) => {
           this.estimation.considerations = considerations;
           this.stopLoading(dataTotal--);
         });
