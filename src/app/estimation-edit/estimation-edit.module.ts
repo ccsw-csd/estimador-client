@@ -18,6 +18,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService } from 'primeng/api';
+import { CommentDialogComponent } from './tasks/comment-dialog/comment-dialog.component';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 
 
@@ -27,7 +29,8 @@ import { ConfirmationService } from 'primeng/api';
     GeneralDataComponent,
     CriteriaComponent,
     TasksComponent,
-    SummaryComponent
+    SummaryComponent,
+    CommentDialogComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +45,8 @@ import { ConfirmationService } from 'primeng/api';
     DropdownModule,
     InputNumberModule,
     ToggleButtonModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    DynamicDialogModule
   ],
   providers: [ConfirmationService]
 })

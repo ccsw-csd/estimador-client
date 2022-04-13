@@ -1,1 +1,194 @@
-<p>tasks works!</p>
+<h2 class="tabview-title">Arquitectura</h2>
+<p-table [value]="estimation.architectureTasks">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Tarea</th>
+            <th class="centered small-cell">Horas</th>
+            <th class="icon-cell"></th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-task>
+        <tr>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="task.name">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{task.name}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td pEditableColumn class="centered">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-inputNumber [(ngModel)]="task.hours" mode="decimal" locale="de-DE" [minFractionDigits]="1" (ngModelChange)="calculateTotalArchitecture()"></p-inputNumber>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{task.hours | number:'':'es'}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td class="centered icon-cell">
+                <button *ngIf="task.comment == null || task.comment == undefined || task.comment ==''" pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-text p-button-plain icon" (click)="openCommentDialog(task)"></button>
+                <button *ngIf="task.comment != null && task.comment != undefined && task.comment !=''" pButton pRipple type="button" icon="pi pi-comments" class="p-button-rounded p-button-text p-button-plain icon comment-icon-fill" (click)="openCommentDialog(task)"></button>
+                <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteArchitectureTask(task)"></button>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <tr class="footer">
+            <td class="add-button-cell">
+                <p-button class="secondary" label="Crear tarea" (click)="addArchitectureTask()"></p-button>
+            </td>
+            <td class="totalCell centered">{{architectureTotal | number:'':'es'}}</td>
+            <td></td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+<h2 class="tabview-title">Desarrollo</h2>
+<p-table [value]="estimation.developmentTasks">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Tarea</th>
+            <th class="centered small-cell">Cantidad</th>
+            <th class="centered small-cell">Horas</th>
+            <th class="centered small-cell">Porcentaje de reutilización</th>
+            <th class="centered small-cell">Total horas</th>
+            <th class="icon-cell"></th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-task>
+        <tr>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="task.name">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{task.name}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td pEditableColumn class="centered">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-inputNumber [(ngModel)]="task.quantity" mode="decimal" locale="de-DE" [minFractionDigits]="1" (ngModelChange)="updateDevelopmentTask(task)"></p-inputNumber>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{task.quantity | number:'':'es'}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td pEditableColumn class="centered">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-inputNumber [(ngModel)]="task.hours" mode="decimal" locale="de-DE" [minFractionDigits]="1" (ngModelChange)="updateDevelopmentTask(task)"></p-inputNumber>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{task.hours | number:'':'es'}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td pEditableColumn class="centered">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-inputNumber [(ngModel)]="task.reusability" mode="decimal" locale="de-DE" [minFractionDigits]="1" (ngModelChange)="updateDevelopmentTask(task)"></p-inputNumber>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{task.reusability | number:'':'es'}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td class="read-only-cell centered">{{task.totalHours | number:'':'es'}}</td>
+                        
+            <td class="centered icon-cell">
+                <button *ngIf="task.comment == null || task.comment == undefined || task.comment ==''" pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-text p-button-plain icon" (click)="openCommentDialog(task)"></button>
+                <button *ngIf="task.comment != null && task.comment != undefined && task.comment !=''" pButton pRipple type="button" icon="pi pi-comments" class="p-button-rounded p-button-text p-button-plain icon comment-icon-fill" (click)="openCommentDialog(task)"></button>
+                <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteDevelopmentTask(task)"></button>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <tr class="footer">
+            <td class="add-button-cell">
+                <p-button class="secondary" label="Crear tarea" (click)="addDevelopmentTask()"></p-button>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="centered totalCell">{{developmentTotal | number:'':'es'}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<h2 class="tabview-title">Tareas globales</h2>
+<p-table [value]="globalTasks">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Tarea</th>
+            <th class="centered small-cell">Horas</th>
+            <th class="icon-cell"></th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-task>
+        <tr>
+            <td class="read-only-cell global-task">{{task.concept}}</td>
+            <td class="read-only-cell centered global-task">{{task.hours}}</td>
+            <td class="read-only-cell"></td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<h2 class="tabview-title">Consideraciones</h2>
+<p-table [value]="estimation.considerations">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Comentarios</th>
+            <th></th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-consideration>
+        <tr>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="consideration.comment">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{consideration.comment}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td class="centered icon-cell">
+                <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteConsideration(consideration)"></button>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <tr class="footer">
+            <td class="add-button-cell">
+                <p-button class="secondary" label="Crear comentario" (click)="addConsiderationComment()"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+

@@ -77,10 +77,10 @@ export class GeneralDataComponent implements OnInit {
 
   updateCustomerString() {
     this.estimation.project.customer = {id: null, name: this.customer};
-      this.globalCriteriaService.findGlobalCriteriaByEstimation(1).subscribe((criteria) => {
+      this.globalCriteriaService.findGlobalCriteriaByEstimationId(1).subscribe((criteria) => {
         this.estimation.globalCriteria = criteria;
       });
-      this.elementWeightService.findElementWeightsByEstimation(1).subscribe((weights) => {
+      this.elementWeightService.findElementWeightsByEstimationId(1).subscribe((weights) => {
         this.estimation.elementsWeights = weights;
       });
   }
@@ -89,7 +89,7 @@ export class GeneralDataComponent implements OnInit {
     this.estimation.project.customer = this.customer;
     this.globalCriteriaService.findGlobalCriteriaByEstimationCustomer(this.estimation.project.customer).subscribe((criteria) => {
       if(criteria == null || criteria == []) {
-        this.globalCriteriaService.findGlobalCriteriaByEstimation(1).subscribe((criteriaDefault) => {
+        this.globalCriteriaService.findGlobalCriteriaByEstimationId(1).subscribe((criteriaDefault) => {
           this.estimation.globalCriteria = criteriaDefault;
         });
       }
@@ -98,7 +98,7 @@ export class GeneralDataComponent implements OnInit {
       }
       this.elementWeightService.findElementWeightsByEstimationCustomer(this.estimation.project.customer).subscribe((weights) => {
         if(weights == null || weights == []) {
-          this.elementWeightService.findElementWeightsByEstimation(1).subscribe((weightsDefault) => {
+          this.elementWeightService.findElementWeightsByEstimationId(1).subscribe((weightsDefault) => {
             this.estimation.elementsWeights = weightsDefault;
           });
         }

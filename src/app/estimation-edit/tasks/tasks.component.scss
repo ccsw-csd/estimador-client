@@ -1,0 +1,35 @@
+@import "./src/assets/scss/master";
+
+.footer {
+    td {
+        background-color: white;
+        border: 0px;
+    }
+
+    .totalCell {
+        background-color: #d1d1d1;
+        font-weight: bold;
+    }
+  }
+
+.global-task {
+    height: 73px;
+}
+
+h2 {
+    margin-top: 50px;
+}
+
+h2:first-child {
+    margin-top: 20px;
+}
+
+::ng-deep {
+    .comment-icon-fill.p-button.p-button-text.p-button-plain, .comment-icon-fill.p-button.p-button-text.p-button-plain:hover {
+        color:$primary;
+    }
+
+    .p-datatable .p-datatable-tfoot > tr > td.add-button-cell {
+        padding-left: 0;
+    }
+}
