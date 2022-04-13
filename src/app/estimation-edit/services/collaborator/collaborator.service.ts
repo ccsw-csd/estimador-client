@@ -12,7 +12,7 @@ export class CollaboratorService {
 
   constructor(private http: HttpClient) { }
 
-  findCollaborators(estimation: Estimation): Observable<Collaborator[]> {
-    return this.http.post<Collaborator[]>(environment.server + '/collaborator', estimation);
+  findCollaborators(id: number): Observable<Collaborator[]> {
+    return this.http.get<Collaborator[]>(environment.server + '/collaborator/' + id);
   }
 }

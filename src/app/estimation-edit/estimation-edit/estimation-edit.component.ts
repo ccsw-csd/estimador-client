@@ -71,7 +71,7 @@ export class EstimationEditComponent implements OnInit {
       this.estimationEditService.getEstimation(+routeId).subscribe((estimation) => {
         this.estimation = estimation;
 
-        this.collaboratorService.findCollaborators(this.estimation).subscribe((data) => {
+        this.collaboratorService.findCollaborators(this.estimation.id).subscribe((data) => {
           this.collaborators = data;
           this.stopLoading(dataTotal--);
         });
