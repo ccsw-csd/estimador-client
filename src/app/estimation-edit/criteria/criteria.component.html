@@ -43,7 +43,7 @@
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="criterion.value" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="criterion.value" mode="decimal" locale="de-DE" [min]="0" [minFractionDigits]="1" [allowEmpty]="false" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{criterion.value | number:'':'es'}}
@@ -113,7 +113,7 @@
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="elementWeight.verySimple" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="elementWeight.verySimple" mode="decimal" locale="de-DE" [min]="0" [minFractionDigits]="1" [allowEmpty]="false" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{elementWeight.verySimple | number:'':'es'}}
@@ -124,7 +124,7 @@
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="elementWeight.simple" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="elementWeight.simple" mode="decimal" locale="de-DE" [min]="0" [minFractionDigits]="1" [allowEmpty]="false" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{elementWeight.simple | number:'':'es'}}
@@ -135,7 +135,7 @@
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="elementWeight.medium" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="elementWeight.medium" mode="decimal" locale="de-DE" [min]="0" [minFractionDigits]="1" [allowEmpty]="false" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{elementWeight.medium | number:'':'es'}}
@@ -146,7 +146,7 @@
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="elementWeight.complex" mode="decimal" locale="de-DE" [minFractionDigits]="1"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="elementWeight.complex" mode="decimal" locale="de-DE" [min]="0" [minFractionDigits]="1" [allowEmpty]="false" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{elementWeight.complex | number:'':'es'}}

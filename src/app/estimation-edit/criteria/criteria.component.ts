@@ -76,4 +76,7 @@ export class CriteriaComponent implements OnInit {
     });
   }
 
+  stopPropagation(event: Event) {
+    event.stopPropagation();
+  }
 }

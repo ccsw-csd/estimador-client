@@ -1,4 +1,4 @@
-export class TaskDevelopment {
+export class TaskDevelopmentHours {
     id: number;
     name: String;
     quantity: number;
