@@ -36,6 +36,7 @@ export class CriteriaComponent implements OnInit {
   addCriterion() {
     var criterion = new Criterion();
     criterion.block = new Block();
+    criterion.value = 0;
     this.estimation.globalCriteria.push(criterion);
   }
 
@@ -58,6 +59,10 @@ export class CriteriaComponent implements OnInit {
   addElementWeight() {
     var element = new ElementWeight();
     element.level = new EstimationLevel();
+    element.simple = 0;
+    element.verySimple = 0;
+    element.medium = 0;
+    element.complex = 0;
     this.estimation.elementsWeights.push(element);
   }
 
@@ -78,5 +83,12 @@ export class CriteriaComponent implements OnInit {
 
   stopPropagation(event: Event) {
     event.stopPropagation();
+  }
+
+  checkNull(value) {
+    if(value == null) {
+      return 0;
+    }
+    return value;
   }
 }

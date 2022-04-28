@@ -96,6 +96,9 @@ export class TasksComponent implements OnInit {
   calculateTotalArchitecture() {
     this.architectureTotal = 0;
     this.estimation.architectureTasks.forEach(task => {
+      if(task.hours == null) {
+        task.hours = 0;
+      }
       this.architectureTotal = this.architectureTotal + task.hours;
     });
   }
@@ -124,13 +127,33 @@ export class TasksComponent implements OnInit {
     if(task.quantity != null && task.quantity != undefined)
       quantity = task.quantity;
 
-    task.totalHours = quantity * task.hours * (1 - task.reusability);
+    task.totalHours = quantity * task.hours * (1 - task.reusability / 100);
   }
 
   getDevelopmentWeightsHours() {
 
     this.estimation.developmentTasksWeights.forEach(task => {
       task.elementName = task.workElementWeight.element;
+
+      if(task.quantityVerySimple == null) {
+        task.quantityVerySimple = 0;
+      }
+
+      if(task.quantitySimple == null) {
+        task.quantitySimple = 0;
+      }
+
+      if(task.quantityMedium == null) {
+        task.quantityMedium = 0;
+      }
+
+      if(task.quantityComplex == null) {
+        task.quantityComplex = 0;
+      }
+
+      if(task.reusability == null) {
+        task.reusability = 0;
+      }
     });
 
     var calculationInfo = new WeightCalculationRequest();
@@ -165,6 +188,15 @@ export class TasksComponent implements OnInit {
   }
 
   updateDevelopmentTask(task: TaskDevelopmentHours) {
+
+    if(task.hours == null) {
+      task.hours = 0;
+    }
+
+    if(task.reusability == null) {
+      task.reusability = 0;
+    }
+
     this.calculateTotalHoursDevelopmentTask(task);
     this.calculateTotalDevelopment();
   }
