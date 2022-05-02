@@ -103,7 +103,7 @@
             <td pEditableColumn class="centered">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.reusability" [min]="0" [max]="100" locale="de-DE" (ngModelChange)="updateDevelopmentTask(task)" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                        <p-inputNumber [(ngModel)]="task.reusability" [maxlength]="3" [min]="0" [max]="100" locale="de-DE" (ngModelChange)="updateDevelopmentTask(task)" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{task.reusability | number:'':'es'}}
@@ -222,7 +222,7 @@
             <td pEditableColumn class="centered">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.reusability" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
+                        <p-inputNumber [(ngModel)]="task.reusability" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{task.reusability | number:'':'es'}}
