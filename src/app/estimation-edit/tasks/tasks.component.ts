@@ -5,9 +5,12 @@ import { CriteriaCalculationResponse } from 'src/app/core/model/CriteriaCalculat
 import { CriteriaCalculationRequest } from 'src/app/core/model/CriteriaCalculationRequest';
 import { Estimation } from 'src/app/core/model/Estimation';
 import { TaskArchitecture } from 'src/app/core/model/TaskArchitecture';
-import { TaskDevelopment } from 'src/app/core/model/TaskDevelopment';
+import { TaskDevelopmentHours } from 'src/app/core/model/TaskDevelopmentHours';
 import { CriteriaCalculationService } from '../services/criteriaCalculation/criteria-calculation.service';
 import { CommentDialogComponent } from './comment-dialog/comment-dialog.component';
+import { TaskDevelopmentWeights } from 'src/app/core/model/TaskDevelopmentWeights';
+import { WeightCalculationRequest } from 'src/app/core/model/WeightCalculationRequest';
+import { WeightCalculatorService } from '../services/weightCalculator/weight-calculator.service';
 
 @Component({
   selector: 'app-tasks',
@@ -19,19 +22,22 @@ export class TasksComponent implements OnInit {
   @Input() estimation: Estimation;
   architectureTotal: number = 0;
   developmentTotal: number = 0;
+  developmentWeightTotal: number = 0;
   globalTasks: CriteriaCalculationResponse[];
 
   constructor(public criteriaCalculationService: CriteriaCalculationService,
+    public weightCalculatorService: WeightCalculatorService,
     public dialogService: DialogService,) { }
 
   ngOnInit(): void {
-    
-    this.estimation.developmentTasks.forEach(task => {
+
+    this.estimation.developmentTasksHours.forEach(task => {
       this.calculateTotalHoursDevelopmentTask(task);
     });
 
     this.calculateTotalArchitecture();
     this.calculateTotalDevelopment();
+    this.calculateTotalDevelopmentWeight();
   }
 
   addArchitectureTask() {
@@ -41,11 +47,23 @@ export class TasksComponent implements OnInit {
   }
 
   addDevelopmentTask() {
-    var task = new TaskDevelopment();
+    var task = new TaskDevelopmentHours();
     task.hours = 0;
     task.reusability = 0;
     task.totalHours = 0;
-    this.estimation.developmentTasks.push(task);
+    this.estimation.developmentTasksHours.push(task);
+  }
+
+  addDevelopmentWeightTask() {
+    var task = new TaskDevelopmentWeights();
+    task.hours = 0;
+    task.reusability = 0;
+    task.quantityVerySimple = 0;
+    task.quantitySimple = 0;
+    task.quantityMedium = 0;
+    task.quantityComplex = 0;
+    task.workElementWeight = this.estimation.elementsWeights[0];
+    this.estimation.developmentTasksWeights.push(task);
   }
 
   addConsiderationComment() {
@@ -58,10 +76,16 @@ export class TasksComponent implements OnInit {
     this.calculateTotalArchitecture();
   }
 
-  deleteDevelopmentTask(task: TaskDevelopment) {
-    const index = this.estimation.developmentTasks.indexOf(task, 0);
-    this.estimation.developmentTasks.splice(index, 1);
+  deleteDevelopmentTask(task: TaskDevelopmentHours) {
+    const index = this.estimation.developmentTasksHours.indexOf(task, 0);
+    this.estimation.developmentTasksHours.splice(index, 1);
     this.calculateTotalDevelopment();
+  }
+
+  deleteDevelopmentWeightTask(task: TaskDevelopmentWeights) {
+    const index = this.estimation.developmentTasksWeights.indexOf(task, 0);
+    this.estimation.developmentTasksWeights.splice(index, 1);
+    this.calculateTotalDevelopmentWeight();
   }
 
   deleteConsideration(consideration: Consideration) {
@@ -72,39 +96,107 @@ export class TasksComponent implements OnInit {
   calculateTotalArchitecture() {
     this.architectureTotal = 0;
     this.estimation.architectureTasks.forEach(task => {
+      if(task.hours == null) {
+        task.hours = 0;
+      }
       this.architectureTotal = this.architectureTotal + task.hours;
     });
   }
 
   calculateTotalDevelopment() {
     this.developmentTotal = 0;
-    this.estimation.developmentTasks.forEach(task => {
+    this.estimation.developmentTasksHours.forEach(task => {
       this.developmentTotal = this.developmentTotal + task.totalHours;
     });
 
     this.getGlobalTasks();
   }
 
-  calculateTotalHoursDevelopmentTask(task: TaskDevelopment) {
+  calculateTotalDevelopmentWeight() {
+    this.developmentWeightTotal = 0;
+    this.estimation.developmentTasksWeights.forEach(task => {
+      this.developmentWeightTotal = this.developmentWeightTotal + task.hours;
+    });
+
+    this.getGlobalTasks();
+  }
+
+  calculateTotalHoursDevelopmentTask(task: TaskDevelopmentHours) {
     var quantity = 1;
 
     if(task.quantity != null && task.quantity != undefined)
       quantity = task.quantity;
 
-    task.totalHours = quantity * task.hours * (1 - task.reusability);
+    task.totalHours = quantity * task.hours * (1 - task.reusability / 100);
+  }
+
+  getDevelopmentWeightsHours() {
+
+    this.estimation.developmentTasksWeights.forEach(task => {
+      task.elementName = task.workElementWeight.element;
+
+      if(task.quantityVerySimple == null) {
+        task.quantityVerySimple = 0;
+      }
+
+      if(task.quantitySimple == null) {
+        task.quantitySimple = 0;
+      }
+
+      if(task.quantityMedium == null) {
+        task.quantityMedium = 0;
+      }
+
+      if(task.quantityComplex == null) {
+        task.quantityComplex = 0;
+      }
+
+      if(task.reusability == null) {
+        task.reusability = 0;
+      }
+    });
+
+    var calculationInfo = new WeightCalculationRequest();
+    calculationInfo.tasks = this.estimation.developmentTasksWeights;
+    calculationInfo.weights = this.estimation.elementsWeights;
+
+    if(calculationInfo.tasks.length > 0 && calculationInfo.weights.length > 0) {
+      this.weightCalculatorService.calculateWeights(calculationInfo).subscribe((data) => {
+        for(var i = 0; i < data.length; i++) {
+          this.estimation.developmentTasksWeights[i].hours = data[i].totalHours;
+        }
+  
+        this.calculateTotalDevelopmentWeight();
+      });
+    }
   }
 
   getGlobalTasks() {
     var calculationInfo = new CriteriaCalculationRequest();
     calculationInfo.criteriaList = this.estimation.globalCriteria;
-    calculationInfo.hours = this.developmentTotal;
+
+    if(this.estimation.showhours) {
+      calculationInfo.hours = this.developmentTotal;
+    }
+    else {
+      calculationInfo.hours = this.developmentWeightTotal;
+    }
 
     this.criteriaCalculationService.calculateHoursWithCriteria(calculationInfo).subscribe((data) => {
       this.globalTasks = data;
     });
   }
 
-  updateDevelopmentTask(task: TaskDevelopment) {
+  updateDevelopmentTask(task: TaskDevelopmentHours) {
+
+    if(task.hours == null) {
+      task.hours = 0;
+    }
+
+    if(task.reusability == null) {
+      task.reusability = 0;
+    }
+
     this.calculateTotalHoursDevelopmentTask(task);
     this.calculateTotalDevelopment();
   }
@@ -123,4 +215,7 @@ export class TasksComponent implements OnInit {
     });
   }
 
+  stopPropagation(event: Event) {
+    event.stopPropagation();
+  }
 }

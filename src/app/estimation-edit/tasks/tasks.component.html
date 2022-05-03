@@ -13,7 +13,7 @@
             <td pEditableColumn>
                 <p-cellEditor>
                     <ng-template pTemplate="input">
-                        <input pInputText type="text" [(ngModel)]="task.name">
+                        <input pInputText type="text" [(ngModel)]="task.name" (keydown.ArrowRight)="stopPropagation($event)">
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{task.name}}
@@ -24,7 +24,7 @@
             <td pEditableColumn class="centered">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.hours" mode="decimal" locale="de-DE" [minFractionDigits]="1" (ngModelChange)="calculateTotalArchitecture()"></p-inputNumber>
+                        <p-inputNumber [(ngModel)]="task.hours" locale="de-DE" [minFractionDigits]="0" [maxFractionDigits]="2" (ngModelChange)="calculateTotalArchitecture()" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{task.hours | number:'':'es'}}
@@ -53,13 +53,13 @@
 
 
 <h2 class="tabview-title">Desarrollo</h2>
-<p-table [value]="estimation.developmentTasks">
+<p-table *ngIf="estimation.showhours" [value]="estimation.developmentTasksHours">
     <ng-template pTemplate="header">
         <tr>
             <th>Tarea</th>
             <th class="centered small-cell">Cantidad</th>
             <th class="centered small-cell">Horas</th>
-            <th class="centered small-cell">Porcentaje de reutilización</th>
+            <th class="centered small-cell">% Reutilización</th>
             <th class="centered small-cell">Total horas</th>
             <th class="icon-cell"></th>
         </tr>
@@ -81,7 +81,7 @@
             <td pEditableColumn class="centered">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.quantity" mode="decimal" locale="de-DE" [minFractionDigits]="1" (ngModelChange)="updateDevelopmentTask(task)"></p-inputNumber>
+                        <p-inputNumber [(ngModel)]="task.quantity" locale="de-DE" (ngModelChange)="updateDevelopmentTask(task)" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{task.quantity | number:'':'es'}}
@@ -92,7 +92,7 @@
             <td pEditableColumn class="centered">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.hours" mode="decimal" locale="de-DE" [minFractionDigits]="1" (ngModelChange)="updateDevelopmentTask(task)"></p-inputNumber>
+                        <p-inputNumber [(ngModel)]="task.hours" locale="de-DE" [minFractionDigits]="0" [maxFractionDigits]="2" (ngModelChange)="updateDevelopmentTask(task)" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{task.hours | number:'':'es'}}
@@ -103,7 +103,7 @@
             <td pEditableColumn class="centered">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.reusability" mode="decimal" locale="de-DE" [minFractionDigits]="1" (ngModelChange)="updateDevelopmentTask(task)"></p-inputNumber>
+                        <p-inputNumber [(ngModel)]="task.reusability" [maxlength]="3" [min]="0" [max]="100" locale="de-DE" (ngModelChange)="updateDevelopmentTask(task)" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{task.reusability | number:'':'es'}}
@@ -134,6 +134,132 @@
     </ng-template>
 </p-table>
 
+<p-table *ngIf="!estimation.showhours" [value]="estimation.developmentTasksWeights">
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Tarea</th>
+            <th class="centered very-small-cell">Elemento</th>
+            <th class="centered very-small-cell">Muy fácil</th>
+            <th class="centered very-small-cell">Fácil</th>
+            <th class="centered very-small-cell">Medio</th>
+            <th class="centered very-small-cell">Complejo</th>
+            <th class="centered very-small-cell">% Reutilización</th>
+            <th class="centered small-cell">Horas</th>
+            <th class="icon-cell"></th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-task>
+
+        <tr>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="task.name" (keydown.ArrowRight)="stopPropagation($event)">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{task.name}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td pEditableColumn class="centered">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-dropdown [options]="estimation.elementsWeights" [(ngModel)]="task.workElementWeight" optionLabel="element" [style]="{'width':'100%'}" (ngModelChange)="getDevelopmentWeightsHours()"></p-dropdown>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{task.workElementWeight.element}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td pEditableColumn class="centered">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-inputNumber [(ngModel)]="task.quantityVerySimple" locale="de-DE" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{task.quantityVerySimple | number:'':'es'}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td pEditableColumn class="centered">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-inputNumber [(ngModel)]="task.quantitySimple" locale="de-DE" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{task.quantitySimple | number:'':'es'}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td pEditableColumn class="centered">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-inputNumber [(ngModel)]="task.quantityMedium" locale="de-DE" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{task.quantityMedium | number:'':'es'}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td pEditableColumn class="centered">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-inputNumber [(ngModel)]="task.quantityComplex" locale="de-DE" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{task.quantityComplex | number:'':'es'}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td pEditableColumn class="centered">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-inputNumber [(ngModel)]="task.reusability" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{task.reusability | number:'':'es'}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td class="centered read-only-cell">{{task.hours | number:'':'es'}}</td>
+
+            <td class="centered icon-cell">
+                <button *ngIf="task.comment == null || task.comment == undefined || task.comment ==''" pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-text p-button-plain icon" (click)="openCommentDialog(task)"></button>
+                <button *ngIf="task.comment != null && task.comment != undefined && task.comment !=''" pButton pRipple type="button" icon="pi pi-comments" class="p-button-rounded p-button-text p-button-plain icon comment-icon-fill" (click)="openCommentDialog(task)"></button>
+                <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteDevelopmentWeightTask(task)" ></button>
+            </td>
+
+        </tr>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <tr class="footer">
+            <td class="add-button-cell">
+                <p-button class="secondary" label="Crear tarea" (click)="addDevelopmentWeightTask()"></p-button>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="centered totalCell">{{developmentWeightTotal | number:'':'es'}}</td>
+        </tr>
+    </ng-template>
+
+</p-table>
+
+
 <h2 class="tabview-title">Tareas globales</h2>
 <p-table [value]="globalTasks">
     <ng-template pTemplate="header">
@@ -147,7 +273,7 @@
     <ng-template pTemplate="body" let-task>
         <tr>
             <td class="read-only-cell global-task">{{task.concept}}</td>
-            <td class="read-only-cell centered global-task">{{task.hours}}</td>
+            <td class="read-only-cell centered global-task">{{task.hours | number: '1.0-2'}}</td>
             <td class="read-only-cell"></td>
         </tr>
     </ng-template>

@@ -4,7 +4,8 @@ import { Criterion } from "./Criterion";
 import { ElementWeight } from "./ElementWeight";
 import { Project } from "./Project";
 import { TaskArchitecture } from "./TaskArchitecture";
-import { TaskDevelopment } from "./TaskDevelopment";
+import { TaskDevelopmentHours } from "./TaskDevelopmentHours";
+import { TaskDevelopmentWeights } from "./TaskDevelopmentWeights";
 
 export class Estimation{
     id: number;
@@ -20,6 +21,7 @@ export class Estimation{
     globalCriteria: Criterion[];
     elementsWeights: ElementWeight[];
     architectureTasks: TaskArchitecture[];
-    developmentTasks: TaskDevelopment[];
+    developmentTasksHours: TaskDevelopmentHours[];
+    developmentTasksWeights: TaskDevelopmentWeights[];
     considerations: Consideration[];
 }

@@ -10,7 +10,8 @@ import { ElementWeightService } from '../services/elementWeight/element-weight.s
 import { EstimationEditService } from '../services/estimation-edit.service';
 import { GlobalCriteriaService } from '../services/globalCriteria/global-criteria.service';
 import { TaskArchitectureService } from '../services/taskArchitecture/task-architecture.service';
-import { TaskDevelopmentService } from '../services/taskDevelopment/task-development.service';
+import { TaskDevelopmentHoursService } from '../services/taskDevelopmentHours/task-development-hours.service';
+import { TaskDevelopmentWeightsService } from '../services/taskDevelopmentWeights/task-development-weights.service';
 import { UserService } from '../services/user/user.service';
 import { TasksComponent } from '../tasks/tasks.component';
 
@@ -33,7 +34,8 @@ export class EstimationEditComponent implements OnInit {
     private elementWeightService: ElementWeightService,
     private globalCriteriaService: GlobalCriteriaService,
     private taskArchitectureService: TaskArchitectureService,
-    private taskDevelopmentService: TaskDevelopmentService,
+    private taskDevelopmentService: TaskDevelopmentHoursService,
+    private taskDevelopmentWeightsService: TaskDevelopmentWeightsService,
     private considerationService: ConsiderationService,
     private authService: AuthService,
     private router: Router) { }
@@ -48,7 +50,8 @@ export class EstimationEditComponent implements OnInit {
       this.estimation.showhours = false;
       this.estimation.architectureTasks = [];
       this.estimation.considerations = [];
-      this.estimation.developmentTasks = [];
+      this.estimation.developmentTasksHours = [];
+      this.estimation.developmentTasksWeights = [];
 
       this.elementWeightService.findElementWeightsByEstimationId(1).subscribe((data) => {
         this.estimation.elementsWeights = data;
@@ -66,7 +69,7 @@ export class EstimationEditComponent implements OnInit {
       });
     }
     else {
-      var dataTotal = 5;
+      var dataTotal = 6;
       
       this.estimationEditService.getEstimation(+routeId).subscribe((estimation) => {
         this.estimation = estimation;
@@ -91,8 +94,13 @@ export class EstimationEditComponent implements OnInit {
           this.stopLoading(dataTotal--);
         });
 
-        this.taskDevelopmentService.findTasksDevelopmentByEstimationId(this.estimation.id).subscribe((tasks) => {
-          this.estimation.developmentTasks = tasks;
+        this.taskDevelopmentService.findTasksDevelopmentHoursByEstimationId(this.estimation.id).subscribe((tasks) => {
+          this.estimation.developmentTasksHours = tasks;
+          this.stopLoading(dataTotal--);
+        });
+
+        this.taskDevelopmentWeightsService.findTasksDevelopmentWeightsByEstimationId(this.estimation.id).subscribe((tasks) => {
+          this.estimation.developmentTasksWeights = tasks;
           this.stopLoading(dataTotal--);
         });
 
@@ -111,7 +119,12 @@ export class EstimationEditComponent implements OnInit {
 
   onChange(event) {
     if(event.index == 2) {
-      this.tasks.getGlobalTasks();
+      if(!this.estimation.showhours) {
+        this.tasks.getDevelopmentWeightsHours();
+      }
+      else {
+        this.tasks.getGlobalTasks();
+      }
     }
   }
 
