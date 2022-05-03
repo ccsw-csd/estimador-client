@@ -2,14 +2,19 @@
 <p-table [value]="estimation.architectureTasks">
     <ng-template pTemplate="header">
         <tr>
+            <th class="reorder-cell"></th>
             <th>Tarea</th>
             <th class="centered small-cell">Horas</th>
             <th class="icon-cell"></th>
         </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-task>
-        <tr>
+    <ng-template pTemplate="body" let-task let-index="rowIndex">
+        <tr [pReorderableRow]="index">
+            <td class="reorder-cell">
+                <span class="pi pi-bars" pReorderableRowHandle></span>
+            </td>
+            
             <td pEditableColumn>
                 <p-cellEditor>
                     <ng-template pTemplate="input">
@@ -42,7 +47,7 @@
 
     <ng-template pTemplate="footer">
         <tr class="footer">
-            <td class="add-button-cell">
+            <td class="add-button-cell" colspan="2">
                 <p-button class="secondary" label="Crear tarea" (click)="addArchitectureTask()"></p-button>
             </td>
             <td class="totalCell centered">{{architectureTotal | number:'':'es'}}</td>
@@ -56,6 +61,7 @@
 <p-table *ngIf="estimation.showhours" [value]="estimation.developmentTasksHours">
     <ng-template pTemplate="header">
         <tr>
+            <th class="reorder-cell"></th>
             <th>Tarea</th>
             <th class="centered small-cell">Cantidad</th>
             <th class="centered small-cell">Horas</th>
@@ -65,8 +71,12 @@
         </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-task>
-        <tr>
+    <ng-template pTemplate="body" let-task let-index="rowIndex">
+        <tr [pReorderableRow]="index">
+            <td class="reorder-cell">
+                <span class="pi pi-bars" pReorderableRowHandle></span>
+            </td>
+
             <td pEditableColumn>
                 <p-cellEditor>
                     <ng-template pTemplate="input">
@@ -123,12 +133,10 @@
 
     <ng-template pTemplate="footer">
         <tr class="footer">
-            <td class="add-button-cell">
+            <td class="add-button-cell" colspan="2">
                 <p-button class="secondary" label="Crear tarea" (click)="addDevelopmentTask()"></p-button>
             </td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="3"></td>
             <td class="centered totalCell">{{developmentTotal | number:'':'es'}}</td>
         </tr>
     </ng-template>
@@ -138,6 +146,7 @@
 
     <ng-template pTemplate="header">
         <tr>
+            <th class="reorder-cell"></th>
             <th>Tarea</th>
             <th class="centered very-small-cell">Elemento</th>
             <th class="centered very-small-cell">Muy fácil</th>
@@ -150,9 +159,13 @@
         </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-task>
+    <ng-template pTemplate="body" let-task let-index="rowIndex">
 
-        <tr>
+        <tr [pReorderableRow]="index">
+            <td class="reorder-cell">
+                <span class="pi pi-bars" pReorderableRowHandle></span>
+            </td>
+            
             <td pEditableColumn>
                 <p-cellEditor>
                     <ng-template pTemplate="input">
@@ -244,15 +257,10 @@
 
     <ng-template pTemplate="footer">
         <tr class="footer">
-            <td class="add-button-cell">
+            <td class="add-button-cell" colspan="2">
                 <p-button class="secondary" label="Crear tarea" (click)="addDevelopmentWeightTask()"></p-button>
             </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="6"></td>
             <td class="centered totalCell">{{developmentWeightTotal | number:'':'es'}}</td>
         </tr>
     </ng-template>
@@ -283,13 +291,18 @@
 <p-table [value]="estimation.considerations">
     <ng-template pTemplate="header">
         <tr>
+            <th class="reorder-cell"></th>
             <th>Comentarios</th>
             <th></th>
         </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-consideration>
-        <tr>
+    <ng-template pTemplate="body" let-consideration let-index="rowIndex">
+        <tr [pReorderableRow]="index">
+            <td class="reorder-cell">
+                <span class="pi pi-bars" pReorderableRowHandle></span>
+            </td>
+
             <td pEditableColumn>
                 <p-cellEditor>
                     <ng-template pTemplate="input">
@@ -309,7 +322,7 @@
 
     <ng-template pTemplate="footer">
         <tr class="footer">
-            <td class="add-button-cell">
+            <td class="add-button-cell" colspan="2">
                 <p-button class="secondary" label="Crear comentario" (click)="addConsiderationComment()"></p-button>
             </td>
         </tr>
