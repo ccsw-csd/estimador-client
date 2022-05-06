@@ -43,7 +43,7 @@ export class EstimationVersionsComponent implements OnInit {
   constructor(
     private estimationService: EstimationService,
     private customerService: CustomerService,
-    private route: ActivatedRoute,
+    //private route: ActivatedRoute,
     private router: Router,
     public dialogRef: DynamicDialogRef,
     public config: DynamicDialogConfig
@@ -71,13 +71,13 @@ export class EstimationVersionsComponent implements OnInit {
             direction: this.direction,
         }]
     }
-    
+    /*
     if (event != null) {
         pageable.pageSize = event.rows;
         pageable.pageNumber = event.first/event.rows;
         if(event.sortField != null)
           pageable.sort = [{property: event.sortField, direction: event.sortOrder == 1? "asc": "desc"}];
-    }
+    }*/
 
     this.estimationService.getEstimationVersions(pageable, this.filterProjectId).subscribe(data => {
         this.estimations = data.content;
@@ -88,6 +88,7 @@ export class EstimationVersionsComponent implements OnInit {
     });
   }
 
+  /*
   onCleanFilter(): void{
     this.filterCustomer = null;
     this.filterProject = null;
@@ -95,8 +96,9 @@ export class EstimationVersionsComponent implements OnInit {
     this.filterEndDate = null;
 
     this.onSearch();
-  }
+  }*/
 
+  /*
   onSearch(): void{
     this.customerId = this.filterCustomer != null ? this.filterCustomer.id: null;
     this.projectName = this.filterProject;
@@ -104,7 +106,7 @@ export class EstimationVersionsComponent implements OnInit {
     this.endDate = this.filterEndDate;
 
     this.loadPage();
-  }
+  }*/
 
   onClose() {
     this.dialogRef.close(false);
@@ -114,4 +116,3 @@ export class EstimationVersionsComponent implements OnInit {
     this.router.navigate(['/estimation-edit/' + id]);
   }  
 }
-

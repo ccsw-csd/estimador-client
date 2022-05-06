@@ -108,7 +108,7 @@ export class EstimationListComponent implements OnInit {
   }
 
   openVersionDialog(projectId: number) {
-    const ref = this.dialogService.open(EstimationVersionsComponent, {width: '1000px', height: '900px', header:"Listado versiones", closable:true, data: {
+    const ref = this.dialogService.open(EstimationVersionsComponent, {width: '1100px', height: '1000px', header:"Listado versiones", closable:true, data: {
       projectId: projectId}
     });
 
