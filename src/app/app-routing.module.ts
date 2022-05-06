@@ -5,6 +5,7 @@ import { AuthGuard } from './core/services/auth.guard';
 import { UserResolverService } from './core/services/user-resolver.service';
 import { EstimationEditComponent } from './estimation-edit/estimation-edit/estimation-edit.component';
 import { EstimationListComponent } from './estimation/estimation-list/estimation-list.component';
+import { EstimationVersionsComponent } from './estimation/estimation-versions/estimation-versions.component';
 import { LoginComponent } from './login/login/login.component';
 
 const routes: Routes = [
@@ -17,11 +18,14 @@ const routes: Routes = [
     children: [
       { path: 'main', component: EstimationListComponent,},
       { path: 'estimation-edit/:id', component: EstimationEditComponent,},
+      { path: 'estimation-versions', component: EstimationVersionsComponent,},
       { path: 'estimation-edit', component: EstimationEditComponent,},
       { path: '**', redirectTo: 'main', pathMatch: 'full' },
     ]
   },  
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'estimation-versions', component: EstimationVersionsComponent,},
+  { path: '**', redirectTo: 'estimation-versions', pathMatch: 'full' },
 ];
 
 @NgModule({

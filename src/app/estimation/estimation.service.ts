@@ -48,4 +48,8 @@ export class EstimationService {
   getEstimations(pageable: Pageable, customerId? :number, projectName?: string, startDate?: Date, endDate?: Date): Observable<EstimationPage>{
     return this.http.post<EstimationPage>(this.composeFindUrl(customerId, projectName, startDate, endDate),{pageable:pageable, customerId, projectName, startDate, endDate});
   }
+
+  getEstimationVersions(pageable: Pageable, projectId?: number): Observable<EstimationPage>{
+    return this.http.post<EstimationPage>(this.url + '/version', {pageable:pageable, projectId: projectId});
+  }
 }

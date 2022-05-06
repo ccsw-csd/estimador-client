@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { EstimationService } from '../estimation.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Estimation } from 'src/app/core/model/Estimation';
-import { Pageable } from 'src/app/core/model/Pageable';
+
 import { Customer } from 'src/app/core/model/Customer';
 import { CustomerService } from '../customer.service';
 import { LazyLoadEvent } from 'primeng/api';
-import { Router } from '@angular/router';
+import { Pageable } from 'src/app/core/model/Pageable';
+
+import { EstimationService } from '../estimation.service';
 
 @Component({
-  selector: 'app-estimation-list',
-  templateUrl: './estimation-list.component.html',
-  styleUrls: ['./estimation-list.component.scss']
+  selector: 'app-estimation-versions',
+  templateUrl: './estimation-versions.component.html',
+  styleUrls: ['./estimation-versions.component.scss']
 })
-export class EstimationListComponent implements OnInit {
+export class EstimationVersionsComponent implements OnInit {
 
   pageNumber: number = 0;
   pageSize: number = 25;
@@ -34,14 +36,20 @@ export class EstimationListComponent implements OnInit {
   projectName: string;
   startDate: Date;
   endDate: Date;
+  projectId: number;
 
   constructor(
+    //public dialogRef: MatDialogRef<EstimationVersionsComponent>,
+    //@Inject(MAT_DIALOG_DATA) public data: any,
     private estimationService: EstimationService,
     private customerService: CustomerService,
+    private route: ActivatedRoute,
     private router: Router
   ) { }
 
+
   ngOnInit(): void {
+    //this.customerId = this.route.snapshot.paramMap.get('id');
     this.customerService.getCustomers().subscribe(
       customers => this.customers = customers
     );
@@ -69,7 +77,7 @@ export class EstimationListComponent implements OnInit {
           pageable.sort = [{property: event.sortField, direction: event.sortOrder == 1? "asc": "desc"}];
     }
 
-    this.estimationService.getEstimations(pageable, this.customerId, this.projectName, this.startDate, this.endDate).subscribe(data => {
+    this.estimationService.getEstimationVersions(pageable).subscribe(data => {
         this.estimations = data.content;
         this.pageNumber = data.pageable.pageNumber;
         this.pageSize = data.pageable.pageSize;
@@ -96,26 +104,13 @@ export class EstimationListComponent implements OnInit {
     this.loadPage();
   }
 
-  createEstimation() {
-    this.router.navigate(['/estimation-edit']);
+  onClose() {
+    this.router.navigate(['/main']);
+
   }
 
   editEstimation(id: number) {
     this.router.navigate(['/estimation-edit/' + id]);
-  }
-
-  versionsEstimation(id: number) {
-    this.router.navigate(['/estimation-versions']);
-  }
-
-
-  /*openDialog() {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = true;
-
-    const dialogRef = this.dialog.open(EstimationVersionsComponent, dialogConfig);
-  }*/
-  
+  }  
 }
+

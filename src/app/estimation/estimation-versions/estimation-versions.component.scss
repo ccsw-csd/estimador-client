@@ -1,0 +1,14 @@
+@import "./src/assets/scss/master";
+
+::ng-deep #versions-component {
+    position: relative;
+    .buttons {
+      margin-left: 20px;
+      width: 320px;
+      display:flex;
+      justify-content: space-between;
+        .secondary {
+          margin-right: 20px;
+    }
+    }
+}
