@@ -17,15 +17,12 @@ const routes: Routes = [
     resolve: {user: UserResolverService},
     children: [
       { path: 'main', component: EstimationListComponent,},
-      { path: 'estimation-edit/:id', component: EstimationEditComponent,},
-      { path: 'estimation-versions', component: EstimationVersionsComponent,},
-      { path: 'estimation-edit', component: EstimationEditComponent,},
+      { path: 'estimation-edit/:id', component: EstimationEditComponent},
+      { path: 'estimation-edit', component: EstimationEditComponent},
       { path: '**', redirectTo: 'main', pathMatch: 'full' },
     ]
   },  
-  { path: '**', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'estimation-versions', component: EstimationVersionsComponent,},
-  { path: '**', redirectTo: 'estimation-versions', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({

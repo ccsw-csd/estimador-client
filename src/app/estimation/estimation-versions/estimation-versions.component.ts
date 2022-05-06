@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Estimation } from 'src/app/core/model/Estimation';
 
@@ -29,6 +30,7 @@ export class EstimationVersionsComponent implements OnInit {
   customers: Customer[];
   filterCustomer: Customer;
   filterProject: string;
+  filterProjectId: number;
   filterStartDate: Date;
   filterEndDate: Date;
 
@@ -39,21 +41,21 @@ export class EstimationVersionsComponent implements OnInit {
   projectId: number;
 
   constructor(
-    //public dialogRef: MatDialogRef<EstimationVersionsComponent>,
-    //@Inject(MAT_DIALOG_DATA) public data: any,
     private estimationService: EstimationService,
     private customerService: CustomerService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public dialogRef: DynamicDialogRef,
+    public config: DynamicDialogConfig
   ) { }
 
 
   ngOnInit(): void {
-    //this.customerId = this.route.snapshot.paramMap.get('id');
     this.customerService.getCustomers().subscribe(
       customers => this.customers = customers
     );
 
+    this.filterProjectId = this.config.data.projectId;
     this.loading = true;
   }
 
@@ -77,7 +79,7 @@ export class EstimationVersionsComponent implements OnInit {
           pageable.sort = [{property: event.sortField, direction: event.sortOrder == 1? "asc": "desc"}];
     }
 
-    this.estimationService.getEstimationVersions(pageable).subscribe(data => {
+    this.estimationService.getEstimationVersions(pageable, this.filterProjectId).subscribe(data => {
         this.estimations = data.content;
         this.pageNumber = data.pageable.pageNumber;
         this.pageSize = data.pageable.pageSize;
@@ -105,8 +107,7 @@ export class EstimationVersionsComponent implements OnInit {
   }
 
   onClose() {
-    this.router.navigate(['/main']);
-
+    this.dialogRef.close(false);
   }
 
   editEstimation(id: number) {

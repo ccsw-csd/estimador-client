@@ -1,7 +1,4 @@
 <div class="versions-component">
-    <div class="title">
-        <h1> Última Versión </h1>
-    </div>
 
     <p-table #table [value]="estimations" [lazy]="true" (onLazyLoad)="loadPage($event)" [totalRecords]="totalElements" [loading]="loading" 
     [scrollable]="true" responsiveLayout="scroll" scrollHeight="calc(100vh - 330px)" [paginator]="true" [rows]="25" [showCurrentPageReport]="true" 
