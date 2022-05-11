@@ -1,16 +1,13 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Estimation } from 'src/app/core/model/Estimation';
 
 import { Customer } from 'src/app/core/model/Customer';
 import { CustomerService } from '../customer.service';
 import { LazyLoadEvent } from 'primeng/api';
-import { Pageable } from 'src/app/core/model/Pageable';
 
 import { EstimationService } from '../estimation.service';
-import { NumberFilter } from 'ag-grid-community';
-import { find } from 'rxjs';
 
 @Component({
   selector: 'app-estimation-versions',
@@ -19,17 +16,11 @@ import { find } from 'rxjs';
 })
 export class EstimationVersionsComponent implements OnInit {
 
-  totalElements: number = 0;
-
-  property: string= 'id';
-  direction: string= 'asc';
-
   estimations: Estimation[];
   loading: boolean;
   
   customers: Customer[];
-  filterProjectId: number;
-  created: number;
+
   projectId: number;
 
   constructor(
@@ -46,43 +37,26 @@ export class EstimationVersionsComponent implements OnInit {
       customers => this.customers = customers
     );
 
-    this.filterProjectId = this.config.data.projectId;
-    this.created = this.config.data.created;
+    this.projectId = this.config.data.projectId;
     this.loading = true;
   }
 
   
-  loadPage(event?: LazyLoadEvent) {
-
-    this.loading = true;
-    
-    let pageable : Pageable =  {
-        sort: [{
-            property: this.property,
-            direction: this.direction,
-        }]
-    }
-    //getEstimationVersions(pageable, this.filterProjectId)
-    /*this.estimationService.getEstimationVersions(pageable, this.created).subscribe(data => {
+  load(event?: LazyLoadEvent) {
+    this.estimationService.getEstimationVersions(this.projectId).subscribe(estimations => {
+        this.estimations = estimations;
         this.loading = false;
-        this.totalElements = data.totalElements;
-    });*/
-    /*this.estimationService.getEstimationVersions().subscribe(data => {
-      this.loading = false;
-      this.totalElements = data.totalElements;
-  });*/
-  /*
-    this.estimationService.getEstimationVersions().subscribe(data => {
-      this.loading = false;
-      this.totalElements = data.totalElements;
-});*/
-    this.estimationService.getEstimationVersions(this.filterProjectId) {
-      return this.loading.created<any>(`path/to/offers/${created}`);
-    }
+      }
+    );
   }
 
   editEstimation(id: number) {
     this.dialogRef.close(false);
     this.router.navigate(['/estimation-edit/' + id]);
-  }  
+  }
+  
+  copyEstimation(id: number) {
+    this.dialogRef.close(false);
+    //TODO
+  }
 }
