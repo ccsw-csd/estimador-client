@@ -2,13 +2,17 @@
 
 ::ng-deep #versions-component {
     position: relative;
-    .buttons {
-      margin-left: 20px;
-      width: 320px;
-      display:flex;
-      justify-content: space-between;
-        .secondary {
-          margin-right: 20px;
-    }
-    }
+    
+}
+#button {
+  //text-align: right;
+  //display:flex;
+  //justify-content: space-between;
+  //justify-content: right;
+  //position: fixed;
+  //align-items: flex-end;
+  display:block;
+  display:flex;
+  justify-content:space-between;
+  width:5px
 }

@@ -9,6 +9,8 @@ import { LazyLoadEvent } from 'primeng/api';
 import { Pageable } from 'src/app/core/model/Pageable';
 
 import { EstimationService } from '../estimation.service';
+import { NumberFilter } from 'ag-grid-community';
+import { find } from 'rxjs';
 
 @Component({
   selector: 'app-estimation-versions',
@@ -17,8 +19,6 @@ import { EstimationService } from '../estimation.service';
 })
 export class EstimationVersionsComponent implements OnInit {
 
-  pageNumber: number = 0;
-  pageSize: number = 25;
   totalElements: number = 0;
 
   property: string= 'id';
@@ -28,22 +28,13 @@ export class EstimationVersionsComponent implements OnInit {
   loading: boolean;
   
   customers: Customer[];
-  filterCustomer: Customer;
-  filterProject: string;
   filterProjectId: number;
-  filterStartDate: Date;
-  filterEndDate: Date;
-
-  customerId: number;
-  projectName: string;
-  startDate: Date;
-  endDate: Date;
+  created: number;
   projectId: number;
 
   constructor(
     private estimationService: EstimationService,
     private customerService: CustomerService,
-    //private route: ActivatedRoute,
     private router: Router,
     public dialogRef: DynamicDialogRef,
     public config: DynamicDialogConfig
@@ -56,63 +47,42 @@ export class EstimationVersionsComponent implements OnInit {
     );
 
     this.filterProjectId = this.config.data.projectId;
+    this.created = this.config.data.created;
     this.loading = true;
   }
 
+  
   loadPage(event?: LazyLoadEvent) {
 
     this.loading = true;
-
+    
     let pageable : Pageable =  {
-        pageNumber: this.pageNumber,
-        pageSize: this.pageSize,
         sort: [{
             property: this.property,
             direction: this.direction,
         }]
     }
-    /*
-    if (event != null) {
-        pageable.pageSize = event.rows;
-        pageable.pageNumber = event.first/event.rows;
-        if(event.sortField != null)
-          pageable.sort = [{property: event.sortField, direction: event.sortOrder == 1? "asc": "desc"}];
-    }*/
-
-    this.estimationService.getEstimationVersions(pageable, this.filterProjectId).subscribe(data => {
-        this.estimations = data.content;
-        this.pageNumber = data.pageable.pageNumber;
-        this.pageSize = data.pageable.pageSize;
+    //getEstimationVersions(pageable, this.filterProjectId)
+    /*this.estimationService.getEstimationVersions(pageable, this.created).subscribe(data => {
+        this.loading = false;
         this.totalElements = data.totalElements;
-        this.loading = false; 
-    });
-  }
-
+    });*/
+    /*this.estimationService.getEstimationVersions().subscribe(data => {
+      this.loading = false;
+      this.totalElements = data.totalElements;
+  });*/
   /*
-  onCleanFilter(): void{
-    this.filterCustomer = null;
-    this.filterProject = null;
-    this.filterStartDate = null;
-    this.filterEndDate = null;
-
-    this.onSearch();
-  }*/
-
-  /*
-  onSearch(): void{
-    this.customerId = this.filterCustomer != null ? this.filterCustomer.id: null;
-    this.projectName = this.filterProject;
-    this.startDate = this.filterStartDate;
-    this.endDate = this.filterEndDate;
-
-    this.loadPage();
-  }*/
-
-  onClose() {
-    this.dialogRef.close(false);
+    this.estimationService.getEstimationVersions().subscribe(data => {
+      this.loading = false;
+      this.totalElements = data.totalElements;
+});*/
+    this.estimationService.getEstimationVersions(this.filterProjectId) {
+      return this.loading.created<any>(`path/to/offers/${created}`);
+    }
   }
 
   editEstimation(id: number) {
+    this.dialogRef.close(false);
     this.router.navigate(['/estimation-edit/' + id]);
   }  
 }
