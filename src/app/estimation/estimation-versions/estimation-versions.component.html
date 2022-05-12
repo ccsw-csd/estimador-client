@@ -1,0 +1,31 @@
+<div class="versions-component">
+
+    <p-table #table [value]="estimations" [lazy]="true" (onLazyLoad)="load($event)" [loading]="loading" 
+    [scrollable]="true" responsiveLayout="scroll" scrollHeight="338px">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Cliente </th>
+                <th>Nombre </th>
+                <th>Fecha </th>
+                <th>Version </th>
+                <th>Jornadas </th>
+                <th>Revenue </th>
+                <th colspan="2">Acción</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-estimation>
+            <tr>
+                <td>{{estimation.project.customer.name}}</td>
+                <td>{{estimation.project.name}}</td>
+                <td>{{estimation.lastUpdate | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{estimation.estVersion}}</td> 
+                <td>{{estimation.totalDays | number: '1.0': 'es-ES'}}</td>
+                <td>{{estimation.totalCost | number:'1.2-2':'es-ES'}}€</td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-pencil" (click)="editEstimation(estimation.id)" class="p-button-rounded p-button-text p-button-plain icon"></button>
+                    <button pButton pRipple type="button" icon="pi pi-copy" (click)="copyEstimation(estimation.id)" class="p-button-rounded p-button-text p-button-plain icon"></button>                    
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

@@ -6,6 +6,8 @@ import { Customer } from 'src/app/core/model/Customer';
 import { CustomerService } from '../customer.service';
 import { LazyLoadEvent } from 'primeng/api';
 import { Router } from '@angular/router';
+import { DialogService } from 'primeng/dynamicdialog';
+import { EstimationVersionsComponent } from '../estimation-versions/estimation-versions.component';
 
 @Component({
   selector: 'app-estimation-list',
@@ -38,7 +40,8 @@ export class EstimationListComponent implements OnInit {
   constructor(
     private estimationService: EstimationService,
     private customerService: CustomerService,
-    private router: Router
+    private router: Router,
+    public dialogService: DialogService
   ) { }
 
   ngOnInit(): void {
@@ -103,4 +106,11 @@ export class EstimationListComponent implements OnInit {
   editEstimation(id: number) {
     this.router.navigate(['/estimation-edit/' + id]);
   }
+
+  openVersionDialog(projectId: number) {
+    const ref = this.dialogService.open(EstimationVersionsComponent, {width: '1100px', height: '450px', header:"Listado versiones", closable:true, data: {
+      projectId: projectId}
+    });
+  }
+  
 }
