@@ -111,10 +111,6 @@ export class EstimationListComponent implements OnInit {
     const ref = this.dialogService.open(EstimationVersionsComponent, {width: '1100px', height: '450px', header:"Listado versiones", closable:true, data: {
       projectId: projectId}
     });
-
-    ref.onClose.subscribe((response: any) => {
-      //TODO
-    });
   }
   
 }
