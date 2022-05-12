@@ -34,7 +34,7 @@
             <tr>
                 <th pSortableColumn="project.customer.name">Cliente <p-sortIcon field="project.customer.name"></p-sortIcon></th>
                 <th pSortableColumn="project.name">Nombre <p-sortIcon field="project.name"></p-sortIcon></th>
-                <th pSortableColumn="created">Fecha <p-sortIcon field="created"></p-sortIcon></th>
+                <th pSortableColumn="lastUpdate">Fecha <p-sortIcon field="lastUpdate"></p-sortIcon></th>
                 <th pSortableColumn="estVersion">Version <p-sortIcon field="estVersion"></p-sortIcon></th>
                 <th pSortableColumn="totalDays">Jornadas <p-sortIcon field="totalDays"></p-sortIcon></th>
                 <th pSortableColumn="totalCost">Revenue <p-sortIcon field="totalCost"></p-sortIcon></th>
@@ -45,7 +45,7 @@
             <tr>
                 <td>{{estimation.project.customer.name}}</td>
                 <td>{{estimation.project.name}}</td>
-                <td>{{estimation.created | date:'dd/MM/yyyy HH:MM'}}</td>
+                <td>{{estimation.lastUpdate | date:'dd/MM/yyyy HH:mm'}}</td>
                 <td>{{estimation.estVersion}}</td> 
                 <td>{{estimation.totalDays | number: '1.0': 'es-ES'}}</td>
                 <td>{{estimation.totalCost | number:'1.2-2':'es-ES'}}€</td>
