@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
-import { DialogComponent } from '../../dialog/dialog.component';
 import { AuthService } from '../../services/auth.service';
 import { UtilsService } from '../../services/utils.service';
 
@@ -30,14 +29,4 @@ export class NavComponent implements OnInit {
       this.backVersion = result.version;
     });
   }
-
-
-  gruposAlert() : void {
-
-    this.dialogService.open(DialogComponent, {width: '500px', height: '250px', header:"Forbidden",closable:false, data: {
-      description: 'You do not have permissions to manage groups. Please contact the support email (ccsw.support@capgemini.com).'}
-    });
-
-  }
-
 }

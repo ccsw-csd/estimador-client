@@ -2,6 +2,8 @@ import { User } from "src/app/core/model/User";
 import { Consideration } from "./Consideration";
 import { Criterion } from "./Criterion";
 import { ElementWeight } from "./ElementWeight";
+import { Fte } from "./Fte";
+import { ProfileParticipation } from "./ProfileParticipation";
 import { Project } from "./Project";
 import { TaskArchitecture } from "./TaskArchitecture";
 import { TaskDevelopmentHours } from "./TaskDevelopmentHours";
@@ -24,4 +26,6 @@ export class Estimation{
     developmentTasksHours: TaskDevelopmentHours[];
     developmentTasksWeights: TaskDevelopmentWeights[];
     considerations: Consideration[];
+    profileParticipation: ProfileParticipation[]; 
+    teamPyramid: Fte[];
 }

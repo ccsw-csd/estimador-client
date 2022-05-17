@@ -9,7 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { UserResolverService } from './services/user-resolver.service';
-import { DialogComponent } from './dialog/dialog.component';
 import {DialogService, DynamicDialogModule} from 'primeng/dynamicdialog';
 import {SidebarModule} from 'primeng/sidebar';
 import {ToolbarModule} from 'primeng/toolbar';
@@ -22,7 +21,7 @@ import { MessageService } from 'primeng/api';
 
 
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, NavComponent, DialogComponent],
+  declarations: [LayoutComponent, HeaderComponent, NavComponent],
   imports: [
     CommonModule,
     HttpClientModule,

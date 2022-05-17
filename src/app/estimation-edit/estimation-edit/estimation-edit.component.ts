@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Collaborator } from 'src/app/core/model/Collaborator';
 import { Estimation } from 'src/app/core/model/Estimation';
+import { Fte } from 'src/app/core/model/Fte';
+import { ProfileParticipation } from 'src/app/core/model/ProfileParticipation';
 import { Project } from 'src/app/core/model/Project';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CollaboratorService } from '../services/collaborator/collaborator.service';
@@ -9,10 +11,14 @@ import { ConsiderationService } from '../services/consideration/consideration.se
 import { ElementWeightService } from '../services/elementWeight/element-weight.service';
 import { EstimationEditService } from '../services/estimation-edit.service';
 import { GlobalCriteriaService } from '../services/globalCriteria/global-criteria.service';
+import { ProfileService } from '../services/profile/profile.service';
+import { SummaryService } from '../services/summary/summary.service';
 import { TaskArchitectureService } from '../services/taskArchitecture/task-architecture.service';
 import { TaskDevelopmentHoursService } from '../services/taskDevelopmentHours/task-development-hours.service';
 import { TaskDevelopmentWeightsService } from '../services/taskDevelopmentWeights/task-development-weights.service';
+import { TeamPyramidService } from '../services/teamPyramid/team-pyramid.service';
 import { UserService } from '../services/user/user.service';
+import { SummaryComponent } from '../summary/summary.component';
 import { TasksComponent } from '../tasks/tasks.component';
 
 @Component({
@@ -26,6 +32,7 @@ export class EstimationEditComponent implements OnInit {
   public collaborators: Collaborator[] = [];
   public loading: Boolean = true;
   @ViewChild('tasks') tasks: TasksComponent;
+  @ViewChild('summary') summary: SummaryComponent;
 
   constructor(private route: ActivatedRoute, 
     private estimationEditService: EstimationEditService,
@@ -37,6 +44,9 @@ export class EstimationEditComponent implements OnInit {
     private taskDevelopmentService: TaskDevelopmentHoursService,
     private taskDevelopmentWeightsService: TaskDevelopmentWeightsService,
     private considerationService: ConsiderationService,
+    private summaryService: SummaryService,
+    private teamPyramidService: TeamPyramidService,
+    private profileService: ProfileService,
     private authService: AuthService,
     private router: Router) { }
 
@@ -44,7 +54,7 @@ export class EstimationEditComponent implements OnInit {
     var routeId = this.route.snapshot.paramMap.get('id');
     
     if(routeId == null) {
-      var dataTotal = 2;
+      var dataTotal = 4;
       this.estimation = new Estimation();
       this.estimation.project = new Project();
       this.estimation.showhours = false;
@@ -52,6 +62,8 @@ export class EstimationEditComponent implements OnInit {
       this.estimation.considerations = [];
       this.estimation.developmentTasksHours = [];
       this.estimation.developmentTasksWeights = [];
+      this.estimation.profileParticipation = [];
+      this.estimation.teamPyramid = [];
 
       this.elementWeightService.findElementWeightsByEstimationId(1).subscribe((data) => {
         this.estimation.elementsWeights = data;
@@ -67,12 +79,37 @@ export class EstimationEditComponent implements OnInit {
         this.estimation.globalCriteria = data;
         this.stopLoading(dataTotal--);
       });
+
+      this.estimationEditService.findBlocks().subscribe((blocks) => {
+        blocks.forEach(block => {
+          var profPart = new ProfileParticipation();
+          profPart.block = block;
+          profPart.total = 0;
+          profPart.workdays = 0;
+          this.estimation.profileParticipation.push(profPart);
+        });
+        this.stopLoading(dataTotal--);
+      });
+
+      this.profileService.findProfiles().subscribe((profiles) => {
+        profiles.forEach(profile => {
+          var fte = new Fte();
+          fte.profile = profile;
+          fte.fte = 0;
+          this.estimation.teamPyramid.push(fte);
+        });
+
+        this.stopLoading(dataTotal--);
+      });
+
     }
     else {
-      var dataTotal = 6;
+      var dataTotal = 8;
       
       this.estimationEditService.getEstimation(+routeId).subscribe((estimation) => {
         this.estimation = estimation;
+        this.estimation.teamPyramid = [];
+        this.estimation.profileParticipation = [];
 
         this.collaboratorService.findCollaboratorsByEstimationId(this.estimation.id).subscribe((data) => {
           this.collaborators = data;
@@ -109,6 +146,48 @@ export class EstimationEditComponent implements OnInit {
           this.stopLoading(dataTotal--);
         });
 
+        this.summaryService.findSummaryByEstimationId(this.estimation.id).subscribe((summary) => {
+          this.estimationEditService.findBlocks().subscribe((blocks) => {
+
+            blocks.forEach(block => {
+              var profPart = new ProfileParticipation();
+              profPart.block = block;
+              profPart.total = 0;
+              profPart.workdays = 0;
+
+              summary.forEach(element => {
+                if(block.id == element.block.id) {
+                  profPart = element;
+                  if(profPart.workdays == null) {
+                    profPart.workdays = 0;
+                  }
+                }
+              });
+              this.estimation.profileParticipation.push(profPart);
+            });
+            this.stopLoading(dataTotal--);
+          });
+        });
+
+        this.teamPyramidService.findTeamPyramidByEstimationId(this.estimation.id).subscribe((teamPyramid) => {
+          this.profileService.findProfiles().subscribe((profiles) => {
+            profiles.forEach(profile => {
+              var fte = new Fte(); 
+              fte.profile = profile;
+              fte.fte = 0;
+              this.estimation.teamPyramid.push(fte);
+
+              teamPyramid.forEach(ftedb => {
+                this.estimation.teamPyramid.forEach(fte => {
+                  if(fte.profile.id == ftedb.profile.id) {
+                    fte.fte = ftedb.fte;
+                  }
+                });
+              });
+            });
+            this.stopLoading(dataTotal--);
+          });
+        });
       });
     }
   }
@@ -122,9 +201,12 @@ export class EstimationEditComponent implements OnInit {
       if(!this.estimation.showhours) {
         this.tasks.getDevelopmentWeightsHours();
       }
-      else {
-        this.tasks.getGlobalTasks();
-      }
+      this.tasks.getGlobalTasks();
+    }
+    else if(event.index == 3) {
+      this.summary.calculateFixedFtes();
+      this.summary.calculateTotalFte();
+      this.summary.calculateBlockDuration();
     }
   }
 
