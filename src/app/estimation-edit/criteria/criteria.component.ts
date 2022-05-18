@@ -5,7 +5,6 @@ import { Criterion } from 'src/app/core/model/Criterion';
 import { ElementWeight } from 'src/app/core/model/ElementWeight';
 import { Estimation } from 'src/app/core/model/Estimation';
 import { EstimationLevel } from 'src/app/core/model/EstimationLevel';
-import { EstimationEditService } from '../services/estimation-edit.service';
 
 @Component({
   selector: 'app-criteria',
@@ -19,18 +18,12 @@ export class CriteriaComponent implements OnInit {
   levels: EstimationLevel[] = [];
   types: string[] = ["% about development", "Days/Month"];
 
-  constructor(private estimationEditService: EstimationEditService,
-    private confirmationService: ConfirmationService) {}
+  constructor(private confirmationService: ConfirmationService) {}
 
   ngOnInit(): void {
 
-    this.estimationEditService.findBlocks().subscribe((data) => {
-      this.blocks = data;
-    });
-
-    this.estimationEditService.findEstimationLevels().subscribe((data) => {
-      this.levels = data;
-    });
+    this.blocks = JSON.parse(sessionStorage.getItem("blocks"));
+    this.levels = JSON.parse(sessionStorage.getItem("levels"));
   }
 
   addCriterion() {

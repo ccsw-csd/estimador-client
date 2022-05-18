@@ -20,40 +20,40 @@
                     <td pEditableColumn class="centered very-small-cell">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="row.a" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="calculateTotal(row.id)"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="row.gradeA" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="calculateTotal(row.id)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                <span >{{ row.a | number:'':'es'}}%</span>
+                                <span >{{ row.gradeA | number:'':'es'}}%</span>
                             </ng-template>
                         </p-cellEditor>
                     </td>
                     <td pEditableColumn class="centered very-small-cell">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="row.b" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="calculateTotal(row.id)"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="row.gradeB" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="calculateTotal(row.id)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                <span>{{ row.b | number:'':'es'}}%</span>
+                                <span>{{ row.gradeB | number:'':'es'}}%</span>
                             </ng-template>
                         </p-cellEditor>
                     </td>
                     <td pEditableColumn class="centered very-small-cell">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="row.c" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="calculateTotal(row.id)"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="row.gradeC" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="calculateTotal(row.id)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                <span>{{ row.c | number:'':'es'}}%</span>
+                                <span>{{ row.gradeC | number:'':'es'}}%</span>
                             </ng-template>
                         </p-cellEditor>
                     </td>
                     <td pEditableColumn class="centered very-small-cell">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="row.d" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="calculateTotal(row.id)"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="row.gradeD" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="calculateTotal(row.id)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                <span>{{ row.d | number:'':'es'}}%</span>
+                                <span>{{ row.gradeD | number:'':'es'}}%</span>
                             </ng-template>
                         </p-cellEditor>
                     </td>

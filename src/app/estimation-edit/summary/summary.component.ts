@@ -31,16 +31,16 @@ export class SummaryComponent implements OnInit {
     this.estimation.profileParticipation.forEach(row => {
       if(row.id == id) {
         this.updateGradeNullValues(row);
-        row.total = row.a + row.b + row.c + row.d;
+        row.total = row.gradeA + row.gradeB + row.gradeC + row.gradeD;
       }
     });
   }
 
   updateGradeNullValues(element) {
-    element.a = this.changeNull(element.a);
-    element.b = this.changeNull(element.b);
-    element.c = this.changeNull(element.c);
-    element.d = this.changeNull(element.d);
+    element.gradeA = this.changeNull(element.gradeA);
+    element.gradeB = this.changeNull(element.gradeB);
+    element.gradeC = this.changeNull(element.gradeC);
+    element.gradeD = this.changeNull(element.gradeD);
   }
 
   calculateBlockDuration() {
@@ -77,20 +77,20 @@ export class SummaryComponent implements OnInit {
 
           this.estimation.globalCriteria.forEach (criteria => {
             if(criteria.type == "Days/Month") {
-              if(criteria.block.id == 10) {
+              if(criteria.block.name == "Gestión") {
                 managerValue = criteria.value + managerValue;
               }
-              else if (criteria.block.id == 20) {
+              else if (criteria.block.name == "TeamLeader") {
                 teamLeaderValue = criteria.value + teamLeaderValue;
               }
             }
           });
 
           this.estimation.profileParticipation.forEach(profile => {
-            if(profile.block.id == 10) {
+            if(profile.block.name == "Gestión") {
               profile.workdays = duration * managerValue;
             }
-            else if(profile.block.id == 20) {
+            else if(profile.block.name == "TeamLeader") {
               profile.workdays = duration * teamLeaderValue;
             }
           })
@@ -100,26 +100,34 @@ export class SummaryComponent implements OnInit {
   }
 
   calculateTotalDevelopmentHours() {
-    var hours = 0;
-
     if (this.estimation.showhours) {
-      this.estimation.developmentTasksHours.forEach(task => {
-        if (task.hours != null) {
-          var quantity = 1;
-          if (task.quantity != null && task.quantity != undefined) {
-            quantity = task.quantity;
-          }
-          hours = hours + (quantity * task.hours * (1 - task.reusability / 100));
-        }
-      });
+      return this.calculateTotalDevelopmentHoursByHours();
     }
     else {
-      this.estimation.developmentTasksWeights.forEach(task => {
-        if (task.hours != null)
-          hours = hours + task.hours;
-      });
+      return this.calculateTotalDevelopmentHoursByWeights();
     }
+  }
 
+  calculateTotalDevelopmentHoursByHours() {
+    var hours = 0;
+    this.estimation.developmentTasksHours.forEach(task => {
+      if (task.hours != null) {
+        var quantity = 1;
+        if (task.quantity != null && task.quantity != undefined) {
+          quantity = task.quantity;
+        }
+        hours = hours + (quantity * task.hours * (1 - task.reusability / 100));
+      }
+    });
+    return hours;
+  }
+
+  calculateTotalDevelopmentHoursByWeights() {
+    var hours = 0;
+    this.estimation.developmentTasksWeights.forEach(task => {
+      if (task.hours != null)
+        hours = hours + task.hours;
+    });
     return hours;
   }
 
@@ -131,10 +139,10 @@ export class SummaryComponent implements OnInit {
   calculateFixedFtes() {
     this.fteCalculationService.calculateFte(this.estimation.globalCriteria).subscribe((data) => {
       this.estimation.teamPyramid.forEach((element) => {
-        if(element.profile.id == 10) {
+        if(element.profile.name == "Project Manager") {
           element.fte = data.manager;
         }
-        else if (element.profile.id == 20) {
+        else if (element.profile.name == "Team Leader") {
           element.fte = data.teamLeader; 
         }
       })

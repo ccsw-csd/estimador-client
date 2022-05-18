@@ -46,7 +46,6 @@ export class EstimationEditComponent implements OnInit {
     private considerationService: ConsiderationService,
     private summaryService: SummaryService,
     private teamPyramidService: TeamPyramidService,
-    private profileService: ProfileService,
     private authService: AuthService,
     private router: Router) { }
 
@@ -54,7 +53,9 @@ export class EstimationEditComponent implements OnInit {
     var routeId = this.route.snapshot.paramMap.get('id');
     
     if(routeId == null) {
-      var dataTotal = 4;
+      var dataTotal = 2;
+      var blocks = JSON.parse(sessionStorage.getItem("blocks"));
+      var profiles = JSON.parse(sessionStorage.getItem("profiles"));
       this.estimation = new Estimation();
       this.estimation.project = new Project();
       this.estimation.showhours = false;
@@ -80,28 +81,20 @@ export class EstimationEditComponent implements OnInit {
         this.stopLoading(dataTotal--);
       });
 
-      this.estimationEditService.findBlocks().subscribe((blocks) => {
-        blocks.forEach(block => {
-          var profPart = new ProfileParticipation();
-          profPart.block = block;
-          profPart.total = 0;
-          profPart.workdays = 0;
-          this.estimation.profileParticipation.push(profPart);
-        });
-        this.stopLoading(dataTotal--);
+      blocks.forEach(block => {
+        var profPart = new ProfileParticipation();
+        profPart.block = block;
+        profPart.total = 0;
+        profPart.workdays = 0;
+        this.estimation.profileParticipation.push(profPart);
       });
 
-      this.profileService.findProfiles().subscribe((profiles) => {
-        profiles.forEach(profile => {
-          var fte = new Fte();
-          fte.profile = profile;
-          fte.fte = 0;
-          this.estimation.teamPyramid.push(fte);
-        });
-
-        this.stopLoading(dataTotal--);
+      profiles.forEach(profile => {
+        var fte = new Fte();
+        fte.profile = profile;
+        fte.fte = 0;
+        this.estimation.teamPyramid.push(fte);
       });
-
     }
     else {
       var dataTotal = 8;
@@ -147,46 +140,43 @@ export class EstimationEditComponent implements OnInit {
         });
 
         this.summaryService.findSummaryByEstimationId(this.estimation.id).subscribe((summary) => {
-          this.estimationEditService.findBlocks().subscribe((blocks) => {
+          var blocks = JSON.parse(sessionStorage.getItem("blocks"));
+          blocks.forEach(block => {
+            var profPart = new ProfileParticipation();
+            profPart.block = block;
+            profPart.total = 0;
+            profPart.workdays = 0;
 
-            blocks.forEach(block => {
-              var profPart = new ProfileParticipation();
-              profPart.block = block;
-              profPart.total = 0;
-              profPart.workdays = 0;
-
-              summary.forEach(element => {
-                if(block.id == element.block.id) {
-                  profPart = element;
-                  if(profPart.workdays == null) {
-                    profPart.workdays = 0;
-                  }
+            summary.forEach(element => {
+              if(block.id == element.block.id) {
+                profPart = element;
+                if(profPart.workdays == null) {
+                  profPart.workdays = 0;
                 }
-              });
-              this.estimation.profileParticipation.push(profPart);
+              }
             });
-            this.stopLoading(dataTotal--);
+            this.estimation.profileParticipation.push(profPart);
           });
+          this.stopLoading(dataTotal--);
         });
 
         this.teamPyramidService.findTeamPyramidByEstimationId(this.estimation.id).subscribe((teamPyramid) => {
-          this.profileService.findProfiles().subscribe((profiles) => {
-            profiles.forEach(profile => {
-              var fte = new Fte(); 
-              fte.profile = profile;
-              fte.fte = 0;
-              this.estimation.teamPyramid.push(fte);
+          var profiles = JSON.parse(sessionStorage.getItem("profiles"));
+          profiles.forEach(profile => {
+            var fte = new Fte(); 
+            fte.profile = profile;
+            fte.fte = 0;
+            this.estimation.teamPyramid.push(fte);
 
-              teamPyramid.forEach(ftedb => {
-                this.estimation.teamPyramid.forEach(fte => {
-                  if(fte.profile.id == ftedb.profile.id) {
-                    fte.fte = ftedb.fte;
-                  }
-                });
+            teamPyramid.forEach(ftedb => {
+              this.estimation.teamPyramid.forEach(fte => {
+                if(fte.profile.id == ftedb.profile.id) {
+                  fte.fte = ftedb.fte;
+                }
               });
             });
-            this.stopLoading(dataTotal--);
           });
+          this.stopLoading(dataTotal--);
         });
       });
     }
