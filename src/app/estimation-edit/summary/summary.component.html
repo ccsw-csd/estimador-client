@@ -1,1 +1,104 @@
-<p>summary works!</p>
+<div class="flex-container">
+    <div class="table-container">
+        <p-table [value]="estimation.profileParticipation">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="centered small-cell">Distribución equipo</th>
+                    <th class="centered small-cell">Jornadas totales</th>
+                    <th class="centered very-small-cell">A</th>
+                    <th class="centered very-small-cell">B</th>
+                    <th class="centered very-small-cell">C</th>
+                    <th class="centered very-small-cell">D</th>
+                    <th class="centered very-small-cell">TOTAL</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-row>
+                <tr>
+                    <td class="read-only-cell small-cell">{{row.block.name}}</td>
+                    <td class="read-only-cell centered small-cell">{{row.workdays | number: '1.2-2'}}</td>
+                    <td pEditableColumn class="centered very-small-cell">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputNumber [(ngModel)]="row.gradeA" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="calculateTotal(row.id)"></p-inputNumber>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span >{{ row.gradeA | number:'':'es'}}%</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td pEditableColumn class="centered very-small-cell">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputNumber [(ngModel)]="row.gradeB" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="calculateTotal(row.id)"></p-inputNumber>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span>{{ row.gradeB | number:'':'es'}}%</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td pEditableColumn class="centered very-small-cell">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputNumber [(ngModel)]="row.gradeC" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="calculateTotal(row.id)"></p-inputNumber>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span>{{ row.gradeC | number:'':'es'}}%</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td pEditableColumn class="centered very-small-cell">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputNumber [(ngModel)]="row.gradeD" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="calculateTotal(row.id)"></p-inputNumber>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span>{{ row.gradeD | number:'':'es'}}%</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td class="read-only-cell centered very-small-cell" [ngClass]="{'red-text': row.total != 100}">
+                        {{row.total}}%
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="team-pyramid table-container">
+        <p-table [value]="estimation.teamPyramid" >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="centered small-cell">Perfil</th>
+                    <th class="centered small-cell">FTEs</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-fte>
+                <tr>
+                    <td class="read-only-cell" >{{fte.profile.name}}</td>
+
+                    <td *ngIf="fte.profile.id > 20" pEditableColumn class="centered">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputNumber [(ngModel)]="fte.fte" (ngModelChange)="onFteChange()" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{ fte.fte | number: '1.2-2'}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td *ngIf="fte.profile.id == 10 || fte.profile.id == 20" (ngModelChange)="onFteChange()" class="read-only-cell centered" >{{fte.fte | number: '1.2-2'}}</td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <tr class="footer">
+                    <td></td>
+                    <td class="centered totalCell">{{fteTotal | number: '1.2-2'}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

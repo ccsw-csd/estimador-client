@@ -14,7 +14,7 @@
             <app-tasks #tasks *ngIf="!loading" [estimation]="estimation"></app-tasks>
         </p-tabPanel>
         <p-tabPanel header="Resumen">
-            <app-summary [estimation]="estimation"></app-summary>
+            <app-summary #summary *ngIf="!loading" [estimation]="estimation"></app-summary>
         </p-tabPanel>
     </p-tabView>
 

@@ -532,11 +532,24 @@ span.text_red {
     }
   
     .small-cell {
-        width: 250px;
+      width: 250px;
     }
 
     .very-small-cell {
-      width: 150px;
+      width: 200px;
+    }
+
+    .p-datatable-tfoot > tr {
+
+      td {
+        background-color: white;
+        border: 0px;
+      }
+
+      td.totalCell {
+          background-color: #d1d1d1;
+          font-weight: bold;
+      }
     }
 
     .reorder-cell {

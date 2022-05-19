@@ -36,7 +36,7 @@ export class TasksComponent implements OnInit {
     });
 
     this.calculateTotalArchitecture();
-    this.calculateTotalDevelopment();
+    this.calculateTotalDevelopmentHours();
     this.calculateTotalDevelopmentWeight();
   }
 
@@ -79,13 +79,15 @@ export class TasksComponent implements OnInit {
   deleteDevelopmentTask(task: TaskDevelopmentHours) {
     const index = this.estimation.developmentTasksHours.indexOf(task, 0);
     this.estimation.developmentTasksHours.splice(index, 1);
-    this.calculateTotalDevelopment();
+    this.calculateTotalDevelopmentHours();
+    this.getGlobalTasks();
   }
 
   deleteDevelopmentWeightTask(task: TaskDevelopmentWeights) {
     const index = this.estimation.developmentTasksWeights.indexOf(task, 0);
     this.estimation.developmentTasksWeights.splice(index, 1);
     this.calculateTotalDevelopmentWeight();
+    this.getGlobalTasks();
   }
 
   deleteConsideration(consideration: Consideration) {
@@ -103,13 +105,11 @@ export class TasksComponent implements OnInit {
     });
   }
 
-  calculateTotalDevelopment() {
+  calculateTotalDevelopmentHours() {
     this.developmentTotal = 0;
     this.estimation.developmentTasksHours.forEach(task => {
       this.developmentTotal = this.developmentTotal + task.totalHours;
     });
-
-    this.getGlobalTasks();
   }
 
   calculateTotalDevelopmentWeight() {
@@ -117,8 +117,6 @@ export class TasksComponent implements OnInit {
     this.estimation.developmentTasksWeights.forEach(task => {
       this.developmentWeightTotal = this.developmentWeightTotal + task.hours;
     });
-
-    this.getGlobalTasks();
   }
 
   calculateTotalHoursDevelopmentTask(task: TaskDevelopmentHours) {
@@ -167,6 +165,7 @@ export class TasksComponent implements OnInit {
         }
   
         this.calculateTotalDevelopmentWeight();
+        this.getGlobalTasks();
       });
     }
   }
@@ -198,7 +197,8 @@ export class TasksComponent implements OnInit {
     }
 
     this.calculateTotalHoursDevelopmentTask(task);
-    this.calculateTotalDevelopment();
+    this.calculateTotalDevelopmentHours();
+    this.getGlobalTasks();
   }
 
   openCommentDialog(task: any) {
