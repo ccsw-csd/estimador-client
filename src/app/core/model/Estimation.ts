@@ -8,6 +8,7 @@ import { Project } from "./Project";
 import { TaskArchitecture } from "./TaskArchitecture";
 import { TaskDevelopmentHours } from "./TaskDevelopmentHours";
 import { TaskDevelopmentWeights } from "./TaskDevelopmentWeights";
+import { CostPerGrade } from "./CostPerGrade";
 
 export class Estimation{
     id: number;
@@ -28,4 +29,5 @@ export class Estimation{
     considerations: Consideration[];
     profileParticipation: ProfileParticipation[]; 
     teamPyramid: Fte[];
+    costPerGrade: CostPerGrade[];
 }

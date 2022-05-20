@@ -6,6 +6,7 @@ import { FteBlockCalculation } from 'src/app/core/model/FteBlockCalculation';
 import { BlockCalculationService } from '../services/blockCalculation/block-calculation.service';
 import { CriteriaCalculationService } from '../services/criteriaCalculation/criteria-calculation.service';
 import { FteCalculationService } from '../services/fteCalculation/fte-calculation.service';
+import { GradeWorkDaysCalculationService } from '../services/gradeWorkDaysCalculation/grade-work-days-calculation.service';
 
 @Component({
   selector: 'app-summary',
@@ -19,7 +20,8 @@ export class SummaryComponent implements OnInit {
 
   constructor( private criteriaCalculationService: CriteriaCalculationService,
     private blockCalculationService: BlockCalculationService,
-    private fteCalculationService: FteCalculationService ) { }
+    private fteCalculationService: FteCalculationService,
+    private gradeWorkDaysCalculationService: GradeWorkDaysCalculationService ) { }
 
   ngOnInit(): void {
     this.estimation.profileParticipation.forEach(element => {
@@ -34,6 +36,11 @@ export class SummaryComponent implements OnInit {
         row.total = row.gradeA + row.gradeB + row.gradeC + row.gradeD;
       }
     });
+  }
+
+  onChangeGradeValue(id: number) {
+    this.calculateTotal(id);
+    this.calculateWorkDaysByGrade();
   }
 
   updateGradeNullValues(element) {
@@ -93,7 +100,9 @@ export class SummaryComponent implements OnInit {
             else if(profile.block.name == "TeamLeader") {
               profile.workdays = duration * teamLeaderValue;
             }
-          })
+          });
+
+          this.calculateWorkDaysByGrade();
         });
       })
     });
@@ -155,6 +164,26 @@ export class SummaryComponent implements OnInit {
       element.fte = this.changeNull(element.fte);
       this.fteTotal += element.fte;
     });
+  }
+
+  calculateWorkDaysByGrade() {
+    this.gradeWorkDaysCalculationService.calculateGradeWorkDays(this.estimation.profileParticipation).subscribe((data) => {
+      this.estimation.costPerGrade.forEach(row => {
+        data.forEach(dataRow => {
+          if(row.grade == dataRow.grade) {
+            row.workdays = dataRow.workdays;
+          }
+        })
+      })
+
+      this.calculateRevenue();
+    })
+  }
+
+  calculateRevenue() {
+    this.estimation.costPerGrade.forEach(row => {
+      row.revenue = row.workdays * row.cost * (100 + row.margin);
+    })
   }
 
   changeNull(value) {

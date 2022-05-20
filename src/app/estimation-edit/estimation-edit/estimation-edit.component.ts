@@ -1,17 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Collaborator } from 'src/app/core/model/Collaborator';
+import { CostPerGrade } from 'src/app/core/model/CostPerGrade';
 import { Estimation } from 'src/app/core/model/Estimation';
+import { EstimationCostPerGrade } from 'src/app/core/model/EstimationCostPerGrade';
 import { Fte } from 'src/app/core/model/Fte';
 import { ProfileParticipation } from 'src/app/core/model/ProfileParticipation';
 import { Project } from 'src/app/core/model/Project';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CollaboratorService } from '../services/collaborator/collaborator.service';
 import { ConsiderationService } from '../services/consideration/consideration.service';
+import { CostPerGradeService } from '../services/costPerGrade/cost-per-grade.service';
 import { ElementWeightService } from '../services/elementWeight/element-weight.service';
 import { EstimationEditService } from '../services/estimation-edit.service';
 import { GlobalCriteriaService } from '../services/globalCriteria/global-criteria.service';
-import { ProfileService } from '../services/profile/profile.service';
 import { SummaryService } from '../services/summary/summary.service';
 import { TaskArchitectureService } from '../services/taskArchitecture/task-architecture.service';
 import { TaskDevelopmentHoursService } from '../services/taskDevelopmentHours/task-development-hours.service';
@@ -46,10 +48,13 @@ export class EstimationEditComponent implements OnInit {
     private considerationService: ConsiderationService,
     private summaryService: SummaryService,
     private teamPyramidService: TeamPyramidService,
+    private costPerGradeService: CostPerGradeService,
     private authService: AuthService,
     private router: Router) { }
 
   ngOnInit(): void {
+    var grades = ["A", "B", "C", "D"];
+
     var routeId = this.route.snapshot.paramMap.get('id');
     
     if(routeId == null) {
@@ -65,6 +70,7 @@ export class EstimationEditComponent implements OnInit {
       this.estimation.developmentTasksWeights = [];
       this.estimation.profileParticipation = [];
       this.estimation.teamPyramid = [];
+      this.estimation.costPerGrade = [];
 
       this.elementWeightService.findElementWeightsByEstimationId(1).subscribe((data) => {
         this.estimation.elementsWeights = data;
@@ -80,6 +86,17 @@ export class EstimationEditComponent implements OnInit {
         this.estimation.globalCriteria = data;
         this.stopLoading(dataTotal--);
       });
+
+      grades.forEach(grade => {
+        var costByGradeRow = new CostPerGrade();
+        costByGradeRow.grade = grade;
+        costByGradeRow.cost = 0;
+        costByGradeRow.workdays = 0;
+        costByGradeRow.margin = 0;
+        costByGradeRow.revenue = 0;
+        this.estimation.costPerGrade.push(costByGradeRow);
+      })
+      
 
       blocks.forEach(block => {
         var profPart = new ProfileParticipation();
@@ -97,12 +114,13 @@ export class EstimationEditComponent implements OnInit {
       });
     }
     else {
-      var dataTotal = 8;
+      var dataTotal = 9;
       
       this.estimationEditService.getEstimation(+routeId).subscribe((estimation) => {
         this.estimation = estimation;
         this.estimation.teamPyramid = [];
         this.estimation.profileParticipation = [];
+        this.estimation.costPerGrade = [];
 
         this.collaboratorService.findCollaboratorsByEstimationId(this.estimation.id).subscribe((data) => {
           this.collaborators = data;
@@ -138,6 +156,39 @@ export class EstimationEditComponent implements OnInit {
           this.estimation.considerations = considerations;
           this.stopLoading(dataTotal--);
         });
+
+        // @TODO terminar de obtener costes y margenes que ya están guardados en la BBDD, no funciona correctamente
+        this.costPerGradeService.findCostPerGradeByEstimationId(this.estimation.id).subscribe((costs) => {
+          grades.forEach(grade => {
+            var costByGradeRow = new CostPerGrade();
+            costByGradeRow.grade = grade;
+            costByGradeRow.workdays = 0;
+            costByGradeRow.margin = 0;
+            costByGradeRow.revenue = 0;
+
+            if(grade == "A") {
+              costByGradeRow.cost = costs.costGradeA;
+            }
+            else if(grade == "B") {
+              costByGradeRow.cost = costs.costGradeB;
+            }
+            else if(grade == "C") {
+              costByGradeRow.cost = costs.costGradeC;
+            }
+            else if(grade == "D") {
+              costByGradeRow.cost = costs.costGradeD;
+            }
+
+            if(costByGradeRow.cost == null) {
+              costByGradeRow.cost = 0;
+            }
+
+            this.estimation.costPerGrade.push(costByGradeRow);
+          });
+
+          this.stopLoading(dataTotal--);
+        })
+
 
         this.summaryService.findSummaryByEstimationId(this.estimation.id).subscribe((summary) => {
           var blocks = JSON.parse(sessionStorage.getItem("blocks"));
