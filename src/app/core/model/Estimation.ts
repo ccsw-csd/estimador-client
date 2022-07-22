@@ -21,13 +21,14 @@ export class Estimation{
     lastUpdate: Date;
     status: number;
     showhours: Boolean;
-    globalCriteria: Criterion[];
-    elementsWeights: ElementWeight[];
+    parameters: Criterion[];
+    elementWeight: ElementWeight[];
     architectureTasks: TaskArchitecture[];
     developmentTasksHours: TaskDevelopmentHours[];
     developmentTasksWeights: TaskDevelopmentWeights[];
     considerations: Consideration[];
-    profileParticipation: ProfileParticipation[]; 
+    distribution: ProfileParticipation[]; 
     teamPyramid: Fte[];
-    costPerGrade: CostPerGrade[];
+    costs: CostPerGrade[];
+    collaborators: User[];
 }

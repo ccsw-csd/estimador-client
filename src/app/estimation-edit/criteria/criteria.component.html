@@ -6,7 +6,7 @@
             <p-button class="secondary" label="Añadir fila" (click)="addCriterion()"></p-button>
         </div>
         
-        <p-table [value]="estimation.globalCriteria" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 400px)">
+        <p-table [value]="estimation.parameters" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 400px)">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Bloque</th>
@@ -84,7 +84,7 @@
             </div>
         </div>
 
-        <p-table *ngIf="!estimation.showhours" [value]="estimation.elementsWeights" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 400px)">
+        <p-table *ngIf="!estimation.showhours" [value]="estimation.elementWeight" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 400px)">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Elemento</th>
@@ -96,16 +96,16 @@
                     <th></th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-elementWeight>
+            <ng-template pTemplate="body" let-item>
                 <tr>
 
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <input pInputText type="text" [(ngModel)]="elementWeight.element">
+                                <input pInputText type="text" [(ngModel)]="item.element">
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{elementWeight.element}}
+                                {{item.element}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -113,10 +113,10 @@
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="elementWeight.verySimple" (ngModelChange)="elementWeight.verySimple = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="item.verySimple" (ngModelChange)="item.verySimple = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{elementWeight.verySimple | number:'':'es'}}
+                                {{item.verySimple | number:'':'es'}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -124,10 +124,10 @@
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="elementWeight.simple" (ngModelChange)="elementWeight.simple = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="item.simple" (ngModelChange)="item.simple = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{elementWeight.simple | number:'':'es'}}
+                                {{item.simple | number:'':'es'}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -135,10 +135,10 @@
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="elementWeight.medium" (ngModelChange)="elementWeight.medium = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="item.medium" (ngModelChange)="item.medium = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{elementWeight.medium | number:'':'es'}}
+                                {{item.medium | number:'':'es'}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -146,10 +146,10 @@
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="elementWeight.complex" (ngModelChange)="elementWeight.complex = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="item.complex" (ngModelChange)="item.complex = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{elementWeight.complex | number:'':'es'}}
+                                {{item.complex | number:'':'es'}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -157,16 +157,16 @@
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-dropdown [options]="levels" [(ngModel)]="elementWeight.level" optionLabel="name"></p-dropdown>
+                                <p-dropdown [options]="levels" [(ngModel)]="item.level" optionLabel="name"></p-dropdown>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{elementWeight.level.name}}
+                                {{item.level.name}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
 
                     <td>
-                        <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteElementWeight(elementWeight)"></button>
+                        <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteElementWeight(item)"></button>
                     </td>
                 </tr>
             </ng-template>

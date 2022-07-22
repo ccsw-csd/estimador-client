@@ -21,7 +21,6 @@ export class CriteriaComponent implements OnInit {
   constructor(private confirmationService: ConfirmationService) {}
 
   ngOnInit(): void {
-
     this.blocks = JSON.parse(sessionStorage.getItem("blocks"));
     this.levels = JSON.parse(sessionStorage.getItem("levels"));
   }
@@ -30,7 +29,7 @@ export class CriteriaComponent implements OnInit {
     var criterion = new Criterion();
     criterion.block = new Block();
     criterion.value = 0;
-    this.estimation.globalCriteria.push(criterion);
+    this.estimation.parameters.push(criterion);
   }
 
   deleteCriterion(criterion: Criterion) {
@@ -41,8 +40,8 @@ export class CriteriaComponent implements OnInit {
       icon: 'pi pi-trash',
       acceptLabel: 'Si',
       accept: () => {
-        const index = this.estimation.globalCriteria.indexOf(criterion, 0);
-        this.estimation.globalCriteria.splice(index, 1);
+        const index = this.estimation.parameters.indexOf(criterion, 0);
+        this.estimation.parameters.splice(index, 1);
       },
       reject: () => {
       }
@@ -56,7 +55,7 @@ export class CriteriaComponent implements OnInit {
     element.verySimple = 0;
     element.medium = 0;
     element.complex = 0;
-    this.estimation.elementsWeights.push(element);
+    this.estimation.elementWeight.push(element);
   }
 
   deleteElementWeight(elementWeight: ElementWeight) {
@@ -66,8 +65,8 @@ export class CriteriaComponent implements OnInit {
       icon: 'pi pi-trash',
       acceptLabel: 'Si',
       accept: () => {
-        const index = this.estimation.elementsWeights.indexOf(elementWeight, 0);
-        this.estimation.elementsWeights.splice(index, 1);
+        const index = this.estimation.elementWeight.indexOf(elementWeight, 0);
+        this.estimation.elementWeight.splice(index, 1);
       },
       reject: () => {
       }

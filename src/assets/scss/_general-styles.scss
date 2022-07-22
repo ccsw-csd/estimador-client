@@ -508,6 +508,16 @@ span.text_red {
   /* ESTILO DE LAS TABLAS */
   .p-datatable {
 
+    .p-datatable-tbody > tr > td.right, .p-datatable-thead > tr > th.right, .p-datatable-tfoot > tr > td.right {
+      text-align: right;
+    }
+
+    .p-datatable-tbody > tr > td.right {
+      input {
+          text-align: right;
+      }
+  }
+
     .p-datatable-tbody > tr > td.centered, .p-datatable-thead > tr > th.centered, .p-datatable-tfoot > tr > td.centered {
       text-align: center;
     }
