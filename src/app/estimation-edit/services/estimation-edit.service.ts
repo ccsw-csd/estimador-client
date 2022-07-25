@@ -28,6 +28,9 @@ export class EstimationEditService {
       if (estimation.id) {
         url += estimation.id;
       }
+      else {
+        url += "new";
+      }
 
       return this.http.post<Estimation>(url, estimation);
     }

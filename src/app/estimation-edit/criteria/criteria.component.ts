@@ -35,10 +35,10 @@ export class CriteriaComponent implements OnInit {
   deleteCriterion(criterion: Criterion) {
 
     this.confirmationService.confirm({
-      target: event.target,
-      message: 'Estas seguro de eliminar esta fila?',
+      header: 'Eliminar criterio global',
+      message: '¿Estás seguro que deseas eliminar esta fila?',
       icon: 'pi pi-trash',
-      acceptLabel: 'Si',
+      acceptLabel: 'Sí',
       accept: () => {
         const index = this.estimation.parameters.indexOf(criterion, 0);
         this.estimation.parameters.splice(index, 1);
@@ -60,10 +60,10 @@ export class CriteriaComponent implements OnInit {
 
   deleteElementWeight(elementWeight: ElementWeight) {
     this.confirmationService.confirm({
-      target: event.target,
-      message: 'Estas seguro de eliminar esta fila?',
+      header: 'Eliminar peso de componente',
+      message: '¿Estás seguro que deseas eliminar esta fila?',
       icon: 'pi pi-trash',
-      acceptLabel: 'Si',
+      acceptLabel: 'Sí',
       accept: () => {
         const index = this.estimation.elementWeight.indexOf(elementWeight, 0);
         this.estimation.elementWeight.splice(index, 1);

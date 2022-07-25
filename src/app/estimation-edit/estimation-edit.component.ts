@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CostPerGrade } from 'src/app/core/model/CostPerGrade';
+import { ConfirmationService } from 'primeng/api';
 import { Estimation } from 'src/app/core/model/Estimation';
 import { Fte } from 'src/app/core/model/Fte';
 import { ProfileParticipation } from 'src/app/core/model/ProfileParticipation';
-import { Project } from 'src/app/core/model/Project';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ElementWeightService } from './services/elementWeight/element-weight.service';
 import { EstimationEditService } from './services/estimation-edit.service';
@@ -31,78 +30,20 @@ export class EstimationEditComponent implements OnInit {
     private elementWeightService: ElementWeightService,
     private globalCriteriaService: GlobalCriteriaService,
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     var grades = ["A", "B", "C", "D"];
 
     var routeId = this.route.snapshot.paramMap.get('id');
     
-    if(routeId == null) {
-      var dataTotal = 2;
-      var blocks = JSON.parse(sessionStorage.getItem("blocks"));
-      var profiles = JSON.parse(sessionStorage.getItem("profiles"));
-      this.estimation = new Estimation();
-      this.estimation.project = new Project();
-      this.estimation.showhours = false;
-      this.estimation.architectureTasks = [];
-      this.estimation.considerations = [];
-      this.estimation.developmentTasksHours = [];
-      this.estimation.developmentTasksWeights = [];
-      this.estimation.distribution = [];
-      this.estimation.teamPyramid = [];
-      this.estimation.costs = [];
+    this.estimationEditService.getEstimation(+routeId).subscribe((estimation) => {
+      estimation.teamPyramid.sort((a : Fte,b : Fte) => a.profile.id - b.profile.id);
+      estimation.distribution.sort((a : ProfileParticipation,b : ProfileParticipation) => a.block.id - b.block.id);
 
-      /*
-      this.elementWeightService.findElementWeightsByEstimationId(1).subscribe((data) => {
-        //TODOthis.estimation.elementsWeights = data;
-        this.stopLoading(dataTotal--);
-      });
-
-      this.userService.getUserByUsername(this.authService.getUsername()).subscribe((user) => {
-        //TODOthis.estimation.createdBy = user;
-        this.stopLoading(dataTotal--);
-      });
-
-      this.globalCriteriaService.findGlobalCriteriaByEstimationId(1).subscribe((data) => {
-        //TODOthis.estimation.globalCriteria = data;
-        this.stopLoading(dataTotal--);
-      });
-      */
-      
-      grades.forEach(grade => {
-        var costByGradeRow = new CostPerGrade();
-        costByGradeRow.grade = grade;
-        costByGradeRow.cost = 0;
-        costByGradeRow.workdays = 0;
-        costByGradeRow.margin = 0;
-        costByGradeRow.revenue = 0;
-        this.estimation.costs.push(costByGradeRow);
-      })
-      
-
-      blocks.forEach(block => {
-        var profPart = new ProfileParticipation();
-        profPart.block = block;
-        profPart.total = 0;
-        profPart.workdays = 0;
-        this.estimation.distribution.push(profPart);
-      });
-
-      profiles.forEach(profile => {
-        var fte = new Fte();
-        fte.profile = profile;
-        fte.fte = 0;
-        this.estimation.teamPyramid.push(fte);
-      });
-    }
-    else {
-      this.estimationEditService.getEstimation(+routeId).subscribe((estimation) => {
-        estimation.teamPyramid.sort((a : Fte,b : Fte) => a.profile.id - b.profile.id);
-        estimation.distribution.sort((a : ProfileParticipation,b : ProfileParticipation) => a.block.id - b.block.id);
-        this.initialize(estimation);
-      });
-    }
+      this.initialize(estimation);
+    });
   }
 
   initialize(estimation: Estimation) : void {
@@ -121,6 +62,36 @@ export class EstimationEditComponent implements OnInit {
   }
 
   save() {
+
+    let errorParams = ``;
+
+    if (this.estimation.project == null || this.estimation.project.name == null || this.estimation.project.name.length == 0) {
+      errorParams += `<li><b>Datos generales.</b> El 'Nombre del proyecto' no puede estar vacío</li>`; 
+    }
+
+    if (this.estimation.project == null || this.estimation.project.customer == null || this.estimation.project.customer.name == null || this.estimation.project.customer.name.length == 0) {
+      errorParams += `<li><b>Datos generales.</b> El 'Cliente' no puede estar vacío</li>`; 
+    }
+    
+    if (errorParams.length > 0) {
+      let message = `No se puede guardar la estimación ya que existen errores en algunos campos: <br/><ul>`+errorParams+`</ul>`;
+      
+      this.confirmationService.confirm({
+        header: 'Error al guardar estimación',
+        message: message,
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'Aceptar',
+        acceptIcon: '',
+        rejectVisible: false,
+        closeOnEscape: false,      
+        accept: () => {
+        }
+      });
+
+      return;
+    }
+
+
     this.loading = true;
     this.estimationEditService.saveEstimation(this.estimation).subscribe((estimationId) => {
 

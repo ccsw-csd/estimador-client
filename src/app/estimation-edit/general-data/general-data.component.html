@@ -11,7 +11,7 @@
                 <div class="medium_input">
                     <span class="p-float-label">
                         <input *ngIf="estimation.id" [disabled]="true" id="customer-input" type="text" pInputText [(ngModel)]="estimation.project.customer.name"> 
-                        <p-autoComplete required *ngIf="estimation.id==null" id="customer-input" [(ngModel)]="customer" [suggestions]="customers" (completeMethod)="searchCustomers($event)" (onBlur)="updateCustomer()" field="name"></p-autoComplete> 
+                        <p-autoComplete required *ngIf="estimation.id==null" id="customer-input" [(ngModel)]="customer" [suggestions]="customers" (completeMethod)="searchCustomers($event)" (onSelect)="updateCustomer()" (onBlur)="updateCustomer()" field="name"></p-autoComplete> 
                         <label for="customer-input">Cliente</label>
                     </span>
                 </div>
