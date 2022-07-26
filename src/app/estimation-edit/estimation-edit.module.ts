@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EstimationEditComponent } from './estimation-edit/estimation-edit.component';
+import { EstimationEditComponent } from './estimation-edit.component';
 import {TabViewModule} from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
 import { GeneralDataComponent } from './general-data/general-data.component';
@@ -18,9 +18,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CommentDialogComponent } from './tasks/comment-dialog/comment-dialog.component';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
-
 
 
 @NgModule({
@@ -46,7 +46,8 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     InputNumberModule,
     ToggleButtonModule,
     ConfirmPopupModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    ConfirmDialogModule
   ],
   providers: [ConfirmationService]
 })

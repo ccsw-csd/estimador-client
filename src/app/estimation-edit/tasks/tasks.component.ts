@@ -62,7 +62,7 @@ export class TasksComponent implements OnInit {
     task.quantitySimple = 0;
     task.quantityMedium = 0;
     task.quantityComplex = 0;
-    task.workElementWeight = this.estimation.elementsWeights[0];
+    task.workElementWeight = this.estimation.elementWeight[0];
     this.estimation.developmentTasksWeights.push(task);
   }
 
@@ -156,7 +156,7 @@ export class TasksComponent implements OnInit {
 
     var calculationInfo = new WeightCalculationRequest();
     calculationInfo.tasks = this.estimation.developmentTasksWeights;
-    calculationInfo.weights = this.estimation.elementsWeights;
+    calculationInfo.weights = this.estimation.elementWeight;
 
     if(calculationInfo.tasks.length > 0 && calculationInfo.weights.length > 0) {
       this.weightCalculatorService.calculateWeights(calculationInfo).subscribe((data) => {
@@ -172,7 +172,8 @@ export class TasksComponent implements OnInit {
 
   getGlobalTasks() {
     var calculationInfo = new CriteriaCalculationRequest();
-    calculationInfo.criteriaList = this.estimation.globalCriteria;
+    calculationInfo.criteriaList = this.estimation.parameters;
+    calculationInfo.archytectureHours = this.architectureTotal;
 
     if(this.estimation.showhours) {
       calculationInfo.hours = this.developmentTotal;
@@ -180,6 +181,7 @@ export class TasksComponent implements OnInit {
     else {
       calculationInfo.hours = this.developmentWeightTotal;
     }
+
 
     this.criteriaCalculationService.calculateHoursWithCriteria(calculationInfo).subscribe((data) => {
       this.globalTasks = data;

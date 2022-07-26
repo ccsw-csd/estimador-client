@@ -21,4 +21,17 @@ export class EstimationEditService {
     findCustomersByFilter(filter: string): Observable<Customer[]> {
       return this.http.post<Customer[]>(environment.server + '/customer/', filter);
     }
+
+    saveEstimation(estimation: Estimation): Observable<Estimation> {
+      let url = environment.server + '/estimation/';
+
+      if (estimation.id) {
+        url += estimation.id;
+      }
+      else {
+        url += "new";
+      }
+
+      return this.http.post<Estimation>(url, estimation);
+    }
 }

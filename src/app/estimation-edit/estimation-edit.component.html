@@ -1,11 +1,12 @@
 <div id="edit-component">
+    <p-confirmDialog [style]="{width: '600px', height: 'auto'}"></p-confirmDialog>
     <div *ngIf="loading" class="loadWrapper">
         <p-progressSpinner></p-progressSpinner>
     </div>
 
     <p-tabView (onChange)="onChange($event)">
         <p-tabPanel header="Datos generales">
-            <app-general-data *ngIf="!loading" [estimation]="estimation" [collaborators]="collaborators"></app-general-data>
+            <app-general-data *ngIf="!loading" [estimation]="estimation"></app-general-data>
         </p-tabPanel>
         <p-tabPanel header="Criterios">
             <app-criteria *ngIf="!loading" [estimation]="estimation"></app-criteria>
@@ -20,6 +21,6 @@
 
     <div class="button-container">
         <p-button class="secondary" label="Cerrar" (click)="close()"></p-button>
-        <p-button class="primary" label="Guardar"></p-button>
+        <p-button class="primary" label="Guardar" (click)="save()"></p-button>
     </div>
 </div>

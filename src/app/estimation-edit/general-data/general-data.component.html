@@ -3,21 +3,21 @@
         <h2 class="tabview-title">Datos generales</h2>
         <div id="data" class="flex-content">
             <span class="p-float-label big_input">
-                <input required [disabled]="!nueva" id="name-input" type="text" pInputText [(ngModel)]="estimation.project.name"> 
+                <input required [disabled]="estimation.id" id="name-input" type="text" pInputText [(ngModel)]="estimation.project.name"> 
                 <label for="name-input">Nombre del proyecto</label>
             </span>
 
             <div class="input-container">
                 <div class="medium_input">
                     <span class="p-float-label">
-                        <input *ngIf="!nueva" [disabled]="true" id="customer-input" type="text" pInputText [(ngModel)]="estimation.project.customer.name"> 
-                        <p-autoComplete required *ngIf="nueva" id="customer-input" [(ngModel)]="customer" [suggestions]="customers" (completeMethod)="searchCustomers($event)" (onBlur)="updateCustomer()" field="name"></p-autoComplete> 
+                        <input *ngIf="estimation.id" [disabled]="true" id="customer-input" type="text" pInputText [(ngModel)]="estimation.project.customer.name"> 
+                        <p-autoComplete required *ngIf="estimation.id==null" id="customer-input" [(ngModel)]="customer" [suggestions]="customers" (completeMethod)="searchCustomers($event)" (onSelect)="updateCustomer()" (onBlur)="updateCustomer()" field="name"></p-autoComplete> 
                         <label for="customer-input">Cliente</label>
                     </span>
                 </div>
  
                 <span class="p-float-label small_input">
-                    <input required [disabled]="!nueva" id="version-input" type="text" pInputText [(ngModel)]="estimation.estVersion"> 
+                    <input required [disabled]="estimation.id" id="version-input" type="text" pInputText [(ngModel)]="estimation.estVersion"> 
                     <label for="version-input">Versión</label>
                 </span>
             </div>
@@ -63,13 +63,13 @@
                         <th>Acción</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-estcollab>
+                <ng-template pTemplate="body" let-item>
                     <tr>
-                        <td>{{estcollab.collaborator.username}}</td>
-                        <td>{{estcollab.collaborator.firstName}}</td>
-                        <td>{{estcollab.collaborator.lastName}}</td>
+                        <td>{{item.username}}</td>
+                        <td>{{item.firstName}}</td>
+                        <td>{{item.lastName}}</td>
                         <td>
-                            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteCollaborator(estcollab)"></button>
+                            <button *ngIf="item.id != estimation.createdBy.id" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteCollaborator(item)"></button>
                         </td>
                     </tr>
                 </ng-template>

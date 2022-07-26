@@ -180,7 +180,7 @@
             <td pEditableColumn class="centered">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
-                        <p-dropdown [options]="estimation.elementsWeights" [(ngModel)]="task.workElementWeight" optionLabel="element" [style]="{'width':'100%'}" (ngModelChange)="getDevelopmentWeightsHours()"></p-dropdown>
+                        <p-dropdown [options]="estimation.elementWeight" [(ngModel)]="task.workElementWeight" optionLabel="element" [style]="{'width':'100%'}" (ngModelChange)="getDevelopmentWeightsHours()"></p-dropdown>
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{task.workElementWeight.element}}
@@ -280,7 +280,7 @@
 
     <ng-template pTemplate="body" let-task>
         <tr>
-            <td class="read-only-cell global-task">{{task.concept}}</td>
+            <td class="read-only-cell global-task">{{task.block.name}} - {{task.concept}}</td>
             <td class="read-only-cell centered global-task">{{task.hours | number: '1.0-2'}}</td>
             <td class="read-only-cell"></td>
         </tr>

@@ -8,6 +8,7 @@ import { Project } from "./Project";
 import { TaskArchitecture } from "./TaskArchitecture";
 import { TaskDevelopmentHours } from "./TaskDevelopmentHours";
 import { TaskDevelopmentWeights } from "./TaskDevelopmentWeights";
+import { CostPerGrade } from "./CostPerGrade";
 
 export class Estimation{
     id: number;
@@ -20,12 +21,14 @@ export class Estimation{
     lastUpdate: Date;
     status: number;
     showhours: Boolean;
-    globalCriteria: Criterion[];
-    elementsWeights: ElementWeight[];
+    parameters: Criterion[];
+    elementWeight: ElementWeight[];
     architectureTasks: TaskArchitecture[];
     developmentTasksHours: TaskDevelopmentHours[];
     developmentTasksWeights: TaskDevelopmentWeights[];
     considerations: Consideration[];
-    profileParticipation: ProfileParticipation[]; 
+    distribution: ProfileParticipation[]; 
     teamPyramid: Fte[];
+    costs: CostPerGrade[];
+    collaborators: User[];
 }

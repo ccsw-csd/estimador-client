@@ -16,10 +16,9 @@ import { UserService } from '../services/user/user.service';
 export class GeneralDataComponent implements OnInit {
 
   @Input() estimation: Estimation;
-  @Input() collaborators: Collaborator[];
+  collaborators: User[];
   customers: Customer[] = [];
   users: User[] = [];
-  nueva: boolean = false;
   customer: any;
 
   constructor(private estimationEditService: EstimationEditService,
@@ -29,15 +28,24 @@ export class GeneralDataComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if(this.estimation.id == undefined) {
-      this.nueva = true;
-      this.estimation.created = new Date();
-    }
-    else {
-      var date = new Date(this.estimation.created);
-      this.estimation.created = date;
-    }
-    this.estimation.lastUpdate = new Date();
+    this.collaborators = this.estimation.collaborators;
+    this.sortCollaborators();
+
+    
+  }
+
+  sortCollaborators(): void {
+    this.collaborators.sort((a, b) => {
+      if (a.username > b.username) {
+        return 1;
+      }
+
+      if (a.username < b.username) {
+          return -1;
+      }
+
+      return 0;
+    });
   }
 
   searchCustomers(event) {
@@ -46,14 +54,26 @@ export class GeneralDataComponent implements OnInit {
     })
   }
 
+  waitFunction = null;
+  lastCustomer = null;
+
   updateCustomer() {
-    if(typeof(this.customer) === "string") {
-      this.updateCustomerString();
-    }
-    else if(this.customer != null) {
-      this.updateCustomerObject();
-    }
+
+    if (this.waitFunction) clearTimeout(this.waitFunction);
+    this.waitFunction = setTimeout(()=>{this.loadCustomerData()}, 200);
   }
+  
+  
+  private loadCustomerData() {
+    
+    this.waitFunction = null;
+    if (this.lastCustomer && this.customer && this.lastCustomer.id == this.customer.id) return;
+    this.lastCustomer = this.customer;
+    
+    if (this.customer && this.customer.id) this.updateCustomerValues();
+    else this.updateDefaultCustomerValues();
+  }
+
 
   searchCollaborator(event) {
     this.userService.findUsersByFilter(event.query).subscribe((data) => {
@@ -62,12 +82,13 @@ export class GeneralDataComponent implements OnInit {
   }
 
   addCollaborator(event) {
-    if(!this.collaborators.find(c => c.collaborator.username === event.username)) {
-      var newCollaborator = new Collaborator();
-      newCollaborator.collaborator = event;
-      newCollaborator.estimation = this.estimation;
-      this.collaborators.push(newCollaborator);
+    if(!this.collaborators.find(c => c.username === event.username)) {
+      var newCollaborator = new User();
+      this.collaborators.push(event);
+      this.sortCollaborators();
     }
+
+
   }
 
   deleteCollaborator(collaborator) {
@@ -75,37 +96,26 @@ export class GeneralDataComponent implements OnInit {
     this.collaborators.splice(index, 1);
   }
 
-  updateCustomerString() {
+  updateDefaultCustomerValues() {
     this.estimation.project.customer = {id: null, name: this.customer};
-      this.globalCriteriaService.findGlobalCriteriaByEstimationId(1).subscribe((criteria) => {
-        this.estimation.globalCriteria = criteria;
-      });
-      this.elementWeightService.findElementWeightsByEstimationId(1).subscribe((weights) => {
-        this.estimation.elementsWeights = weights;
-      });
+
+    this.globalCriteriaService.findGlobalCriteriaByEstimationId(1).subscribe((parameters) => {
+      this.estimation.parameters = parameters;
+    });
+    this.elementWeightService.findElementWeightsByEstimationId(1).subscribe((weights) => {
+      this.estimation.elementWeight = weights;
+    });
   }
 
-  updateCustomerObject() {
+  updateCustomerValues() {
     this.estimation.project.customer = this.customer;
-    this.globalCriteriaService.findGlobalCriteriaByEstimationCustomer(this.estimation.project.customer).subscribe((criteria) => {
-      if(criteria == null || criteria == []) {
-        this.globalCriteriaService.findGlobalCriteriaByEstimationId(1).subscribe((criteriaDefault) => {
-          this.estimation.globalCriteria = criteriaDefault;
-        });
-      }
-      else {
-        this.estimation.globalCriteria = criteria;
-      }
-      this.elementWeightService.findElementWeightsByEstimationCustomer(this.estimation.project.customer).subscribe((weights) => {
-        if(weights == null || weights == []) {
-          this.elementWeightService.findElementWeightsByEstimationId(1).subscribe((weightsDefault) => {
-            this.estimation.elementsWeights = weightsDefault;
-          });
-        }
-        else {
-          this.estimation.elementsWeights = weights;
-        }
-      });
+
+    this.globalCriteriaService.findGlobalCriteriaByEstimationCustomer(this.estimation.project.customer).subscribe((parameters) => {
+      this.estimation.parameters = parameters;
     });
+    this.elementWeightService.findElementWeightsByEstimationCustomer(this.estimation.project.customer).subscribe((weights) => {
+        this.estimation.elementWeight = weights;
+    });
+
   }
 }
