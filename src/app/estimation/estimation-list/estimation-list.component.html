@@ -29,7 +29,7 @@
 
     <p-table #table [value]="estimations" [lazy]="true" (onLazyLoad)="loadPage($event)" [totalRecords]="totalElements" [loading]="loading" 
     [scrollable]="true" responsiveLayout="scroll" scrollHeight="calc(100vh - 330px)" [paginator]="true" [rows]="25" [showCurrentPageReport]="true" 
-    currentPageReportTemplate="{first} - {last} of {totalRecords}" [rowsPerPageOptions]="[10,25,50]">
+    currentPageReportTemplate="{first} - {last} of {totalRecords}" [rowsPerPageOptions]="[10,25,50]" sortField="lastUpdate" [sortOrder]="-1">
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="project.customer.name">Cliente <p-sortIcon field="project.customer.name"></p-sortIcon></th>
@@ -52,7 +52,7 @@
                 <td>
                     <div style="display:flex; justify-content:space-between; width:150px">
                         <button pButton pRipple type="button" icon="pi pi-pencil" (click)="editEstimation(estimation.id)" class="p-button-rounded p-button-text p-button-plain icon"></button>
-                        <button pButton pRipple type="button" icon="pi pi-copy" class="p-button-rounded p-button-text p-button-plain icon"></button>                    
+                        <button pButton pRipple type="button" icon="pi pi-copy" (click)="copyEstimation(estimation)" class="p-button-rounded p-button-text p-button-plain icon"></button>                    
                         <button pButton pRipple type="button" icon="pi pi-history" (click)="openVersionDialog(estimation.project.id)" class="p-button-rounded p-button-text p-button-plain icon"></button>
                     </div>
                 </td>

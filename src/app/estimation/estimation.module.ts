@@ -9,12 +9,14 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
+import { EstimationCreateCopyComponent } from './estimation-create-copy/estimation-create-copy.component';
 
 
 @NgModule({
   declarations: [
     EstimationListComponent,
     EstimationVersionsComponent,
+    EstimationCreateCopyComponent,
   ],
   imports: [
     CommonModule,

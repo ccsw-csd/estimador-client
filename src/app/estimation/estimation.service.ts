@@ -13,6 +13,7 @@ import { Estimation } from '../core/model/Estimation';
 })
 export class EstimationService {
 
+
   url: string = environment.server+'/estimation';
 
   constructor(
@@ -54,4 +55,10 @@ export class EstimationService {
   getEstimationVersions(projectId?: number): Observable<Estimation[]>{
     return this.http.get<Estimation[]>(this.url + '/version/' + projectId);
   }
+
+  duplicate(estimation: Estimation): Observable<Estimation>{
+    return this.http.put<Estimation>(this.url + '/' + estimation.id + '/duplicate', {version:estimation.estVersion});
+  }
+
+
 }

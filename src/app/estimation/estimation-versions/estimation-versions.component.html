@@ -23,7 +23,7 @@
                 <td>{{estimation.totalCost | number:'1.2-2':'es-ES'}}€</td>
                 <td>
                     <button pButton pRipple type="button" icon="pi pi-pencil" (click)="editEstimation(estimation.id)" class="p-button-rounded p-button-text p-button-plain icon"></button>
-                    <button pButton pRipple type="button" icon="pi pi-copy" (click)="copyEstimation(estimation.id)" class="p-button-rounded p-button-text p-button-plain icon"></button>                    
+                    <button pButton pRipple type="button" icon="pi pi-copy" (click)="copyEstimation(estimation)" class="p-button-rounded p-button-text p-button-plain icon"></button>                    
                 </td>
             </tr>
         </ng-template>

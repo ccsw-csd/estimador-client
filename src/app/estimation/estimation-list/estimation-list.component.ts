@@ -8,6 +8,8 @@ import { LazyLoadEvent } from 'primeng/api';
 import { Router } from '@angular/router';
 import { DialogService } from 'primeng/dynamicdialog';
 import { EstimationVersionsComponent } from '../estimation-versions/estimation-versions.component';
+import { EstimationCreateCopyComponent } from '../estimation-create-copy/estimation-create-copy.component';
+import { ResponseCredentials } from 'src/app/core/model/ResponseCredentials';
 
 @Component({
   selector: 'app-estimation-list',
@@ -78,6 +80,9 @@ export class EstimationListComponent implements OnInit {
         this.pageSize = data.pageable.pageSize;
         this.totalElements = data.totalElements;
         this.loading = false; 
+
+        //TODO Quitar esto
+        //this.copyEstimation(data.content[2]);
     });
   }
 
@@ -111,6 +116,27 @@ export class EstimationListComponent implements OnInit {
     const ref = this.dialogService.open(EstimationVersionsComponent, {width: '1100px', height: '450px', header:"Listado versiones", closable:true, data: {
       projectId: projectId}
     });
+
+
+    ref.onClose.subscribe((response: any) => {
+      if(response != false && response != null && response.id != null) {
+        this.copyEstimation(response);
+      }
+    });
+
   }
   
+
+  copyEstimation(estimation: any) {
+    const ref = this.dialogService.open(EstimationCreateCopyComponent, {width: '550px', height: '450px', header:"Duplicar version", closable:true, data: estimation});
+    
+    ref.onClose.subscribe((response: any) => {
+      if(response != false && response != null && response.id != null) {
+        this.router.navigate(['/estimation-edit/' + response.id]);
+      }
+    });
+
+
+  }
+
 }

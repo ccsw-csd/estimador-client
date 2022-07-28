@@ -55,8 +55,7 @@ export class EstimationVersionsComponent implements OnInit {
     this.router.navigate(['/estimation-edit/' + id]);
   }
   
-  copyEstimation(id: number) {
-    this.dialogRef.close(false);
-    //TODO
+  copyEstimation(estimation: any) {
+    this.dialogRef.close(estimation);
   }
 }

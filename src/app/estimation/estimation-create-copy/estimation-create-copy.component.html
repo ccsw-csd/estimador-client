@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="form">
+        <span class="p-float-label">
+            <input id="float-input" type="text" pInputText [(ngModel)]="estimation.project.name" disabled> 
+            <label for="float-input">Nombre</label>
+        </span>
+        <span class="p-float-label">
+            <input id="float-input" type="text" pInputText [(ngModel)]="estimation.project.customer.name" disabled> 
+            <label for="float-input">Cliente</label>
+        </span>
+        <div class="row">
+        <span class="p-float-label">
+            <input id="float-input" type="text" pInputText value="{{estimation.lastUpdate | date:'dd/MM/yyyy HH:mm'}}" disabled>
+            <label for="float-input">Fecha actualización</label>
+        </span>
+            <span class="p-float-label">
+                <input id="float-input" type="text" pInputText value="{{estimation.totalDays | number: '1.0': 'es-ES'}}" disabled>             
+                <label for="float-input">Jornadas</label>
+            </span>
+            <span class="p-float-label">
+                <input id="float-input" type="text" pInputText value="{{estimation.totalCost | number:'1.2-2':'es-ES'}}€" disabled> 
+                <label for="float-input">Revenue</label>
+            </span>
+        </div>
+        <span class="p-float-label">
+            <input id="float-input" type="text" pInputText [(ngModel)]="estimation.estVersion"> 
+            <label for="float-input">Versión</label>
+            <small *ngIf="versionError" class="p-invalid">Debes cambiar el nombre de versión.</small>
+        </span>
+        <div class="filterButtons">
+            <p-button class="secondary" label="Cerrar" (click)="close()"></p-button>
+            <p-button class="primary" label="Duplicar" (click)="duplicate()"></p-button>
+        </div>
+    </div>
+</div>
+<div *ngIf="loading" class="loadWrapper">
+    <p-progressSpinner></p-progressSpinner>
+</div>
