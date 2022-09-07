@@ -10,7 +10,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { EstimationCreateCopyComponent } from './estimation-create-copy/estimation-create-copy.component';
-
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 @NgModule({
   declarations: [
@@ -28,6 +28,7 @@ import { EstimationCreateCopyComponent } from './estimation-create-copy/estimati
     CalendarModule,
     InputTextModule,
     DialogModule,
+    InputSwitchModule,
   ],
   providers: [{
     provide: LOCALE_ID,

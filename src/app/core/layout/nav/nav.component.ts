@@ -21,8 +21,7 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = [
-      {label: "Main", routerLink: '/main'},
-      {label: "Feedback", url: 'mailto:ccsw.support@capgemini.com?subject=[Estimador] Consulta / Feedback'}
+      {label: "Estimaciones", routerLink: '/main'},
       ];
 
     this.utilsService.getAppVersion().subscribe((result: any) => {

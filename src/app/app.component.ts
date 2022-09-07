@@ -11,23 +11,11 @@ import { ProfileService } from './estimation-edit/services/profile/profile.servi
 export class AppComponent implements OnInit {
   title = 'estimador';
 
-  constructor(private profileService: ProfileService,
-    private blockService: BlockService,
-    private estimationLevelService: EstimationLevelsService) {}
+  constructor() {
+    
+  }
 
   ngOnInit(): void {
-    
-    this.blockService.findBlocks().subscribe((blocks) => {
-      sessionStorage.setItem("blocks", JSON.stringify(blocks));
-    });
-
-    this.profileService.findProfiles().subscribe((profiles) => {
-      sessionStorage.setItem("profiles", JSON.stringify(profiles));
-    });
-
-    this.estimationLevelService.findEstimationLevels().subscribe((levels) => {
-      sessionStorage.setItem("levels", JSON.stringify(levels));
-    });
   }
 }
 

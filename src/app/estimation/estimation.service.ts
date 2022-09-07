@@ -48,8 +48,15 @@ export class EstimationService {
       else return this.url + '?'+params;
     }
 
-  getEstimations(pageable: Pageable, customerId? :number, projectName?: string, startDate?: Date, endDate?: Date): Observable<EstimationPage>{
-    return this.http.post<EstimationPage>(this.composeFindUrl(customerId, projectName, startDate, endDate),{pageable:pageable, customerId, projectName, startDate, endDate});
+  getEstimations(pageable: Pageable, adminView: Boolean, customerId? :number, projectName?: string, startDate?: Date, endDate?: Date): Observable<EstimationPage>{
+    return this.http.post<EstimationPage>(this.composeFindUrl(customerId, projectName, startDate, endDate),{
+        pageable:pageable, 
+        adminView: adminView, 
+        customerId, 
+        projectName, 
+        startDate, 
+        endDate
+      });
   }
 
   getEstimationVersions(projectId?: number): Observable<Estimation[]>{

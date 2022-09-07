@@ -2,9 +2,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { LoginService } from 'src/app/login/services/login.service';
 import { AuthService } from '../../services/auth.service';
 import { SnackbarService } from '../../services/snackbar.service';
-import { User } from '../../model/User';
 import { DialogService } from 'primeng/dynamicdialog';
 import { MenuItem } from 'primeng/api';
+import { UserInfoSSO } from '../../model/UserInfoSSO';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class HeaderComponent implements OnInit {
 
-  user : User | null = null;
+  user : UserInfoSSO | null = null;
   navOpen = true;
   isloading : boolean = false;
   @Output() navOpenEvent = new EventEmitter();
@@ -46,7 +47,7 @@ export class HeaderComponent implements OnInit {
   getName() : string {
     if (this.user == null) return "";
 
-    let name : string = this.user.username;
+    let name : string = this.user.displayName;
 
     return name;
   }
@@ -54,4 +55,15 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
+
+  getEmailRef() {
+    let gitWord2 = "pge";
+    let gitWord4 = "i";
+    let gitWord3 = "min";
+    let gitWord1 = "ca";
+
+    let gitWord = gitWord1+gitWord2+gitWord3+gitWord4;
+
+    return "mailto:ccsw.support@"+gitWord+".com?subject=["+environment.appCode+"] Consulta / Feedback";
+  }  
 }

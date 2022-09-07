@@ -63,6 +63,17 @@ export class EstimationEditComponent implements OnInit {
 
   save() {
 
+      if(!this.estimation.showhours) {
+        this.tasks.getDevelopmentWeightsHours();
+      }
+      this.tasks.getGlobalTasks();
+
+      this.summary.initializeCalculation();
+
+    console.log(this.estimation.totalCost);
+
+    return;
+
     let errorParams = ``;
 
     if (this.estimation.project == null || this.estimation.project.name == null || this.estimation.project.name.length == 0) {

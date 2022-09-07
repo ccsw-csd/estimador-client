@@ -2,6 +2,11 @@
     <div class="title-button">
         <h1> Listado de estimaciones </h1>
         <p-button class="primary" label="Crear estimación" (click)="createEstimation()"></p-button>
+        <div style="flex:1"></div>
+        <div *ngIf="roleAdmin" style="display:flex">
+                <h3>Admin View&nbsp;&nbsp;</h3>
+                <p-inputSwitch [(ngModel)]="adminView" (onChange)="changeAdminView()"></p-inputSwitch>
+        </div>
     </div>
 
     <div class="filters">
@@ -28,7 +33,7 @@
     </div>
 
     <p-table #table [value]="estimations" [lazy]="true" (onLazyLoad)="loadPage($event)" [totalRecords]="totalElements" [loading]="loading" 
-    [scrollable]="true" responsiveLayout="scroll" scrollHeight="calc(100vh - 330px)" [paginator]="true" [rows]="25" [showCurrentPageReport]="true" 
+    [scrollable]="true" responsiveLayout="scroll" scrollHeight="calc(100vh - 350px)" [paginator]="true" [rows]="25" [showCurrentPageReport]="true" 
     currentPageReportTemplate="{first} - {last} of {totalRecords}" [rowsPerPageOptions]="[10,25,50]" sortField="lastUpdate" [sortOrder]="-1">
         <ng-template pTemplate="header">
             <tr>

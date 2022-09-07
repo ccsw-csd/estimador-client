@@ -8,7 +8,6 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpInterceptorService } from './services/http-interceptor.service';
-import { UserResolverService } from './services/user-resolver.service';
 import {DialogService, DynamicDialogModule} from 'primeng/dynamicdialog';
 import {SidebarModule} from 'primeng/sidebar';
 import {ToolbarModule} from 'primeng/toolbar';
@@ -40,7 +39,6 @@ import { MessageService } from 'primeng/api';
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
-    UserResolverService,
     DialogService,
     MessageService
   ],

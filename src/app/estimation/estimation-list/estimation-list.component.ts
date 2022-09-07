@@ -10,6 +10,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { EstimationVersionsComponent } from '../estimation-versions/estimation-versions.component';
 import { EstimationCreateCopyComponent } from '../estimation-create-copy/estimation-create-copy.component';
 import { ResponseCredentials } from 'src/app/core/model/ResponseCredentials';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-estimation-list',
@@ -18,6 +19,8 @@ import { ResponseCredentials } from 'src/app/core/model/ResponseCredentials';
 })
 export class EstimationListComponent implements OnInit {
 
+  adminView: boolean = false;
+  roleAdmin: boolean = false;
   pageNumber: number = 0;
   pageSize: number = 25;
   totalElements: number = 0;
@@ -43,10 +46,16 @@ export class EstimationListComponent implements OnInit {
     private estimationService: EstimationService,
     private customerService: CustomerService,
     private router: Router,
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    public authService: AuthService,
   ) { }
 
   ngOnInit(): void {
+
+    if (this.authService.getRoles().indexOf("ADMIN") >= 0) {
+      this.roleAdmin = true;
+    }
+
     this.customerService.getCustomers().subscribe(
       customers => this.customers = customers
     );
@@ -74,7 +83,7 @@ export class EstimationListComponent implements OnInit {
           pageable.sort = [{property: event.sortField, direction: event.sortOrder == 1? "asc": "desc"}];
     }
 
-    this.estimationService.getEstimations(pageable, this.customerId, this.projectName, this.startDate, this.endDate).subscribe(data => {
+    this.estimationService.getEstimations(pageable, this.adminView, this.customerId, this.projectName, this.startDate, this.endDate).subscribe(data => {
         this.estimations = data.content;
         this.pageNumber = data.pageable.pageNumber;
         this.pageSize = data.pageable.pageSize;
@@ -84,6 +93,10 @@ export class EstimationListComponent implements OnInit {
         //TODO Quitar esto
         //this.copyEstimation(data.content[2]);
     });
+  }
+
+  changeAdminView() : void {
+    this.loadPage();
   }
 
   onCleanFilter(): void{

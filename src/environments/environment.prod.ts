@@ -1,4 +1,7 @@
 export const environment = {
   production: true,
-  server: 'http://localhost:8080',
+  appCode: 'estimador',
+  server: '../estimador-data',
+  sso: '../sso'
+
 };
