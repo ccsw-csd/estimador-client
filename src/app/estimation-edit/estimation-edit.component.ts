@@ -21,6 +21,7 @@ export class EstimationEditComponent implements OnInit {
 
   public estimation: Estimation;
   public loading: Boolean = true;
+  public loaded: Boolean = false;
   @ViewChild('tasks') tasks: TasksComponent;
   @ViewChild('summary') summary: SummaryComponent;
 
@@ -58,22 +59,11 @@ export class EstimationEditComponent implements OnInit {
       }
       this.estimation.lastUpdate = new Date();
 
+      this.loaded = true;
       this.loading = false;
   }
 
   save() {
-
-      if(!this.estimation.showhours) {
-        this.tasks.getDevelopmentWeightsHours();
-      }
-      this.tasks.getGlobalTasks();
-
-      this.summary.initializeCalculation();
-
-    console.log(this.estimation.totalCost);
-
-    return;
-
     let errorParams = ``;
 
     if (this.estimation.project == null || this.estimation.project.name == null || this.estimation.project.name.length == 0) {
@@ -104,15 +94,32 @@ export class EstimationEditComponent implements OnInit {
 
 
     this.loading = true;
-    this.estimationEditService.saveEstimation(this.estimation).subscribe((estimationId) => {
 
-      this.estimationEditService.getEstimation(+estimationId).subscribe((estimation) => {
-        estimation.teamPyramid.sort((a : Fte,b : Fte) => a.profile.id - b.profile.id);
-        estimation.distribution.sort((a : ProfileParticipation,b : ProfileParticipation) => a.block.id - b.block.id);
-        this.initialize(estimation);
-      });      
 
-    })
+    this.loading = true;
+      this.calculateDevelopmentHours().subscribe(it => {
+        this.summary.initializeCalculation().subscribe(() => {
+
+          this.estimationEditService.saveEstimation(this.estimation).subscribe((estimationId) => {
+
+            this.estimationEditService.getEstimation(+estimationId).subscribe((estimation) => {
+              estimation.teamPyramid.sort((a : Fte,b : Fte) => a.profile.id - b.profile.id);
+              estimation.distribution.sort((a : ProfileParticipation,b : ProfileParticipation) => a.block.id - b.block.id);
+              this.initialize(estimation);
+            });      
+      
+          })
+        });
+      });
+
+  }
+
+  calculateDevelopmentHours() {
+    if (this.estimation.showhours) {
+      return this.tasks.getGlobalTasks();
+    }
+
+    return this.tasks.getDevelopmentWeightsHoursObservable();
   }
 
   close() {

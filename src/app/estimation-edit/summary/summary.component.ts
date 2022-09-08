@@ -7,6 +7,7 @@ import { BlockCalculationService } from '../services/blockCalculation/block-calc
 import { CriteriaCalculationService } from '../services/criteriaCalculation/criteria-calculation.service';
 import { FteCalculationService } from '../services/fteCalculation/fte-calculation.service';
 import { GradeWorkDaysCalculationService } from '../services/gradeWorkDaysCalculation/grade-work-days-calculation.service';
+import { EMPTY, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-summary',
@@ -38,14 +39,16 @@ export class SummaryComponent implements OnInit {
 
     });
 
-    this.initializeCalculation();        
+    this.initializeCalculation().subscribe();        
   }
 
 
-  initializeCalculation(): void {
-    this.calculateFixedFtes();
-    this.calculateTotalFte();
-    this.calculateBlockDuration();
+  initializeCalculation() {
+
+    return this.calculateFixedFtes().pipe(switchMap(() => {
+      this.calculateTotalFte(); //no subscribe
+      return this.calculateBlockDuration();
+    }));
   }
 
 
@@ -80,7 +83,7 @@ export class SummaryComponent implements OnInit {
 
   onChangeGradeValue(id: number) {
     this.calculateTotal(id);
-    this.calculateWorkDaysByGrade();
+    this.calculateWorkDaysByGrade().subscribe();
   }
 
   updateGradeNullValues(element) {
@@ -110,10 +113,10 @@ export class SummaryComponent implements OnInit {
     calculationInfo.hours = request.hours;
     calculationInfo.archytectureHours = request.archytectureHours;
 
-    this.criteriaCalculationService.calculateHoursWithCriteria(calculationInfo).subscribe((data) => {
+    return this.criteriaCalculationService.calculateHoursWithCriteria(calculationInfo).pipe(switchMap((data) => {
       request.criteriaList = data;
 
-      this.blockCalculationService.calculateBlockDuration(request).subscribe((data) => {
+      return this.blockCalculationService.calculateBlockDuration(request).pipe(switchMap((data) => {
         this.estimation.distribution.forEach(element => {
           data.forEach(elementbd => {
             if(element.block.name == elementbd.blockName) {
@@ -122,7 +125,7 @@ export class SummaryComponent implements OnInit {
           });
         });
 
-        this.blockCalculationService.calculateTotalDuration(data).subscribe((duration) => {
+        return this.blockCalculationService.calculateTotalDuration(data).pipe(switchMap((duration) => {
           var managerValue = 0;
           var teamLeaderValue = 0;
 
@@ -148,10 +151,12 @@ export class SummaryComponent implements OnInit {
             }
           });
 
-          this.calculateWorkDaysByGrade();
-        });
-      })
-    });
+          return this.calculateWorkDaysByGrade();
+        }));
+
+      }));
+
+    }));
   }
 
 
@@ -200,11 +205,11 @@ export class SummaryComponent implements OnInit {
 
   onFteChange() {
     this.calculateTotalFte();
-    this.calculateBlockDuration();
+    this.calculateBlockDuration().subscribe();
   }
 
   calculateFixedFtes() {
-    this.fteCalculationService.calculateFte(this.estimation.parameters).subscribe((data) => {
+    return this.fteCalculationService.calculateFte(this.estimation.parameters).pipe(tap((data) => {
       this.estimation.teamPyramid.forEach((element) => {
         if(element.profile.name == "Project Manager") {
           element.fte = data.manager;
@@ -213,7 +218,7 @@ export class SummaryComponent implements OnInit {
           element.fte = data.teamLeader; 
         }
       })
-    });
+    }));
   }
 
   calculateTotalFte() {
@@ -225,7 +230,7 @@ export class SummaryComponent implements OnInit {
   }
 
   calculateWorkDaysByGrade() {
-    this.gradeWorkDaysCalculationService.calculateGradeWorkDays(this.estimation.distribution).subscribe((data) => {
+    return this.gradeWorkDaysCalculationService.calculateGradeWorkDays(this.estimation.distribution).pipe(tap((data) => {
       this.estimation.costs.forEach(row => {
         data.forEach(dataRow => {
           if(row.grade == dataRow.grade) {
@@ -235,7 +240,7 @@ export class SummaryComponent implements OnInit {
       })
 
       this.calculateRevenue();      
-    })
+    }));
   }
 
   calculateRevenue() {

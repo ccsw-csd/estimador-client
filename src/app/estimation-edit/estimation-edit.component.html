@@ -6,16 +6,16 @@
 
     <p-tabView (onChange)="onChange($event)">
         <p-tabPanel header="Datos generales">
-            <app-general-data *ngIf="!loading" [estimation]="estimation"></app-general-data>
+            <app-general-data *ngIf="loaded" [estimation]="estimation"></app-general-data>
         </p-tabPanel>
         <p-tabPanel header="Criterios">
-            <app-criteria *ngIf="!loading" [estimation]="estimation"></app-criteria>
+            <app-criteria *ngIf="loaded" [estimation]="estimation"></app-criteria>
         </p-tabPanel>
         <p-tabPanel header="Tareas">
-            <app-tasks #tasks *ngIf="!loading" [estimation]="estimation"></app-tasks>
+            <app-tasks #tasks *ngIf="loaded" [estimation]="estimation"></app-tasks>
         </p-tabPanel>
         <p-tabPanel header="Resumen">
-            <app-summary #summary *ngIf="!loading" [estimation]="estimation"></app-summary>
+            <app-summary #summary *ngIf="loaded" [estimation]="estimation"></app-summary>
         </p-tabPanel>
     </p-tabView>
 

@@ -11,6 +11,7 @@ import { CommentDialogComponent } from './comment-dialog/comment-dialog.componen
 import { TaskDevelopmentWeights } from 'src/app/core/model/TaskDevelopmentWeights';
 import { WeightCalculationRequest } from 'src/app/core/model/WeightCalculationRequest';
 import { WeightCalculatorService } from '../services/weightCalculator/weight-calculator.service';
+import { EMPTY, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-tasks',
@@ -129,6 +130,10 @@ export class TasksComponent implements OnInit {
   }
 
   getDevelopmentWeightsHours() {
+      this.getDevelopmentWeightsHoursObservable().subscribe();
+  }
+
+  getDevelopmentWeightsHoursObservable() {
 
     this.estimation.developmentTasksWeights.forEach(task => {
       task.elementName = task.workElementWeight.element;
@@ -159,15 +164,17 @@ export class TasksComponent implements OnInit {
     calculationInfo.weights = this.estimation.elementWeight;
 
     if(calculationInfo.tasks.length > 0 && calculationInfo.weights.length > 0) {
-      this.weightCalculatorService.calculateWeights(calculationInfo).subscribe((data) => {
+      return this.weightCalculatorService.calculateWeights(calculationInfo).pipe(switchMap((data) => {
         for(var i = 0; i < data.length; i++) {
           this.estimation.developmentTasksWeights[i].hours = data[i].totalHours;
         }
   
         this.calculateTotalDevelopmentWeight();
-        this.getGlobalTasks();
-      });
+        return this.getGlobalTasks();
+      }));
     }
+
+    return EMPTY;
   }
 
   getGlobalTasks() {
@@ -183,9 +190,9 @@ export class TasksComponent implements OnInit {
     }
 
 
-    this.criteriaCalculationService.calculateHoursWithCriteria(calculationInfo).subscribe((data) => {
+    return this.criteriaCalculationService.calculateHoursWithCriteria(calculationInfo).pipe(tap((data) => {
       this.globalTasks = data;
-    });
+    }));
   }
 
   updateDevelopmentTask(task: TaskDevelopmentHours) {
