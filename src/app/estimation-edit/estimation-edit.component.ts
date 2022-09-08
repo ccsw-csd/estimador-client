@@ -128,13 +128,11 @@ export class EstimationEditComponent implements OnInit {
 
   onChange(event) {
     if(event.index == 2) {
-      if(!this.estimation.showhours) {
-        this.tasks.getDevelopmentWeightsHours();
-      }
-      this.tasks.getGlobalTasks();
+      this.calculateDevelopmentHours().subscribe();
     }
+    
     else if(event.index == 3) {
-      this.summary.initializeCalculation();
+      this.summary.initializeCalculation().subscribe();
     }
   }
 
