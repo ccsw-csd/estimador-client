@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { Block } from 'src/app/core/model/Block';
 import { Criterion } from 'src/app/core/model/Criterion';
@@ -13,6 +13,7 @@ import { EstimationLevel } from 'src/app/core/model/EstimationLevel';
 })
 export class CriteriaComponent implements OnInit {
 
+  @Output() notifyParent: EventEmitter<any> = new EventEmitter();
   @Input() estimation: Estimation;
   blocks: Block[] = [];
   levels: EstimationLevel[] = [];

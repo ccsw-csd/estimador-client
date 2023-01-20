@@ -5,6 +5,8 @@ import { Estimation } from 'src/app/core/model/Estimation';
 import { Fte } from 'src/app/core/model/Fte';
 import { ProfileParticipation } from 'src/app/core/model/ProfileParticipation';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { CriteriaComponent } from './criteria/criteria.component';
+import { GeneralDataComponent } from './general-data/general-data.component';
 import { ElementWeightService } from './services/elementWeight/element-weight.service';
 import { EstimationEditService } from './services/estimation-edit.service';
 import { GlobalCriteriaService } from './services/globalCriteria/global-criteria.service';
@@ -20,7 +22,12 @@ import { TasksComponent } from './tasks/tasks.component';
 export class EstimationEditComponent implements OnInit {
 
   public estimation: Estimation;
-  public loading: Boolean = true;
+  public loadingView: Boolean = true;
+  public loading: Boolean = false;
+  saveEvents = {'save': false};
+
+  @ViewChild('generalData') generalData: GeneralDataComponent;
+  @ViewChild('criteria') criteria: CriteriaComponent;
   @ViewChild('tasks') tasks: TasksComponent;
   @ViewChild('summary') summary: SummaryComponent;
 
@@ -58,22 +65,47 @@ export class EstimationEditComponent implements OnInit {
       }
       this.estimation.lastUpdate = new Date();
 
-      this.loading = false;
+      this.loadingView = false;
+  }
+  
+
+  getNotification(event) {
+
+    Object.keys(event).forEach(key => {
+      this.saveEvents[key] = event[key];
+    });
+
+    let isPrepareCompleted = true;
+
+    Object.keys(this.saveEvents).forEach(key => {
+      isPrepareCompleted = isPrepareCompleted && this.saveEvents[key];
+    });
+
+    if (isPrepareCompleted) this.completeSave();
   }
 
+  
+
   save() {
+    this.loading = true;
 
-      if(!this.estimation.showhours) {
-        this.tasks.getDevelopmentWeightsHours();
-      }
-      this.tasks.getGlobalTasks();
+    this.saveEvents = {'save': false};
 
-      this.summary.initializeCalculation();
+    if(!this.estimation.showhours) {
+      this.getNotification({'getDevelopmentWeightsHours':false});
+      this.tasks.getDevelopmentWeightsHours();
+    }
 
-    console.log(this.estimation.totalCost);
+    this.getNotification({'getGlobalTasks':false});
+    this.tasks.getGlobalTasks();
 
-    return;
+    this.getNotification({'initializeCalculation':false});
+    this.summary.initializeCalculation();
 
+    this.getNotification({'save':true});
+  }
+
+  completeSave() {
     let errorParams = ``;
 
     if (this.estimation.project == null || this.estimation.project.name == null || this.estimation.project.name.length == 0) {
@@ -85,6 +117,7 @@ export class EstimationEditComponent implements OnInit {
     }
     
     if (errorParams.length > 0) {
+      this.loading = false;
       let message = `No se puede guardar la estimación ya que existen errores en algunos campos: <br/><ul>`+errorParams+`</ul>`;
       
       this.confirmationService.confirm({
@@ -102,14 +135,25 @@ export class EstimationEditComponent implements OnInit {
       return;
     }
 
-
-    this.loading = true;
     this.estimationEditService.saveEstimation(this.estimation).subscribe((estimationId) => {
-
+      
+      this.saveEvents = {'save': false};
+      
       this.estimationEditService.getEstimation(+estimationId).subscribe((estimation) => {
         estimation.teamPyramid.sort((a : Fte,b : Fte) => a.profile.id - b.profile.id);
         estimation.distribution.sort((a : ProfileParticipation,b : ProfileParticipation) => a.block.id - b.block.id);
         this.initialize(estimation);
+
+        this.generalData.estimation = this.estimation;
+        this.criteria.estimation = this.estimation;        
+        this.tasks.estimation = this.estimation;
+        this.summary.estimation = this.estimation;
+
+        this.generalData.initializateData();
+        this.tasks.initializateData();
+        this.summary.initializateData();
+
+        this.loading = false;
       });      
 
     })
@@ -133,7 +177,7 @@ export class EstimationEditComponent implements OnInit {
 
   stopLoading(dataTotal: number) {
     if(dataTotal == 0) {
-      this.loading = false;
+      this.loadingView = false;
     }
   }
   

@@ -14,24 +14,24 @@ export class EstimationEditService {
     private http: HttpClient
   ) { }
 
-    getEstimation(id: number): Observable<Estimation> {
-      return this.http.get<Estimation>(environment.server + '/estimation/' + id);
+  getEstimation(id: number): Observable<Estimation> {
+    return this.http.get<Estimation>(environment.server + '/estimation/' + id);
+  }
+
+  findCustomersByFilter(filter: string): Observable<Customer[]> {
+    return this.http.post<Customer[]>(environment.server + '/customer/', filter);
+  }
+
+  saveEstimation(estimation: Estimation): Observable<Estimation> {
+    let url = environment.server + '/estimation/';
+
+    if (estimation.id) {
+      url += estimation.id;
+    }
+    else {
+      url += "new";
     }
 
-    findCustomersByFilter(filter: string): Observable<Customer[]> {
-      return this.http.post<Customer[]>(environment.server + '/customer/', filter);
-    }
-
-    saveEstimation(estimation: Estimation): Observable<Estimation> {
-      let url = environment.server + '/estimation/';
-
-      if (estimation.id) {
-        url += estimation.id;
-      }
-      else {
-        url += "new";
-      }
-
-      return this.http.post<Estimation>(url, estimation);
-    }
+    return this.http.post<Estimation>(url, estimation);
+  }
 }

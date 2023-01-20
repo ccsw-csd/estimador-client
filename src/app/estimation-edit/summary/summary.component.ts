@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BlockCalculationRequest } from 'src/app/core/model/BlockCalculationRequest';
 import { CriteriaCalculationRequest } from 'src/app/core/model/CriteriaCalculationRequest';
 import { Estimation } from 'src/app/core/model/Estimation';
@@ -15,6 +15,7 @@ import { GradeWorkDaysCalculationService } from '../services/gradeWorkDaysCalcul
 })
 export class SummaryComponent implements OnInit {
 
+  @Output() notifyParent: EventEmitter<any> = new EventEmitter();
   @Input() estimation: Estimation;
   fteTotal: number = 0;
   summaryValues: any[];
@@ -26,6 +27,10 @@ export class SummaryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initializateData();
+  }
+
+  initializateData() : void {
     this.estimation.distribution.forEach(element => {
       this.calculateTotal(element.id);
 
@@ -43,9 +48,15 @@ export class SummaryComponent implements OnInit {
 
 
   initializeCalculation(): void {
+    this.notifyParent.emit({'calculateFixedFtes':false});  
     this.calculateFixedFtes();
+
     this.calculateTotalFte();
+
+    this.notifyParent.emit({'calculateBlockDuration':false});  
     this.calculateBlockDuration();
+
+    this.notifyParent.emit({'initializeCalculation':true});  
   }
 
 
@@ -122,6 +133,7 @@ export class SummaryComponent implements OnInit {
           });
         });
 
+        this.notifyParent.emit({'calculateTotalDuration':false});  
         this.blockCalculationService.calculateTotalDuration(data).subscribe((duration) => {
           var managerValue = 0;
           var teamLeaderValue = 0;
@@ -148,8 +160,12 @@ export class SummaryComponent implements OnInit {
             }
           });
 
+          this.notifyParent.emit({'calculateWorkDaysByGrade':false});  
           this.calculateWorkDaysByGrade();
+          this.notifyParent.emit({'calculateTotalDuration':true});  
         });
+
+        this.notifyParent.emit({'calculateBlockDuration':true});  
       })
     });
   }
@@ -204,6 +220,7 @@ export class SummaryComponent implements OnInit {
   }
 
   calculateFixedFtes() {
+    
     this.fteCalculationService.calculateFte(this.estimation.parameters).subscribe((data) => {
       this.estimation.teamPyramid.forEach((element) => {
         if(element.profile.name == "Project Manager") {
@@ -213,6 +230,7 @@ export class SummaryComponent implements OnInit {
           element.fte = data.teamLeader; 
         }
       })
+      this.notifyParent.emit({'calculateFixedFtes':true});  
     });
   }
 
@@ -235,6 +253,8 @@ export class SummaryComponent implements OnInit {
       })
 
       this.calculateRevenue();      
+
+      this.notifyParent.emit({'calculateWorkDaysByGrade':true});  
     })
   }
 

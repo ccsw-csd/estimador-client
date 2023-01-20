@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Consideration } from 'src/app/core/model/Consideration';
 import { CriteriaCalculationResponse } from 'src/app/core/model/CriteriaCalculationResponse';
@@ -19,6 +19,7 @@ import { WeightCalculatorService } from '../services/weightCalculator/weight-cal
 })
 export class TasksComponent implements OnInit {
 
+  @Output() notifyParent: EventEmitter<any> = new EventEmitter();
   @Input() estimation: Estimation;
   architectureTotal: number = 0;
   developmentTotal: number = 0;
@@ -30,11 +31,14 @@ export class TasksComponent implements OnInit {
     public dialogService: DialogService,) { }
 
   ngOnInit(): void {
+    this.initializateData();
+  }
 
+  initializateData() : void {
     this.estimation.developmentTasksHours.forEach(task => {
       this.calculateTotalHoursDevelopmentTask(task);
     });
-
+  
     this.calculateTotalArchitecture();
     this.calculateTotalDevelopmentHours();
     this.calculateTotalDevelopmentWeight();
@@ -165,9 +169,13 @@ export class TasksComponent implements OnInit {
         }
   
         this.calculateTotalDevelopmentWeight();
+
+        this.notifyParent.emit({'getGlobalTasks':false});        
         this.getGlobalTasks();
       });
-    }
+    } 
+
+    this.notifyParent.emit({'getDevelopmentWeightsHours':true});
   }
 
   getGlobalTasks() {
@@ -185,6 +193,7 @@ export class TasksComponent implements OnInit {
 
     this.criteriaCalculationService.calculateHoursWithCriteria(calculationInfo).subscribe((data) => {
       this.globalTasks = data;
+      this.notifyParent.emit({'getGlobalTasks':true});
     });
   }
 

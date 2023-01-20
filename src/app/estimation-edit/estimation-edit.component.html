@@ -1,21 +1,21 @@
 <div id="edit-component">
     <p-confirmDialog [style]="{width: '600px', height: 'auto'}"></p-confirmDialog>
-    <div *ngIf="loading" class="loadWrapper">
+    <div *ngIf="loading || loadingView" class="loadWrapper">
         <p-progressSpinner></p-progressSpinner>
     </div>
 
     <p-tabView (onChange)="onChange($event)">
         <p-tabPanel header="Datos generales">
-            <app-general-data *ngIf="!loading" [estimation]="estimation"></app-general-data>
+            <app-general-data #generalData *ngIf="!loadingView" (notifyParent)="getNotification($event)" [estimation]="estimation"></app-general-data>
         </p-tabPanel>
         <p-tabPanel header="Criterios">
-            <app-criteria *ngIf="!loading" [estimation]="estimation"></app-criteria>
+            <app-criteria #criteria *ngIf="!loadingView" (notifyParent)="getNotification($event)" [estimation]="estimation"></app-criteria>
         </p-tabPanel>
         <p-tabPanel header="Tareas">
-            <app-tasks #tasks *ngIf="!loading" [estimation]="estimation"></app-tasks>
+            <app-tasks #tasks *ngIf="!loadingView" (notifyParent)="getNotification($event)" [estimation]="estimation"></app-tasks>
         </p-tabPanel>
         <p-tabPanel header="Resumen">
-            <app-summary #summary *ngIf="!loading" [estimation]="estimation"></app-summary>
+            <app-summary #summary *ngIf="!loadingView" (notifyParent)="getNotification($event)" [estimation]="estimation"></app-summary>
         </p-tabPanel>
     </p-tabView>
 

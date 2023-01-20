@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Collaborator } from 'src/app/core/model/Collaborator';
 import { Customer } from 'src/app/core/model/Customer';
 import { Estimation } from 'src/app/core/model/Estimation';
@@ -15,6 +15,7 @@ import { UserService } from '../services/user/user.service';
 })
 export class GeneralDataComponent implements OnInit {
 
+  @Output() notifyParent: EventEmitter<any> = new EventEmitter();
   @Input() estimation: Estimation;
   collaborators: User[];
   customers: Customer[] = [];
@@ -27,11 +28,12 @@ export class GeneralDataComponent implements OnInit {
     private elementWeightService: ElementWeightService) { }
 
   ngOnInit(): void {
-
+    this.initializateData();        
+  }
+  
+  initializateData() : void {
     this.collaborators = this.estimation.collaborators;
     this.sortCollaborators();
-
-    
   }
 
   sortCollaborators(): void {
