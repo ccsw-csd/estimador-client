@@ -34,4 +34,8 @@ export class EstimationEditService {
 
     return this.http.post<Estimation>(url, estimation);
   }
+  sendToExport(estimation: Estimation): Observable<object>{
+    let url = environment.server + '/estimation/export';
+    return this.http.post<object>(url, estimation, { responseType: 'blob' as 'json' });
+  }
 }

@@ -38,7 +38,8 @@ export class EstimationEditComponent implements OnInit {
     private globalCriteriaService: GlobalCriteriaService,
     private authService: AuthService,
     private router: Router,
-    private confirmationService: ConfirmationService) { }
+    private confirmationService: ConfirmationService,
+    ) { }
 
   ngOnInit(): void {
     var grades = ["A", "B", "C", "D"];
@@ -48,11 +49,10 @@ export class EstimationEditComponent implements OnInit {
     this.estimationEditService.getEstimation(+routeId).subscribe((estimation) => {
       estimation.teamPyramid.sort((a : Fte,b : Fte) => a.profile.id - b.profile.id);
       estimation.distribution.sort((a : ProfileParticipation,b : ProfileParticipation) => a.block.id - b.block.id);
-
       this.initialize(estimation);
     });
   }
-
+  
   initialize(estimation: Estimation) : void {
       this.estimation = estimation;
 
@@ -157,6 +157,7 @@ export class EstimationEditComponent implements OnInit {
       });      
 
     })
+    
   }
 
   close() {
@@ -180,5 +181,23 @@ export class EstimationEditComponent implements OnInit {
       this.loadingView = false;
     }
   }
-  
+  exportar() {
+    this.estimationEditService.sendToExport(this.estimation).subscribe(
+      result => {
+        this.downloadFile(result, "application/ms-excel");
+      }
+    );
+  }
+  downloadFile(data: any, type: string) {
+
+    let blob = new Blob([data], { type: type});
+    let url = window.URL.createObjectURL(blob);
+    var a: any = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+    a.href = url;
+    a.download = 'Report.xlsx';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
 }
