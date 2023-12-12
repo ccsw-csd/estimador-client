@@ -4,28 +4,26 @@
     </div>
 
     <div id="login-right">        
-        <div id="card" style="display:flex;flex-direction: column;">
-            <div style="flex:1"></div>
+        <div id="card">
             <div id="header">
                 <img src="assets/images/logo-negative.png" alt="" />
             </div>
 
-            <div style="height:200px;width:300px;" id="login-card">
+            <div id="login-card">
                 <span class="p-float-label">
                     <input id="username" type="username" aria-describedby="username-help" pInputText required [(ngModel)]="user" placeholder="Username" (keyup.enter)="login()"/>
                     <label for="username">Username <span class="red">*</span></label>
                     <small id="username-help" class="p-error">this field cannot be empty</small>
                 </span>
 
-                <span class="p-float-label" style="margin-top: 10px">
+                <span class="p-float-label">
                     <input id="password" type="password" aria-describedby="password-help" pInputText required [(ngModel)]="password" placeholder="Password" (keyup.enter)="login()"/>
                     <label for="password">Contraseña <span class="red">*</span></label>
                     <small id="password-help" class="p-error">this field cannot be empty</small>
                 </span>
-                <p-button label="Login" [disabled]="user == '' || password == ''" (click)="login()" class="primary"></p-button>   
+                <p-button style="width: 100%; margin-top: 1.5rem;" label="Login" [disabled]="user == '' || password == ''" (click)="login()"></p-button>   
             </div>
             <div class="support">Si necesita ayuda para resolver dudas o problemas técnicos, por favor envía un correo a <a [href]="getEmailRef()">{{getEmail()}}</a>.</div>
-            <div style="flex:1"></div>
         </div>
     </div>
 </div>
