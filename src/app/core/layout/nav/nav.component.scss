@@ -4,11 +4,13 @@
 .container {
   display: flex;
   flex-direction: column;
-  background-color: $primary;
+  background-color: #f2f2f2;
   height: 100%;
+  width: 200px;
 
   nav {
-    height: 225px;
+    width: 100%;
+    margin-top: 1rem;
   }
 
   .space {
@@ -25,19 +27,23 @@
 
 ::ng-deep {
   .p-menu {
-    background-color: $primary;
+    background-color: #f2f2f2;
     border:none;
-    width: 200px;
-    margin-left: 0px;
-    padding-left: 0px;
+    width: 100%;
+    padding: 0;
 
     .p-menuitem {
+      height: 40px;
+      width: 100%;
+
       .p-menuitem-link {
+        height: inherit;
+        width: inherit;
         box-shadow: none;
+        border-left: 6px solid #f2f2f2;
 
         .p-menuitem-text {
-          color: white;
-          padding-left: 20px;
+          color: #15011d;
         }
       } 
 
@@ -45,13 +51,17 @@
         background-color: rgba(0,0,0,.04);
 
         .p-menuitem-text {
-          color: white;
+          color: #15011d;
         }
+      }
+
+      .p-menuitem-link-active:not(.p-disabled):hover {
+        background-color: #f2f2f2;
       }
       
       .p-menuitem-link-active {
-        font-weight: bold;
-        border-left: 6px solid $background;
+        font-weight: 700;
+        border-left: 6px solid #0070AD;
       }
     }
   }
