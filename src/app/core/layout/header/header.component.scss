@@ -28,6 +28,16 @@
       height: inherit !important;
     }
 
+    .p-menu{
+      width: 200px;
+      margin-left: 0px;
+      padding-left: 0px;
+    }
+
+    .p-menuitem-link{
+      border-left: none !important;
+    }
+
     p-menu.logout-menu .p-menu {
       .p-menuitem-link .p-menuitem-text {
         color: $darkgrey;

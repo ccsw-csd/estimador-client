@@ -29,16 +29,15 @@
   .p-menu {
     background-color: #f2f2f2;
     border:none;
-    width: 100%;
+    width: 200px;
+    margin-left: 0px;
     padding: 0;
 
     .p-menuitem {
       height: 40px;
-      width: 100%;
 
       .p-menuitem-link {
         height: inherit;
-        width: inherit;
         box-shadow: none;
         border-left: 6px solid #f2f2f2;
 
@@ -57,6 +56,9 @@
 
       .p-menuitem-link-active:not(.p-disabled):hover {
         background-color: #f2f2f2;
+        .p-menuitem-text{
+          color: #0070AD;
+        }
       }
       
       .p-menuitem-link-active {
