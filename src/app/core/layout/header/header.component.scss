@@ -8,6 +8,7 @@
   max-height: 56px;
   min-height: 56px;
   overflow:hidden;
+  background-color: #272936;
 
   a {
     text-decoration: none;
@@ -16,9 +17,16 @@
 
 ::ng-deep {
   .p-toolbar {
-    background-color: $primary;
+    background-color: #272936;
     border:none;
     width: 100%;
+    height: 56px;
+    padding: 0 1rem;
+    box-sizing: border-box;
+
+    .p-toolbar-group-left, .p-toolbar-group-right{
+      height: inherit !important;
+    }
 
     p-menu.logout-menu .p-menu {
       .p-menuitem-link .p-menuitem-text {
@@ -31,8 +39,12 @@
     }
 
     .primary-icon {
-      margin-right: 20px;
+      margin-right: 10px;
       min-width: 0;
+    }
+
+    .primary-icon span, .primary-icon:hover{
+      background-color: transparent !important;
     }
 
     .primary {
@@ -41,4 +53,9 @@
       }
     }
   }
+}
+
+h3{
+  color: #ffff;
+  margin: 0;
 }
