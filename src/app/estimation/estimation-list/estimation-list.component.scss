@@ -1,23 +1,40 @@
 @import "./src/assets/scss/master";
 
-::ng-deep {
+.container {
+  overflow: hidden !important;
+}
+
+:host::ng-deep {
+  .p-datatable .p-datatable-tbody>tr>td {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .filters {
-    display:flex;
-    justify-content: space-between; 
-    margin-bottom: 20px; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
     margin-top: 30px;
-    height: 40px;
-    .filterButtons {
-      width: 320px;
-      display:flex;
+    gap: 1rem;
+
+    .filterFields {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
       justify-content: space-between;
+      gap: 1rem;
+      width: 70%;
+      flex: 1;
     }
-    .p-calendar .p-inputtext {
-      min-width: 120px;
-      max-width: 160px;
+    .filterButtons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
     .p-inputtext {
-      min-width: 260px;
+      min-width: 200px;
       max-width: 260px;
       min-height: 40px;
     }

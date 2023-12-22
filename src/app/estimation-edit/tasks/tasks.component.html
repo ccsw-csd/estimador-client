@@ -1,11 +1,11 @@
 <h2 class="tabview-title">Arquitectura</h2>
-<p-table [value]="estimation.architectureTasks">
+<p-table [value]="estimation.architectureTasks" styleClass="p-datatable-striped">
     <ng-template pTemplate="header">
         <tr>
             <th class="reorder-cell"></th>
             <th>Tarea</th>
-            <th class="centered small-cell">Horas</th>
-            <th class="icon-cell"></th>
+            <th>Horas</th>
+            <th class="icon-cell">Acción</th>
         </tr>
     </ng-template>
 
@@ -26,7 +26,7 @@
                 </p-cellEditor>
             </td>
 
-            <td pEditableColumn class="centered small-cell">
+            <td pEditableColumn>
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <p-inputNumber [(ngModel)]="task.hours" locale="de-DE" [minFractionDigits]="0" [maxFractionDigits]="2" (ngModelChange)="calculateTotalArchitecture()" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
@@ -58,15 +58,15 @@
 
 
 <h2 class="tabview-title">Desarrollo</h2>
-<p-table *ngIf="estimation.showhours" [value]="estimation.developmentTasksHours">
+<p-table *ngIf="estimation.showhours" [value]="estimation.developmentTasksHours" styleClass="p-datatable-striped">
     <ng-template pTemplate="header">
         <tr>
             <th class="reorder-cell"></th>
             <th>Tarea</th>
-            <th class="centered small-cell">Cantidad</th>
-            <th class="centered small-cell">Horas</th>
-            <th class="centered small-cell">% Reutilización</th>
-            <th class="centered small-cell">Total horas</th>
+            <th>Cantidad</th>
+            <th>Horas</th>
+            <th>% Reutilización</th>
+            <th>Total horas</th>
             <th class="icon-cell"></th>
         </tr>
     </ng-template>
@@ -142,7 +142,7 @@
     </ng-template>
 </p-table>
 
-<p-table *ngIf="!estimation.showhours" [value]="estimation.developmentTasksWeights">
+<p-table *ngIf="!estimation.showhours" [value]="estimation.developmentTasksWeights" styleClass="p-datatable-striped">
 
     <ng-template pTemplate="header">
         <tr>
@@ -154,7 +154,7 @@
             <th class="centered very-small-cell">Medio</th>
             <th class="centered very-small-cell">Complejo</th>
             <th class="centered very-small-cell">% Reutilización</th>
-            <th class="centered small-cell">Horas</th>
+            <th>Horas</th>
             <th class="icon-cell"></th>
         </tr>
     </ng-template>
@@ -269,11 +269,11 @@
 
 
 <h2 class="tabview-title">Tareas globales</h2>
-<p-table [value]="globalTasks">
+<p-table [value]="globalTasks" styleClass="p-datatable-striped">
     <ng-template pTemplate="header">
         <tr>
             <th>Tarea</th>
-            <th class="centered small-cell">Horas</th>
+            <th>Horas</th>
             <th class="icon-cell"></th>
         </tr>
     </ng-template>
@@ -288,7 +288,7 @@
 </p-table>
 
 <h2 class="tabview-title">Consideraciones</h2>
-<p-table [value]="estimation.considerations">
+<p-table [value]="estimation.considerations" styleClass="p-datatable-striped">
     <ng-template pTemplate="header">
         <tr>
             <th class="reorder-cell"></th>

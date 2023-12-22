@@ -15,10 +15,17 @@
     margin-bottom: 40px;
 }
 
-::ng-deep {
+:host::ng-deep {
+
+    .p-datatable .p-datatable-tbody>tr>td {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
     .p-inputtext, .p-autocomplete {
         width: 100%;
+        min-width: 150px;
     }
 
     .big_input {
@@ -40,4 +47,8 @@
             padding-right: 40px;
         }
     }
+}
+
+.top-header{
+    justify-content: center;
 }

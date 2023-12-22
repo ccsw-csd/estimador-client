@@ -5,18 +5,18 @@
     -->
     <div class="flex-content">
         <div class="title-button criteria">
-            <h2 class="tabview-title">Criterios globales</h2>
+            <h3 class="tabview-title">Criterios globales</h3>
             <p-button class="secondary" label="Añadir fila" (click)="addCriterion()"></p-button>
         </div>
         
-        <p-table [value]="estimation.parameters" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 400px)">
+        <p-table [value]="estimation.parameters" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 400px)" styleClass="p-datatable-striped">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Bloque</th>
-                    <th>Concepto</th>
-                    <th>Valor</th>
-                    <th>Tipo</th>
-                    <th></th>
+                    <th class="top-header">Bloque</th>
+                    <th class="top-header">Concepto</th>
+                    <th class="top-header">Valor</th>
+                    <th class="top-header">Tipo</th>
+                    <th class="top-header"></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-criterion>
@@ -76,7 +76,7 @@
     <div class="flex-content">
         <div class="title">
             <div class="title-button">
-                <h2 class="tabview-title">Pesos de los componentes</h2>
+                <h3 class="tabview-title">Pesos de los componentes</h3>
                 <p-button *ngIf="!estimation.showhours" class="secondary" label="Añadir fila" (click)="addElementWeight()"></p-button>
             </div>
             
@@ -87,16 +87,16 @@
             </div>
         </div>
 
-        <p-table *ngIf="!estimation.showhours" [value]="estimation.elementWeight" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 400px)">
+        <p-table *ngIf="!estimation.showhours" [value]="estimation.elementWeight" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 400px)" styleClass="p-datatable-striped">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Elemento</th>
-                    <th>Muy fácil</th>
-                    <th>Fácil</th>
-                    <th>Medio</th>
-                    <th>Complejo</th>
-                    <th>Nivel</th>
-                    <th></th>
+                    <th class="top-header">Elemento</th>
+                    <th class="top-header">Muy fácil</th>
+                    <th class="top-header">Fácil</th>
+                    <th class="top-header">Medio</th>
+                    <th class="top-header">Complejo</th>
+                    <th class="top-header">Nivel</th>
+                    <th class="top-header"></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item>

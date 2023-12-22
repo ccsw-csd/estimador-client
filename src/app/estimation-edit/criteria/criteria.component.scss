@@ -31,3 +31,20 @@ p {
     margin:0;
     margin-left: 10px;
 }
+
+:host::ng-deep {
+
+    .p-datatable .p-datatable-tbody>tr>td {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.top-header{
+    justify-content: center;
+}
+
+.title{
+    gap: 1.5rem;
+}

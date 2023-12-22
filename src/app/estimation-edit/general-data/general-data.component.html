@@ -1,6 +1,6 @@
 <div class="flex-container">
     <div class="flex-content">
-        <h2 class="tabview-title">Datos generales</h2>
+        <h3 class="tabview-title">Datos generales</h3>
         <div id="data" class="flex-content">
             <span class="p-float-label big_input">
                 <input required [disabled]="estimation.id" id="name-input" type="text" pInputText [(ngModel)]="estimation.project.name"> 
@@ -43,7 +43,7 @@
 
     <div class="flex-content">
         <div>
-            <h2 class="tabview-title">Colaboradores</h2>
+            <h3 class="tabview-title">Colaboradores</h3>
             <span id="inputCollab" class="p-float-label">
                 <p-autoComplete id="collaborator-input" [suggestions]="users" (completeMethod)="searchCollaborator($event)" field="username" (onSelect)="addCollaborator($event)">
                     <ng-template let-user pTemplate="item">
@@ -54,13 +54,13 @@
                 </p-autoComplete> 
                 <label for="collaborator-input">Añadir colaborador</label>
             </span>
-            <p-table [value]="collaborators" [scrollable]="true" responsiveLayout="scroll" scrollHeight="calc(100vh - 450px)">
+            <p-table [value]="collaborators" [scrollable]="true" responsiveLayout="scroll" scrollHeight="calc(100vh - 450px)" styleClass="p-datatable-striped">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>Username</th>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>Acción</th>
+                        <th class="top-header">Username</th>
+                        <th class="top-header">Nombre</th>
+                        <th class="top-header">Apellidos</th>
+                        <th class="top-header">Acción</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-item>

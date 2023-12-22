@@ -12,12 +12,29 @@ h2:first-child {
     margin-top: 20px;
 }
 
-::ng-deep {
+:host::ng-deep {
     .comment-icon-fill.p-button.p-button-text.p-button-plain, .comment-icon-fill.p-button.p-button-text.p-button-plain:hover {
         color:$primary;
     }
 
     .p-datatable .p-datatable-tfoot > tr > td.add-button-cell {
-        padding-left: 0;
+        padding-left: 1rem;
+        text-align: left !important;
+    }
+
+    .p-datatable{
+        border: 1px solid #babfc7;
+    }
+
+    .p-datatable .p-datatable-thead>tr>th{
+        text-align: center !important;
+        padding: 8px 3px 8px 3px; 
+        height: 34px;
+        margin-bottom: 0px !important;
+        box-sizing: border-box;
+    }
+
+    .p-datatable .p-datatable-tbody>tr>td, .p-datatable .p-datatable-tfoot>tr>td {
+        text-align: center;
     }
 }

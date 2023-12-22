@@ -16,3 +16,25 @@
     display: flex;
     margin-bottom: 50px;
 }
+
+:host::ng-deep{
+
+    .p-datatable{
+        border: 1px solid #babfc7;
+    }
+
+    .p-datatable .p-datatable-thead>tr>th{
+        text-align: center !important;
+        padding: 8px 3px 8px 3px; 
+        height: 34px;
+        margin-bottom: 0px !important;
+    }
+
+    .p-datatable .p-datatable-tbody>tr>td {
+        text-align: center;
+    }
+}
+
+.read-only-cell{
+    background-color: #f5f5f5;;
+}
