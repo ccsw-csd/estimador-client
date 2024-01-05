@@ -1,82 +1,134 @@
-<div class="container">
-    <div class="title-button">
-        <h3>Listado de estimaciones</h3>
-        <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-            <p-button class="primary" label="Crear estimación" (click)="createEstimation()"></p-button>
-            <div *ngIf="roleAdmin" style="display:flex">
-                    <h3>Admin View&nbsp;&nbsp;</h3>
-                    <p-inputSwitch [(ngModel)]="adminView" (onChange)="changeAdminView()"></p-inputSwitch>
+<div class="flex-column {{contentWindowClass}}">
+
+
+    <div class="flex flex-row justify-content-between">
+        <div class="flex justify-content-start">
+            <h3 class="p-0 m-0 mb-2">
+                Listado de estimaciones
+            </h3>
+        </div>
+    </div>
+
+
+    <div class="flex flex-row justify-content-between align-items-center">
+        <div class="flex items-center ml-2">
+            <div class="small-input-switch">
+                <p-inputSwitch [(ngModel)]="adminView" (onChange)="loadPage()" label="Admin View"></p-inputSwitch>
             </div>
+            <span style="margin-left: 0.5rem;">Admin View</span>
         </div>
 
-    </div>
-
-    <div class="filters">
-        <div class="filterFields">
-            <span class="p-float-label">
-                <p-dropdown id="customer-drop" [options]="customers" [(ngModel)]="filterCustomer" optionLabel="name" placeholder="  "></p-dropdown>
-                <label for="customer-drop">Cliente</label>
-            </span>
-            <span class="p-float-label">
-                <input id="float-input" type="text" pInputText [(ngModel)]="filterProject"> 
-                <label for="float-input">Nombre</label>
-            </span>
-            <span class="p-float-label">
-                <p-calendar [(ngModel)]="filterStartDate" [showIcon]="true" inputId="startDate" dateFormat="dd/mm/yy"></p-calendar>
-                <label for="startDate">Fecha inicio</label>
-            </span>
-            <span class="p-float-label">
-                <p-calendar [(ngModel)]="filterEndDate" [showIcon]="true" inputId="endDate" dateFormat="dd/mm/yy"></p-calendar>
-                <label for="endDate">Fecha fin</label>
-            </span>
-        </div>
-        <div class="filterButtons">
-            <p-button class="secondary" label="Limpiar" (click)="onCleanFilter()"></p-button>
-            <p-button class="secondary" label="Filtrar" (click)="onSearch()"></p-button>
+        <div>
+            <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-plus" class="p-button-lg m-2 p-button-outlined" pTooltip="Crear estimación" (click)="createEstimation()"></button>
         </div>
     </div>
 
-    <p-table [style]="{'height': 'calc(100vh - 210px)' }" [value]="estimations" [lazy]="true" (onLazyLoad)="loadPage($event)" [totalRecords]="totalElements" [loading]="loading" 
-    [scrollable]="true" responsiveLayout="scroll" scrollHeight="flex" styleClass="p-datatable-striped" [paginator]="true" [rows]="25" [showCurrentPageReport]="true" 
-    currentPageReportTemplate="{first} - {last} of {totalRecords}" [rowsPerPageOptions]="[10,25,50]" sortField="lastUpdate" [sortOrder]="-1">
+    <div class="container">
+
+    <p-table [style]="{'height': 'calc(100vh - 210px)' }" [scrollable]="true" scrollHeight="flex" selectionMode="single" [value]="estimations" 
+    [responsive]="true" styleClass="p-datatable-striped" [paginator]="true" [rows]="10" sortField="lastUpdate" [sortOrder]="-1">
         <ng-template pTemplate="header">
             <tr>
-                <th class="top-header" pSortableColumn="project.customer.name">
-                    <span>Cliente</span> 
-                    <p-sortIcon field="project.customer.name"></p-sortIcon>
+
+                <th class="flex flex-none w-20rem flex-column align-items-center justify-content-center" >
+                    <div class="flex flex-row w-full top-header" pSortableColumn="project.customer.name">
+                        <span class="flex flex-1 justify-content-center">Cliente</span>
+                        <p-sortIcon field="project.customer.name"></p-sortIcon>
+                    </div>                
+                    <div class="w-full foot-header">
+                        <p-columnFilter class="w-full" type="text" field="project.customer.name" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                            </ng-template>
+                        </p-columnFilter>
+                    </div>
                 </th>
-                <th class="top-header" pSortableColumn="project.name">
-                    <span>Nombre</span> 
-                    <p-sortIcon field="project.name"></p-sortIcon>
+
+                <th class="flex flex-column align-items-center justify-content-center" >
+                    <div class="flex flex-row w-full top-header" pSortableColumn="project.name">
+                        <span class="flex flex-1 justify-content-center">Nombre</span>
+                        <p-sortIcon field="project.name"></p-sortIcon>
+                    </div>                
+                    <div class="w-full foot-header">
+                        <p-columnFilter class="w-full" type="text" field="project.name" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                            </ng-template>
+                        </p-columnFilter>
+                    </div>
                 </th>
-                <th class="top-header" pSortableColumn="lastUpdate">
-                    <span>Fecha</span> 
-                    <p-sortIcon field="lastUpdate"></p-sortIcon>
-                </th>
-                <th class="top-header" pSortableColumn="estVersion">
-                    <span>Version</span> 
-                    <p-sortIcon field="estVersion"></p-sortIcon>
-                </th>
-                <th class="top-header" pSortableColumn="totalDays">
-                    <span>Jornadas</span> 
-                    <p-sortIcon field="totalDays"></p-sortIcon>
-                </th>
-                <th class="top-header" pSortableColumn="totalCost">
-                    <span>Revenue</span> 
-                    <p-sortIcon field="totalCost"></p-sortIcon>
-                </th>
-                <th class="top-header"><span>Acción</span></th>
+
+                <th class="flex flex-none w-10rem flex-column align-items-center justify-content-center" >
+                    <div class="flex flex-row w-full top-header" pSortableColumn="lastUpdate">
+                        <span class="flex flex-1 justify-content-center">Fecha</span>
+                        <p-sortIcon field="lastUpdate"></p-sortIcon>
+                    </div>                
+                    <div class="w-full foot-header">
+                        <p-columnFilter class="w-full" type="text" field="lastUpdate" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                            </ng-template>
+                        </p-columnFilter>
+                    </div>
+                </th>                
+
+                <th class="flex flex-none w-10rem flex-column align-items-center justify-content-center" >
+                    <div class="flex flex-row w-full top-header" pSortableColumn="estVersion">
+                        <span class="flex flex-1 justify-content-center">Versión</span>
+                        <p-sortIcon field="estVersion"></p-sortIcon>
+                    </div>                
+                    <div class="w-full foot-header">
+                        <p-columnFilter class="w-full" type="text" field="estVersion" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                            </ng-template>
+                        </p-columnFilter>
+                    </div>
+                </th>                
+
+                <th class="flex flex-none w-10rem flex-column align-items-center justify-content-center" >
+                    <div class="flex flex-row w-full top-header" pSortableColumn="totalDays">
+                        <span class="flex flex-1 justify-content-center">Jornadas</span>
+                        <p-sortIcon field="totalDays"></p-sortIcon>
+                    </div>                
+                    <div class="w-full foot-header">
+                        <p-columnFilter class="w-full" type="text" field="totalDays" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                            </ng-template>
+                        </p-columnFilter>
+                    </div>
+                </th>                
+
+                <th class="flex flex-none w-10rem flex-column align-items-center justify-content-center" >
+                    <div class="flex flex-row w-full top-header" pSortableColumn="totalCost">
+                        <span class="flex flex-1 justify-content-center">Revenue</span>
+                        <p-sortIcon field="totalCost"></p-sortIcon>
+                    </div>                
+                    <div class="w-full foot-header">
+                        <p-columnFilter class="w-full" type="text" field="totalCost" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                            </ng-template>
+                        </p-columnFilter>
+                    </div>
+                </th>                
+                
+                <th class="buttons flex-none w-10rem flex-column">
+                    <div class="flex flex-row w-full top-header"></div>
+                    <div class="w-full foot-header"></div>
+                </th>  
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-estimation>
             <tr>
-                <td>{{estimation.project.customer.name}}</td>
-                <td>{{estimation.project.name}}</td>
-                <td>{{estimation.lastUpdate | date:'dd/MM/yyyy HH:mm'}}</td>
-                <td>{{estimation.estVersion}}</td> 
-                <td>{{estimation.totalDays | number: '1.0': 'es-ES'}}</td>
-                <td>{{estimation.totalCost | number:'1.2-2':'es-ES'}}€</td>
-                <td class="buttons">
+                <td class="flex-none w-20rem">{{estimation.project.customer.name}}</td>
+                <td class="flex">{{estimation.project.name}}</td>
+                <td class="flex-none w-10rem justify-content-center">{{estimation.lastUpdate | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td class="flex-none w-10rem justify-content-center">{{estimation.estVersion}}</td> 
+                <td class="flex-none w-10rem justify-content-end">{{estimation.totalDays | number: '1.0': 'es-ES'}}</td>
+                <td class="flex-none w-10rem justify-content-end">{{estimation.totalCost | number:'1.2-2':'es-ES'}}€</td>
+                <td class="flex-none w-10rem">
                     <div style="display:flex; flex-direction: row;">
                         <button pButton pRipple type="button" icon="pi pi-pencil" (click)="editEstimation(estimation.id)" class="p-button-rounded p-button-text p-button-plain icon"></button>
                         <button pButton pRipple type="button" icon="pi pi-copy" (click)="copyEstimation(estimation)" class="p-button-rounded p-button-text p-button-plain icon"></button>                    
@@ -85,14 +137,8 @@
                 </td>
             </tr>
         </ng-template>
-        <ng-template pTemplate="paginatorleft">
-            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
-        </ng-template>
-        <ng-template pTemplate="paginatorright">
-            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
-        </ng-template>
     </p-table>    
 </div>
 
 
-
+</div>

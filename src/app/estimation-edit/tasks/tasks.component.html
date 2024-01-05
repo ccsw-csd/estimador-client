@@ -1,333 +1,346 @@
-<h2 class="tabview-title">Arquitectura</h2>
-<p-table [value]="estimation.architectureTasks" styleClass="p-datatable-striped">
-    <ng-template pTemplate="header">
-        <tr>
-            <th class="reorder-cell"></th>
-            <th>Tarea</th>
-            <th>Horas</th>
-            <th class="icon-cell">Acción</th>
-        </tr>
-    </ng-template>
-
-    <ng-template pTemplate="body" let-task let-index="rowIndex">
-        <tr [pReorderableRow]="index">
-            <td class="reorder-cell">
-                <span class="pi pi-bars" pReorderableRowHandle></span>
-            </td>
-            
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <input pInputText type="text" [(ngModel)]="task.name" (keydown.ArrowRight)="stopPropagation($event)">
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{task.name}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.hours" locale="de-DE" [minFractionDigits]="0" [maxFractionDigits]="2" (ngModelChange)="calculateTotalArchitecture()" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{task.hours | number:'':'es'}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-
-            <td class="centered icon-cell">
-                <button *ngIf="task.comment == null || task.comment == undefined || task.comment ==''" pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-text p-button-plain icon" (click)="openCommentDialog(task)"></button>
-                <button *ngIf="task.comment != null && task.comment != undefined && task.comment !=''" pButton pRipple type="button" icon="pi pi-comments" class="p-button-rounded p-button-text p-button-plain icon comment-icon-fill" (click)="openCommentDialog(task)"></button>
-                <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteArchitectureTask(task)"></button>
-            </td>
-        </tr>
-    </ng-template>
-
-    <ng-template pTemplate="footer">
-        <tr>
-            <td class="add-button-cell" colspan="2">
-                <p-button class="secondary" label="Crear tarea" (click)="addArchitectureTask()"></p-button>
-            </td>
-            <td class="totalCell centered">{{architectureTotal | number:'':'es'}}</td>
-            <td></td>
-        </tr>
-    </ng-template>
-</p-table>
+<div class="flex flex-column gap-3 p-0 m-0 pr-2" style="height: calc(100vh - 200px); overflow: auto;">
 
 
-<h2 class="tabview-title">Desarrollo</h2>
-<p-table *ngIf="estimation.showhours" [value]="estimation.developmentTasksHours" styleClass="p-datatable-striped">
-    <ng-template pTemplate="header">
-        <tr>
-            <th class="reorder-cell"></th>
-            <th>Tarea</th>
-            <th>Cantidad</th>
-            <th>Horas</th>
-            <th>% Reutilización</th>
-            <th>Total horas</th>
-            <th class="icon-cell"></th>
-        </tr>
-    </ng-template>
+    <h3 class="m-0 p-0 pt-5">Arquitectura</h3>
+    <p-table [value]="estimation.architectureTasks" responsiveLayout="scroll" [scrollable]="true" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+            <tr>
+                <tr>
+                    <th class="flex-none w-3rem top-header justify-content-start"></th>
+                    <th class="flex flex-1 top-header justify-content-start"><div class="ml-2">Tarea</div></th>
+                    <th class="flex-none w-6rem top-header justify-content-end"><div class="mr-2">Horas</div></th>
+                    <th class="flex-none w-6rem top-header justify-content-start"></th>
+                </tr>
+        </ng-template>
 
-    <ng-template pTemplate="body" let-task let-index="rowIndex">
-        <tr [pReorderableRow]="index">
-            <td class="reorder-cell">
-                <span class="pi pi-bars" pReorderableRowHandle></span>
-            </td>
+        <ng-template pTemplate="body" let-task let-index="rowIndex">
+            <tr [pReorderableRow]="index">
+                <td class="flex-none w-3rem justify-content-center">
+                    <span class="pi pi-bars" pReorderableRowHandle></span>
+                </td>
+                
+                <td class="flex flex-1" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <input class="w-full" pInputText type="text" [(ngModel)]="task.name" (keydown.ArrowRight)="stopPropagation($event)">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem;">{{task.name}}</div>                            
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
 
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <input pInputText type="text" [(ngModel)]="task.name">
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{task.name}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
+                <td class="flex-none w-6rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <p-inputNumber inputStyleClass="w-6rem" [(ngModel)]="task.hours" locale="de-DE" [minFractionDigits]="0" [maxFractionDigits]="2" (ngModelChange)="calculateTotalArchitecture()" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem; text-align: right;">{{task.hours | number:'':'es'}}</div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
 
-            <td pEditableColumn class="centered">
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.quantity" locale="de-DE" (ngModelChange)="updateDevelopmentTask(task)" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{task.quantity | number:'':'es'}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
+                <td class="flex-none w-6rem">
+                    <button *ngIf="task.comment == null || task.comment == undefined || task.comment ==''" pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-text p-button-plain icon" (click)="openCommentDialog(task)"></button>
+                    <button *ngIf="task.comment != null && task.comment != undefined && task.comment !=''" pButton pRipple type="button" icon="pi pi-comments" class="p-button-rounded p-button-text p-button-plain icon comment-icon-fill" (click)="openCommentDialog(task)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteArchitectureTask(task)"></button>
+                </td>
+            </tr>
+        </ng-template>
 
-            <td pEditableColumn class="centered">
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.hours" locale="de-DE" [minFractionDigits]="0" [maxFractionDigits]="2" (ngModelChange)="updateDevelopmentTask(task)" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{task.hours | number:'':'es'}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-
-            <td pEditableColumn class="centered">
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.reusability" [maxlength]="3" [min]="0" [max]="100" locale="de-DE" (ngModelChange)="updateDevelopmentTask(task)" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{task.reusability | number:'':'es'}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-
-            <td class="read-only-cell centered">{{task.totalHours | number:'':'es'}}</td>
-                        
-            <td class="centered icon-cell">
-                <button *ngIf="task.comment == null || task.comment == undefined || task.comment ==''" pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-text p-button-plain icon" (click)="openCommentDialog(task)"></button>
-                <button *ngIf="task.comment != null && task.comment != undefined && task.comment !=''" pButton pRipple type="button" icon="pi pi-comments" class="p-button-rounded p-button-text p-button-plain icon comment-icon-fill" (click)="openCommentDialog(task)"></button>
-                <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteDevelopmentTask(task)"></button>
-            </td>
-        </tr>
-    </ng-template>
-
-    <ng-template pTemplate="footer">
-        <tr>
-            <td class="add-button-cell" colspan="2">
-                <p-button class="secondary" label="Crear tarea" (click)="addDevelopmentTask()"></p-button>
-            </td>
-            <td colspan="3"></td>
-            <td class="centered totalCell">{{developmentTotal | number:'':'es'}}</td>
-        </tr>
-    </ng-template>
-</p-table>
-
-<p-table *ngIf="!estimation.showhours" [value]="estimation.developmentTasksWeights" styleClass="p-datatable-striped">
-
-    <ng-template pTemplate="header">
-        <tr>
-            <th class="reorder-cell"></th>
-            <th>Tarea</th>
-            <th class="centered very-small-cell">Elemento</th>
-            <th class="centered very-small-cell">Muy fácil</th>
-            <th class="centered very-small-cell">Fácil</th>
-            <th class="centered very-small-cell">Medio</th>
-            <th class="centered very-small-cell">Complejo</th>
-            <th class="centered very-small-cell">% Reutilización</th>
-            <th>Horas</th>
-            <th class="icon-cell"></th>
-        </tr>
-    </ng-template>
-
-    <ng-template pTemplate="body" let-task let-index="rowIndex">
-
-        <tr [pReorderableRow]="index">
-            <td class="reorder-cell">
-                <span class="pi pi-bars" pReorderableRowHandle></span>
-            </td>
-            
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <input pInputText type="text" [(ngModel)]="task.name" (keydown.ArrowRight)="stopPropagation($event)">
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{task.name}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-
-            <td pEditableColumn class="centered">
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <p-dropdown [options]="estimation.elementWeight" [(ngModel)]="task.workElementWeight" optionLabel="element" [style]="{'width':'100%'}" (ngModelChange)="getDevelopmentWeightsHours()"></p-dropdown>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{task.workElementWeight.element}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-
-            <td pEditableColumn class="centered">
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.quantityVerySimple" locale="de-DE" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{task.quantityVerySimple | number:'':'es'}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-
-            <td pEditableColumn class="centered">
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.quantitySimple" locale="de-DE" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{task.quantitySimple | number:'':'es'}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-
-            <td pEditableColumn class="centered">
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.quantityMedium" locale="de-DE" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{task.quantityMedium | number:'':'es'}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-
-            <td pEditableColumn class="centered">
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.quantityComplex" locale="de-DE" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{task.quantityComplex | number:'':'es'}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-
-            <td pEditableColumn class="centered">
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <p-inputNumber [(ngModel)]="task.reusability" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{task.reusability | number:'':'es'}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-
-            <td class="centered read-only-cell">{{task.hours | number:'':'es'}}</td>
-
-            <td class="centered icon-cell">
-                <button *ngIf="task.comment == null || task.comment == undefined || task.comment ==''" pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-text p-button-plain icon" (click)="openCommentDialog(task)"></button>
-                <button *ngIf="task.comment != null && task.comment != undefined && task.comment !=''" pButton pRipple type="button" icon="pi pi-comments" class="p-button-rounded p-button-text p-button-plain icon comment-icon-fill" (click)="openCommentDialog(task)"></button>
-                <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteDevelopmentWeightTask(task)" ></button>
-            </td>
-
-        </tr>
-
-    </ng-template>
-
-    <ng-template pTemplate="footer">
-        <tr>
-            <td class="add-button-cell" colspan="2">
-                <p-button class="secondary" label="Crear tarea" (click)="addDevelopmentWeightTask()"></p-button>
-            </td>
-            <td colspan="6"></td>
-            <td class="centered totalCell">{{developmentWeightTotal | number:'':'es'}}</td>
-        </tr>
-    </ng-template>
-
-</p-table>
+        <ng-template pTemplate="footer">
+            <tr>
+                <td class="flex flex-1" colspan="2">
+                    <button pButton class="p-button-primary p-button-outlined" label="Crear tarea" (click)="addArchitectureTask()"></button>
+                </td>
+                <td class="flex-none w-6rem justify-content-end"><b>{{architectureTotal | number:'':'es'}}</b></td>
+                <td class="flex-none w-6rem"></td>
+            </tr>
+        </ng-template>
+    </p-table>
 
 
-<h2 class="tabview-title">Tareas globales</h2>
-<p-table [value]="globalTasks" styleClass="p-datatable-striped">
-    <ng-template pTemplate="header">
-        <tr>
-            <th>Tarea</th>
-            <th>Horas</th>
-            <th class="icon-cell"></th>
-        </tr>
-    </ng-template>
+    <h3 class="m-0 p-0 pt-5">Desarrollo</h3>
+    <p-table *ngIf="estimation.showhours" [value]="estimation.developmentTasksHours" responsiveLayout="scroll" [scrollable]="true" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="flex-none w-3rem top-header justify-content-start"></th>
+                <th class="flex flex-1 top-header justify-content-start"><div class="ml-2">Tarea</div></th>
+                <th class="flex-none w-4rem top-header justify-content-end"><div class="mr-2">Cantidad</div></th>
+                <th class="flex-none w-4rem top-header justify-content-end"><div class="mr-2">Horas</div></th>
+                <th class="flex-none w-4rem top-header justify-content-end"><div class="mr-2">% Reuso</div></th>
+                <th class="flex-none w-6rem top-header justify-content-end"><div class="mr-2">Total</div></th>
+                <th class="flex-none w-6rem top-header justify-content-start"></th>
+            </tr>
+        </ng-template>
 
-    <ng-template pTemplate="body" let-task>
-        <tr>
-            <td class="read-only-cell global-task">{{task.block.name}} - {{task.concept}}</td>
-            <td class="read-only-cell centered global-task">{{task.hours | number: '1.0-2'}}</td>
-            <td class="read-only-cell"></td>
-        </tr>
-    </ng-template>
-</p-table>
+        <ng-template pTemplate="body" let-task let-index="rowIndex">
+            <tr [pReorderableRow]="index">
+                <td class="flex-none w-3rem justify-content-center">
+                    <span class="pi pi-bars" pReorderableRowHandle></span>
+                </td>
 
-<h2 class="tabview-title">Consideraciones</h2>
-<p-table [value]="estimation.considerations" styleClass="p-datatable-striped">
-    <ng-template pTemplate="header">
-        <tr>
-            <th class="reorder-cell"></th>
-            <th>Comentarios</th>
-            <th></th>
-        </tr>
-    </ng-template>
+                <td class="flex flex-1" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <input class="w-full" pInputText type="text" [(ngModel)]="task.name">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem">{{task.name}}</div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
 
-    <ng-template pTemplate="body" let-consideration let-index="rowIndex">
-        <tr [pReorderableRow]="index">
-            <td class="reorder-cell">
-                <span class="pi pi-bars" pReorderableRowHandle></span>
-            </td>
+                <td class="flex-none w-4rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <p-inputNumber inputStyleClass="w-4rem" [(ngModel)]="task.quantity" locale="de-DE" (ngModelChange)="updateDevelopmentTask(task)" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem; text-align: right;">{{task.quantity | number:'':'es'}}</div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
 
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <input pInputText type="text" [(ngModel)]="consideration.comment">
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{consideration.comment}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
+                <td class="flex-none w-4rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <p-inputNumber inputStyleClass="w-4rem" [(ngModel)]="task.hours" locale="de-DE" [minFractionDigits]="0" [maxFractionDigits]="2" (ngModelChange)="updateDevelopmentTask(task)" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                        </ng-template>                        
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem; text-align: right;">{{task.hours | number:'':'es'}}</div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
 
-            <td class="centered icon-cell">
-                <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteConsideration(consideration)"></button>
-            </td>
-        </tr>
-    </ng-template>
+                <td class="flex-none w-4rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <p-inputNumber inputStyleClass="w-4rem" [(ngModel)]="task.reusability" [maxlength]="3" [min]="0" [max]="100" locale="de-DE" (ngModelChange)="updateDevelopmentTask(task)" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem; text-align: right;">{{task.reusability | number:'':'es'}}</div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
 
-    <ng-template pTemplate="footer">
-        <tr class="footer">
-            <td class="add-button-cell" colspan="2">
-                <p-button class="secondary" label="Crear comentario" (click)="addConsiderationComment()"></p-button>
-            </td>
-        </tr>
-    </ng-template>
-</p-table>
+                <td class="flex-none w-6rem justify-content-end" style="padding: 0.75rem 0">
+                    <div style="padding: 0 0.75rem; text-align: right;">{{task.totalHours | number:'':'es'}}</div>
+                </td>
+                            
+                <td class="flex-none w-6rem">
+                    <button *ngIf="task.comment == null || task.comment == undefined || task.comment ==''" pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-text p-button-plain icon" (click)="openCommentDialog(task)"></button>
+                    <button *ngIf="task.comment != null && task.comment != undefined && task.comment !=''" pButton pRipple type="button" icon="pi pi-comments" class="p-button-rounded p-button-text p-button-plain icon comment-icon-fill" (click)="openCommentDialog(task)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteDevelopmentTask(task)"></button>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <tr>
+                <td class="flex flex-1" colspan="2">
+                    <button pButton class="p-button-primary p-button-outlined" label="Crear tarea" (click)="addDevelopmentTask()"></button>
+                </td>
+                <td class="flex-none w-6rem justify-content-end"><b>{{developmentTotal | number:'':'es'}}</b></td>
+                <td class="flex-none w-6rem"></td>
+            </tr>
+        </ng-template>
+    </p-table>
 
 
+    <p-table *ngIf="!estimation.showhours" [value]="estimation.developmentTasksWeights" responsiveLayout="scroll" [scrollable]="true" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="flex-none w-3rem top-header justify-content-start"></th>
+                <th class="flex flex-1 top-header justify-content-start"><div class="ml-2">Tarea</div></th>
+                <th class="flex-none w-16rem top-header justify-content-start"><div class="mr-2">Elemento</div></th>
+                <th class="flex-none w-5rem top-header justify-content-end"><div class="mr-2">Muy fácil</div></th>
+                <th class="flex-none w-5rem top-header justify-content-end"><div class="mr-2">Fácil</div></th>
+                <th class="flex-none w-5rem top-header justify-content-end"><div class="mr-2">Medio</div></th>
+                <th class="flex-none w-5rem top-header justify-content-end"><div class="mr-2">Complejo</div></th>
+                <th class="flex-none w-5rem top-header justify-content-end"><div class="mr-2">% Reuso</div></th>
+                <th class="flex-none w-6rem top-header justify-content-end"><div class="mr-2">Total</div></th>
+                <th class="flex-none w-6rem top-header justify-content-start"></th>
+            </tr>
+        </ng-template>
 
+        <ng-template pTemplate="body" let-task let-index="rowIndex">
+
+            <tr [pReorderableRow]="index">
+                <td class="flex-none w-3rem justify-content-center">
+                    <span class="pi pi-bars" pReorderableRowHandle></span>
+                </td>
+                
+                <td class="flex flex-1" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <input class="w-full" pInputText type="text" [(ngModel)]="task.name">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem">{{task.name}}</div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td class="flex-none w-16rem" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <p-dropdown styleClass="w-16rem" appendTo="body" [options]="estimation.elementWeight" [(ngModel)]="task.workElementWeight" optionLabel="element" [style]="{'width':'100%'}" (ngModelChange)="getDevelopmentWeightsHours()"></p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem">{{task.workElementWeight.element}}</div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td class="flex-none w-5rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <p-inputNumber inputStyleClass="w-5rem" [(ngModel)]="task.quantityVerySimple" locale="de-DE" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem; text-align: right;">{{task.quantityVerySimple | number:'':'es'}}</div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td class="flex-none w-5rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <p-inputNumber inputStyleClass="w-5rem" [(ngModel)]="task.quantitySimple" locale="de-DE" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem; text-align: right;">{{task.quantitySimple | number:'':'es'}}</div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td class="flex-none w-5rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <p-inputNumber inputStyleClass="w-5rem" [(ngModel)]="task.quantityMedium" locale="de-DE" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem; text-align: right;">{{task.quantityMedium | number:'':'es'}}</div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td class="flex-none w-5rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <p-inputNumber inputStyleClass="w-5rem" [(ngModel)]="task.quantityComplex" locale="de-DE" [min]="0" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem; text-align: right;">{{task.quantityComplex | number:'':'es'}}</div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td class="flex-none w-5rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <p-inputNumber inputStyleClass="w-5rem" [(ngModel)]="task.reusability" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="getDevelopmentWeightsHours()"></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem; text-align: right;">{{task.reusability | number:'':'es'}}</div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td class="flex-none w-6rem justify-content-end" style="padding: 0.75rem 0">
+                    <div style="padding: 0 0.75rem; text-align: right;">{{task.hours | number:'':'es'}}</div>
+                </td>
+
+                <td class="flex-none w-6rem">
+                    <button *ngIf="task.comment == null || task.comment == undefined || task.comment ==''" pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-text p-button-plain icon" (click)="openCommentDialog(task)"></button>
+                    <button *ngIf="task.comment != null && task.comment != undefined && task.comment !=''" pButton pRipple type="button" icon="pi pi-comments" class="p-button-rounded p-button-text p-button-plain icon comment-icon-fill" (click)="openCommentDialog(task)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteDevelopmentWeightTask(task)"></button>
+                </td>
+
+            </tr>
+
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <tr>
+                <td class="flex flex-1" colspan="8">
+                    <button pButton class="p-button-primary p-button-outlined" label="Crear tarea" (click)="addDevelopmentWeightTask()"></button>
+                </td>
+                
+                <td class="flex-none w-6rem justify-content-end"><b>{{developmentWeightTotal | number:'':'es'}}</b></td>
+                <td class="flex-none w-6rem"></td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+
+
+    
+    <h3 class="m-0 p-0 pt-5">Consideraciones</h3>
+    <p-table [value]="estimation.considerations" responsiveLayout="scroll" [scrollable]="true" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="flex-none w-3rem top-header justify-content-start"></th>
+                <th class="flex flex-1 top-header justify-content-start">Comentarios</th>
+                <th class="flex-none w-4rem"></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-consideration let-index="rowIndex">
+            <tr [pReorderableRow]="index">
+                <td class="flex-none w-3rem justify-content-center">
+                    <span class="pi pi-bars" pReorderableRowHandle></span>
+                </td>
+                
+                <td class="flex flex-1" style="padding: 0.75rem 0" pEditableColumn>
+                    <p-cellEditor class="w-full">
+                        <ng-template pTemplate="input">
+                            <input class="w-full" pInputText type="text" [(ngModel)]="consideration.comment" (keydown.ArrowRight)="stopPropagation($event)">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="padding: 0 0.75rem;">{{consideration.comment}}</div>                            
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td class="flex-none w-4rem">
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteConsideration(consideration)"></button>
+                </td>
+
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <tr>
+                <td class="flex flex-1" colspan="3">
+                    <button pButton class="p-button-primary p-button-outlined" label="Crear comentario" (click)="addConsiderationComment()"></button>
+                </td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+
+
+    <h3 class="m-0 p-0 pt-5">Tareas globales</h3>
+    <p-table [value]="globalTasks" responsiveLayout="scroll" [scrollable]="true" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="flex flex-1 top-header justify-content-start"><div class="ml-2">Tarea</div></th>
+                <th class="flex-none w-3rem top-header justify-content-end"><div class="mr-2">Horas</div></th>
+                <th class="flex-none w-6rem"></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-task>
+            <tr>
+                <td class="flex flex-1">{{task.block.name}} - {{task.concept}}</td>
+                <td class="flex-none w-6rem justify-content-end">{{task.hours | number: '1.0-2'}}</td>
+                <td class="flex-none w-6rem"></td>
+            </tr>
+        </ng-template>
+    </p-table>    
+
+
+</div>

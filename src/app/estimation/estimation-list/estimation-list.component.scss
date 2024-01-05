@@ -1,51 +1,28 @@
-@import "./src/assets/scss/master";
-
-.container {
-  overflow: hidden !important;
+.icon-center{
+  margin-left: auto;
+  margin-right: auto;
 }
 
-:host::ng-deep {
-  .p-datatable .p-datatable-tbody>tr>td {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .filters {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    margin-top: 30px;
-    gap: 1rem;
-
-    .filterFields {
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 1rem;
-      width: 70%;
-      flex: 1;
-    }
-    .filterButtons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .p-inputtext {
-      min-width: 200px;
-      max-width: 260px;
-      min-height: 40px;
-    }
-  }
+.content-menu-open {
+  width: calc(100vw - 250px);
 }
 
-h3 {
-  color: $title;
-  font-size: 16px;
+.content-menu-close {
+  width: calc(100vw - 50px);
 }
 
-p-inputswitch {
-  margin: 13px 0px;
+.top-header{
+  min-width: 50px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.top-header>span{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.foot-header{
+  min-width: 50px;
 }

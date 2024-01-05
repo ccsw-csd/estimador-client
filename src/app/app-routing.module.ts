@@ -5,6 +5,7 @@ import { AuthGuard } from './core/services/auth.guard';
 import { EstimationEditComponent } from './estimation-edit/estimation-edit.component';
 import { EstimationListComponent } from './estimation/estimation-list/estimation-list.component';
 import { LoginComponent } from './login/login/login.component';
+import { RefreshTokenResolverService } from './core/services/refresh-token-resolver.service';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},

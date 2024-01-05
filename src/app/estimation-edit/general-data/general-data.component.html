@@ -1,79 +1,80 @@
-<div class="flex-container">
-    <div class="flex-content">
-        <h3 class="tabview-title">Datos generales</h3>
-        <div id="data" class="flex-content">
-            <span class="p-float-label big_input">
-                <input required [disabled]="estimation.id" id="name-input" type="text" pInputText [(ngModel)]="estimation.project.name"> 
-                <label for="name-input">Nombre del proyecto</label>
-            </span>
+<div class="flex flex-row gap-5 p-0 m-0" style="height: calc(100vh - 200px); overflow: auto;">
 
-            <div class="input-container">
-                <div class="medium_input">
-                    <span class="p-float-label">
-                        <input *ngIf="estimation.id" [disabled]="true" id="customer-input" type="text" pInputText [(ngModel)]="estimation.project.customer.name"> 
-                        <p-autoComplete required *ngIf="estimation.id==null" id="customer-input" [(ngModel)]="customer" [suggestions]="customers" (completeMethod)="searchCustomers($event)" (onSelect)="updateCustomer()" (onBlur)="updateCustomer()" field="name"></p-autoComplete> 
-                        <label for="customer-input">Cliente</label>
-                    </span>
-                </div>
- 
-                <span class="p-float-label small_input">
-                    <input required [disabled]="estimation.id" id="version-input" type="text" pInputText [(ngModel)]="estimation.estVersion"> 
-                    <label for="version-input">Versión</label>
-                </span>
+    <div class="flex flex-1 flex-column gap-3">
+        <h3 class="mb-3">Datos generales</h3>
+
+        <div class="p-float-label">
+            <input required [disabled]="estimation.id" id="name-input" type="text" pInputText [(ngModel)]="estimation.project.name"  class="w-full"> 
+            <label for="name-input">Nombre del proyecto</label>
+        </div>
+
+        <div class="flex flex-row gap-3">
+            <div class="flex flex-1 p-float-label">
+                <input *ngIf="estimation.id" [disabled]="true" id="customer-input" type="text" pInputText [(ngModel)]="estimation.project.customer.name"  class="w-full"> 
+                <p-autoComplete class="w-full" required *ngIf="estimation.id==null" id="customer-input" [(ngModel)]="customer" [suggestions]="customers" (completeMethod)="searchCustomers($event)" (onSelect)="updateCustomer()" (onBlur)="updateCustomer()" field="name"></p-autoComplete> 
+                <label for="customer-input">Cliente</label>
             </div>
 
-            <div class="input-container">
-                <span class="p-float-label small_input">
-                    <p-calendar [disabled]="true" [showIcon]="true" inputId="creationDate" dateFormat="dd/mm/yy" [(ngModel)]="estimation.created" showTime="true" [hourFormat]="24"></p-calendar>
-                    <label for="creationDate">Fecha de creación</label>
-                </span>
-    
-                <span class="p-float-label small_input">
-                    <p-calendar [disabled]="true" [showIcon]="true" inputId="updateDate" dateFormat="dd/mm/yy" [(ngModel)]="estimation.lastUpdate" showTime="true" [hourFormat]="24"></p-calendar>
-                    <label for="updateDate">Última actualización</label>
-                </span>
-    
-                <span class="p-float-label small_input">
-                    <input [disabled]="true" id="user-input" type="text" pInputText [(ngModel)]="estimation.createdBy.firstName + ' ' + estimation.createdBy.lastName " > 
-                    <label for="user-input">Propietario</label>
-                </span>
+            <div class="flex flex-1 p-float-label">
+                <input required [disabled]="estimation.id" id="version-input" type="text" pInputText [(ngModel)]="estimation.estVersion"  class="w-full"> 
+                <label for="version-input">Versión</label>
             </div>
         </div>
+
+        <div class="flex flex-row gap-3">
+            <span class="flex flex-1 min-w-max p-float-label">
+                <p-calendar styleClass="w-full" [style]="{'height':'42px'}" [disabled]="true" [showIcon]="true" inputId="creationDate" dateFormat="dd/mm/yy" [(ngModel)]="estimation.created" showTime="true" [hourFormat]="24"></p-calendar>
+                <label for="creationDate">Fecha de creación</label>
+            </span>
+
+            <div class="flex flex-1 p-float-label">
+                <p-calendar styleClass="w-full" [style]="{'height':'42px'}" [disabled]="true" [showIcon]="true" inputId="updateDate" dateFormat="dd/mm/yy" [(ngModel)]="estimation.lastUpdate" showTime="true" [hourFormat]="24"></p-calendar>
+                <label for="updateDate">Última actualización</label>
+            </div>
+
+            <div class="flex flex-1 p-float-label">
+                <input [disabled]="true" id="user-input" type="text" pInputText [(ngModel)]="estimation.createdBy.firstName + ' ' + estimation.createdBy.lastName "  class="w-full"> 
+                <label for="user-input">Propietario</label>
+            </div>
+        </div>
+
+        <div class="flex flex-1"></div>
+
     </div>
 
-    <div class="flex-content">
-        <div>
-            <h3 class="tabview-title">Colaboradores</h3>
-            <span id="inputCollab" class="p-float-label">
-                <p-autoComplete id="collaborator-input" [suggestions]="users" (completeMethod)="searchCollaborator($event)" field="username" (onSelect)="addCollaborator($event)">
-                    <ng-template let-user pTemplate="item">
-                        <div class="ui-helper-clearfix">
-                            <div>{{user.firstName}} {{user.lastName}} <b>({{user.username}})</b></div>
-                        </div>
-                    </ng-template>
-                </p-autoComplete> 
-                <label for="collaborator-input">Añadir colaborador</label>
-            </span>
-            <p-table [value]="collaborators" [scrollable]="true" responsiveLayout="scroll" scrollHeight="calc(100vh - 450px)" styleClass="p-datatable-striped">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th class="top-header">Username</th>
-                        <th class="top-header">Nombre</th>
-                        <th class="top-header">Apellidos</th>
-                        <th class="top-header">Acción</th>
-                    </tr>
+    <div class="flex flex-1 flex-column gap-3">
+        <h3 class="mb-3">Colaboradores</h3>
+
+        <span id="inputCollab" class="p-float-label">
+            <p-autoComplete id="collaborator-input" [suggestions]="users" (completeMethod)="searchCollaborator($event)" field="username" (onSelect)="addCollaborator($event)" styleClass="w-full">
+                <ng-template let-user pTemplate="item">
+                    <div class="ui-helper-clearfix">
+                        <div>{{user.firstName}} {{user.lastName}} <b>({{user.username}})</b></div>
+                    </div>
                 </ng-template>
-                <ng-template pTemplate="body" let-item>
-                    <tr>
-                        <td>{{item.username}}</td>
-                        <td>{{item.firstName}}</td>
-                        <td>{{item.lastName}}</td>
-                        <td>
-                            <button *ngIf="item.id != estimation.createdBy.id" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteCollaborator(item)"></button>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
+            </p-autoComplete> 
+            <label for="collaborator-input">Añadir colaborador</label>
+        </span>
+
+        <p-table [value]="collaborators" [scrollable]="true" responsiveLayout="scroll" scrollHeight="calc(100vh - 375px)" styleClass="p-datatable-striped">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="flex-none w-6rem top-header justify-content-start"><div class="ml-2">Username</div></th>
+                    <th class="flex flex-1 top-header justify-content-start"><div class="ml-2">Nombre</div></th>
+                    <th class="flex flex-1 top-header justify-content-start"><div class="ml-2">Apellidos</div></th>
+                    <th class="flex-none w-4rem top-header"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td class="flex-none w-6rem">{{item.username}}</td>
+                    <td class="flex flex-1">{{item.firstName}}</td>
+                    <td class="flex flex-1">{{item.lastName}}</td>
+                    <td class="flex-none w-4rem">
+                        <button *ngIf="item.id != estimation.createdBy.id" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteCollaborator(item)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 </div>

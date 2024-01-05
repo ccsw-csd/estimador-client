@@ -1,0 +1,39 @@
+
+$button-primary: #0070AD;
+$button-secondary: #FF5770;
+
+.p-button.p-button-outlined {
+  color: $button-primary !important;
+  border:0px solid $button-primary !important;
+}
+
+.p-button-secondary.p-button-outlined {
+  color: $button-secondary !important;
+  border:0px solid $button-secondary !important;
+}
+
+.p-button.p-button-text {
+  color: $button-primary !important;
+}
+
+.p-button.p-button-text.p-button-danger {
+  color: $button-secondary !important;
+}
+
+.p-button-outlined {   
+    height: 45px;
+}
+
+.p-button-outlined:focus {
+  background: none !important;
+}
+
+.p-button {
+  background-color: $button-primary;
+  height: 45px;
+  min-width: 150px;
+}
+
+.p-card:hover {
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+}

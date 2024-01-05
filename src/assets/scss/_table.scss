@@ -1,200 +1,96 @@
-::ng-deep{
-    .p-datatable .p-datatable-thead>tr>th {
-        text-align: left;
-        padding: 0px;
-        border: 1px solid #babfc7;
-        border-width: 0 0 1px 0;
-        font-weight: 700;
-        color: #000000de;
-        background: #f8f8f8;
-        transition: none;
-        min-width: 200px;
-    
-        input, .p-dropdown, .p-multiselect {
-            height: 1.6rem;
-            padding-left: 0.25rem;
-    
-            span, 
-            .p-multiselect-label {
-                padding-top: 0.15rem;
-                padding-left: 0px;
-                padding-right: 0px;
-            }
-    
-            .p-dropdown-trigger,
-            .p-multiselect-trigger {
-                padding-right: 5px;
-                width: auto;
-            }
-    
-    
-            .p-dropdown-clear-icon,
-            .p-multiselect-clear-icon {
-                margin-top: 0.15rem;
-                margin-right: 5px;
-                position: initial;
-            }
-    
-            .p-dropdown-label {
-                padding-right: 0px;
-            }
-            
+.p-datatable .p-datatable-thead>tr>th {
+    text-align: left;
+    padding: 0px;
+    border: 1px solid #babfc7;
+    border-width: 0 0 1px 0;
+    font-weight: 700;
+    color: #000000de;
+    background: #f8f8f8;
+    transition: none;
+
+    input, .p-dropdown, .p-multiselect {
+        height: 1.6rem;
+        padding-left: 0.25rem;
+
+        span, 
+        .p-multiselect-label {
+            padding-top: 0.15rem;
+            padding-left: 0px;
+            padding-right: 0px;
         }
-    }
-    
-    .p-datatable .p-datatable-thead>tr:nth-of-type(2)>th {
-        padding: 0.25rem;
-    }
-    
-    .p-datatable .p-datatable-tbody>tr>td {
-        height: 2.5rem;
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
-        min-width: 200px;
-    }
-    
-    .p-datatable-scrollable .p-datatable-wrapper {
-        position: relative;
-        overflow: auto;
-        border: 1px solid #babfc7;
-    }
-    
-    .no-border.p-datatable-scrollable .p-datatable-wrapper {
-        position: relative;
-        overflow: auto;
-        border: none;
-    }
-    
-    .p-datatable .p-sortable-column.p-highlight {
-        background: #f8f8f8;
-        color: #000000de;
-    }
-    
-    .top-header {
-        padding: 8px 3px 8px 3px; 
-        height: 34px;
-        margin-bottom: 0px !important;
-        display: flex;
-        justify-content: space-between;
-        span{
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
+
+        .p-dropdown-trigger,
+        .p-multiselect-trigger {
+            padding-right: 5px;
+            width: auto;
         }
-    }
-    
-    .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr {
-        cursor: pointer;
-    }
-    
-    .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover {
-        background: rgba(200, 200, 255, 0.5);
-    }
+
+
+        .p-dropdown-clear-icon,
+        .p-multiselect-clear-icon {
+            margin-top: 0.15rem;
+            margin-right: 5px;
+            position: initial;
+        }
+
+        .p-dropdown-label {
+            padding-right: 0px;
+        }
+        
+    }    
 }
 
-// ::ng-deep{
-//     /* ESTILO DE LAS TABLAS */
-//  .p-datatable {
+.p-datatable .p-datatable-thead>tr:nth-of-type(2)>th {
+    padding: 0.25rem;
+}
 
-//    border: 1px solid black;
+.p-datatable .p-datatable-tbody>tr>td {
+    height: 2.5rem;
+}
 
-//    .p-datatable-tbody > tr > td.right, .p-datatable-thead > tr > th.right, .p-datatable-tfoot > tr > td.right {
-//      text-align: right;
-//    }
+.p-datatable-scrollable .p-datatable-wrapper {
+    position: relative;
+    overflow: auto;
+    border: 1px solid #babfc7;
+}
 
-//    .p-datatable-tbody > tr > td.right {
-//      input {
-//          text-align: right;
-//      }
-//  }
+.no-border.p-datatable-scrollable .p-datatable-wrapper {
+    position: relative;
+    overflow: auto;
+    border: none;
+}
 
-//    .p-datatable-tbody > tr > td.centered, .p-datatable-thead > tr > th.centered, .p-datatable-tfoot > tr > td.centered {
-//      text-align: center;
-//    }
+.p-datatable .p-sortable-column.p-highlight {
+    background: #f8f8f8;
+    color: #000000de;
+}
 
-//    .p-datatable-tbody > tr > td.centered {
-//        input {
-//            text-align: center;
-//        }
-//    }
 
-//    table {
-//        border-collapse: separate;
-//        border-spacing: 0px;
-//    }
+.top-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 3px 8px 3px; 
+    height: 34px;
+    margin-bottom: 0px !important;
+}
 
-//    .read-only-cell {
-//      background-color: $background;
-//    }
+.top-header>span{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
-//    .icon-cell {
-//      width: 130px;
-//    }
- 
-//    .small-cell {
-//      width: 250px;
-//    }
 
-//    .very-small-cell {
-//      width: 200px;
-//    }
+.foot-header {
+    padding: 8px 3px 8px 3px; 
+    margin-bottom: 0px !important;
+    border-top: 1px solid #babfc7;
+}
 
-//    .p-datatable-tfoot > tr {
+.p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr {
+    cursor: pointer;
+}
 
-//      td {
-//        background-color: white;
-//        border: 0px;
-//      }
-
-//      td.totalCell {
-//          background-color: #d1d1d1;
-//          font-weight: bold;
-//      }
-//    }
-
-//    .reorder-cell {
-//      width: 50px;
-//    }
-   
-//    .p-datatable-thead > tr > th {
-//      background-color:$background;
-//      border-color: $primary;
-//      font-weight: bold;
-//      color: $darkgrey;
-//    }
-
-//    .p-datatable-tbody > tr > td {
-//      border-color: $primary;
-//    }
-
-//    .p-sortable-column.p-highlight .p-sortable-column-icon {
-//      color: $primary;
-//    }
-
-//    td {
-//      button {
-//        min-width: 0px;
-//      }
-
-//      input {
-//        border: none;
-//      }
-
-//      .p-dropdown .p-dropdown-label {
-//        border: none;
-//      }
-//    }
-   
-//    .p-sortable-column:not(.p-highlight):hover, .p-sortable-column.p-highlight, .p-sortable-column.p-highlight:hover  {
-//      background-color: $background;
-//      box-shadow: none;
-//    }
-
-//    p-celleditor .p-inputtext {
-//      padding:0;
-//      font-family: "Source Sans Pro", sans-serif;
-//    }
-//  }
-// }
+.p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover {
+    background: rgba(200, 200, 255, 0.5);
+}

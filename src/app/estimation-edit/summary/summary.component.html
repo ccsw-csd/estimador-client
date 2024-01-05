@@ -1,129 +1,145 @@
-<div class="flex-container">
-    <div class="table-container">
-        <p-table [value]="estimation.distribution" styleClass="p-datatable-striped">
+<div class="flex flex-column gap-3 p-0 m-0 pr-2" style="height: calc(100vh - 200px); overflow: auto;">
+    
+    <div class="flex flex-row gap-5 pt-5">
+
+        <p-table class="flex-2" [value]="estimation.distribution" responsiveLayout="scroll" [scrollable]="true" styleClass="p-datatable-striped">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Distribución equipo</th>
-                    <th>Jornadas totales</th>
-                    <th>A (%)</th>
-                    <th>B (%)</th>
-                    <th>C (%)</th>
-                    <th>D (%)</th>
-                    <th>TOTAL (%)</th>
+                    <th class="flex flex-1 top-header justify-content-start"><div class="ml-2">Distribución equipo</div></th>
+                    <th class="flex-none w-8rem top-header justify-content-end"><div class="mr-2">Jornadas totales</div></th>
+                    <th class="flex-none w-8rem top-header justify-content-end"><div class="mr-2">A (%)</div></th>
+                    <th class="flex-none w-8rem top-header justify-content-end"><div class="mr-2">B (%)</div></th>
+                    <th class="flex-none w-8rem top-header justify-content-end"><div class="mr-2">C (%)</div></th>
+                    <th class="flex-none w-8rem top-header justify-content-end"><div class="mr-2">D (%)</div></th>
+                    <th class="flex-none w-8rem top-header justify-content-end"><div class="mr-2">Total (%)</div></th>
                 </tr>
             </ng-template>
-
             <ng-template pTemplate="body" let-row>
                 <tr>
-                    <td class="read-only-cell">{{row.block.name}}</td>
-                    <td class="read-only-cell">{{row.workdays | number: '1.2-2'}}</td>
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex flex-1" style="padding: 0.75rem 0">
+                        <div style="padding: 0 0.75rem;">{{row.block.name}}</div>
+                    </td>
+
+                    <td class="flex-none w-8rem justify-content-end" style="padding: 0.75rem 0">
+                        <div style="padding: 0 0.75rem; text-align: right;">{{row.workdays | number: '1.2-2'}}</div>
+                    </td>
+
+                    <td class="flex-none w-8rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="row.gradeA" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="onChangeGradeValue(row.id)"></p-inputNumber>
+                                <p-inputNumber inputStyleClass="w-8rem" [(ngModel)]="row.gradeA" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="onChangeGradeValue(row.id)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                <span >{{ row.gradeA | number:'':'es'}}%</span>
+                                <div style="padding: 0 0.75rem; text-align: right;">{{row.gradeA | number:'':'es'}}%</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex-none w-8rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="row.gradeB" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="onChangeGradeValue(row.id)"></p-inputNumber>
+                                <p-inputNumber inputStyleClass="w-8rem" [(ngModel)]="row.gradeB" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="onChangeGradeValue(row.id)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                <span>{{ row.gradeB | number:'':'es'}}%</span>
+                                <div style="padding: 0 0.75rem; text-align: right;">{{row.gradeB | number:'':'es'}}%</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex-none w-8rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="row.gradeC" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="onChangeGradeValue(row.id)"></p-inputNumber>
+                                <p-inputNumber inputStyleClass="w-8rem" [(ngModel)]="row.gradeC" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="onChangeGradeValue(row.id)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                <span>{{ row.gradeC | number:'':'es'}}%</span>
+                                <div style="padding: 0 0.75rem; text-align: right;">{{row.gradeC | number:'':'es'}}%</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex-none w-8rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="row.gradeD" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="onChangeGradeValue(row.id)"></p-inputNumber>
+                                <p-inputNumber inputStyleClass="w-8rem" [(ngModel)]="row.gradeD" [maxlength]="3" locale="de-DE" [min]="0" [max]="100" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)" (ngModelChange)="onChangeGradeValue(row.id)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                <span>{{ row.gradeD | number:'':'es'}}%</span>
+                                <div style="padding: 0 0.75rem; text-align: right;">{{row.gradeD | number:'':'es'}}%</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
-                    <td class="read-only-cell" [ngClass]="{'red-text': row.total != 100}">
-                        {{row.total}}%
+                    <td class="flex-none w-8rem justify-content-end" style="padding: 0.75rem 0" [ngClass]="{'red-text': row.total != 100}">
+                        <div style="padding: 0 0.75rem; text-align: right;">{{row.total}}%</div>
                     </td>
                 </tr>
             </ng-template>
         </p-table>
-    </div>
 
-    <div class="right-table table-container">
-        <p-table [value]="estimation.teamPyramid" styleClass="p-datatable-striped">
+        <p-table class="flex-1" [value]="estimation.teamPyramid" responsiveLayout="scroll" [scrollable]="true" styleClass="p-datatable-striped">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Perfil</th>
-                    <th>FTEs</th>
+                    <th class="flex flex-1 top-header justify-content-start"><div class="ml-2">Perfil</div></th>
+                    <th class="flex-none w-6rem top-header justify-content-end"><div class="mr-2">FTEs</div></th>
                 </tr>
             </ng-template>
 
             <ng-template pTemplate="body" let-fte>
                 <tr>
-                    <td class="read-only-cell" >{{fte.profile.name}}</td>
 
-                    <td *ngIf="fte.profile.id > 20" pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex flex-1" style="padding: 0.75rem 0">
+                        <div style="padding: 0 0.75rem;">{{fte.profile.name}}</div>
+                    </td>
+
+                    <td *ngIf="fte.profile.id > 20" class="flex-none w-6rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="fte.fte" (ngModelChange)="onFteChange()" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                                <p-inputNumber inputStyleClass="w-6rem" [(ngModel)]="fte.fte" (ngModelChange)="onFteChange()" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{ fte.fte | number: '1.2-2'}}
+                                <div style="padding: 0 0.75rem; text-align: right;">{{fte.fte | number: '1.2-2'}}</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
 
-                    <td *ngIf="fte.profile.id == 10 || fte.profile.id == 20" (ngModelChange)="onFteChange()" class="read-only-cell" >{{fte.fte | number: '1.2-2'}}</td>
+                    <td *ngIf="fte.profile.id <= 20" (ngModelChange)="onFteChange()" class="flex-none w-6rem justify-content-end" style="padding: 0.75rem 0">
+                        <div style="padding: 0 0.75rem; text-align: right;">{{fte.fte | number: '1.2-2'}}</div>
+                    </td>
                 </tr>
             </ng-template>
 
             <ng-template pTemplate="footer">
                 <tr class="footer">
-                    <td></td>
-                    <td class=" totalCell">{{fteTotal | number: '1.2-2'}}</td>
+                    <td class="flex flex-1" style="padding: 0.75rem 0"></td>
+                    <td class="flex-none w-6rem justify-content-end" style="padding: 0.75rem 0">
+                        <div style="padding: 0 0.75rem; text-align: right;"><b>{{fteTotal | number: '1.2-2'}}</b></div>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>
     </div>
-</div>
 
-<div class="flex-container">
-    <div class="table-container">
 
-        <p-table [value]="estimation.costs" styleClass="p-datatable-striped">
+    <div class="flex flex-row gap-5 pt-5">
+
+        <p-table class="flex-2" [value]="estimation.costs" responsiveLayout="scroll" [scrollable]="true" styleClass="p-datatable-striped">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Grado</th>
-                    <th>Jornadas</th>
-                    <th>Coste (€)</th>
-                    <th>Margen (%)</th>
-                    <th>Revenue</th>
+                    <th class="flex flex-1 top-header justify-content-start"><div class="ml-2">Grados</div></th>
+                    <th class="flex-none w-10rem top-header justify-content-end"><div class="mr-2">Jornadas</div></th>
+                    <th class="flex-none w-10rem top-header justify-content-end"><div class="mr-2">Coste (€)</div></th>
+                    <th class="flex-none w-10rem top-header justify-content-end"><div class="mr-2">Margen (%)</div></th>
+                    <th class="flex-none w-10rem top-header justify-content-end"><div class="mr-2">Revenue</div></th>
                 </tr>
             </ng-template>
 
             <ng-template pTemplate="body" let-row>
                 <tr>
-                    <td class="read-only-cell">{{row.grade}}</td>
 
-                    <td class="read-only-cell">{{row.workdays | number: '1.2-2'}}</td>
+                    <td class="flex flex-1" style="padding: 0.75rem 0">
+                        <div style="padding: 0 0.75rem;">Grado {{row.grade}}</div>
+                    </td>
 
-                    <td pEditableColumn>
+                    <td class="flex-none w-10rem justify-content-end" style="padding: 0.75rem 0">
+                        <div style="padding: 0 0.75rem; text-align: right;">{{row.workdays | number: '1.2-2'}}</div>
+                    </td>
+
+                    <td class="flex-none w-10rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
                                 <p-inputNumber [(ngModel)]="row.cost" (ngModelChange)="calculateRevenue()" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
@@ -134,7 +150,7 @@
                         </p-cellEditor>
                     </td>
 
-                    <td pEditableColumn>
+                    <td class="flex-none w-10rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
                                 <p-inputNumber [(ngModel)]="row.margin" (ngModelChange)="calculateRevenue()" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
@@ -145,26 +161,31 @@
                         </p-cellEditor>
                     </td>
 
-                    <td class="read-only-cell">{{row.revenue | number: '1.2-2'}}</td>
+                    <td class="flex-none w-10rem justify-content-end" style="padding: 0.75rem 0">
+                        <div style="padding: 0 0.75rem; text-align: right;">{{row.revenue | number: '1.2-2'}}</div>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>
 
-    </div>
 
-    <div class="right-table table-container">
-        <p-table [value]="summaryValues" styleClass="p-datatable-striped">
+        <p-table class="flex-1" [value]="summaryValues" responsiveLayout="scroll" [scrollable]="true" styleClass="p-datatable-striped">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Concepto</th>
-                    <th>Valor</th>
+                    <th class="flex flex-1 top-header justify-content-start"><div class="ml-2">Concepto</div></th>
+                    <th class="flex-none w-6rem top-header justify-content-end"><div class="mr-2">Valor</div></th>
                 </tr>
             </ng-template>
 
             <ng-template pTemplate="body" let-item>
                 <tr>
-                    <td class="read-only-cell" >{{item.name}}</td>
-                    <td class="right read-only-cell" >{{item.value | number: '1.2-2'}}</td>
+                    <td class="flex flex-1" style="padding: 0.75rem 0">
+                        <div style="padding: 0 0.75rem;">Grado {{item.name}}</div>
+                    </td>
+
+                    <td class="flex-none w-6rem justify-content-end" style="padding: 0.75rem 0">
+                        <div style="padding: 0 0.75rem; text-align: right;">{{item.value | number: '1.2-2'}}</div>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>

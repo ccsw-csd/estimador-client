@@ -19,9 +19,9 @@
         </p-tabPanel>
     </p-tabView>
 
-    <div class="button-container">
-        <p-button class="secondary" label="Exportar" (click)="exportar()"></p-button>
-        <p-button class="secondary" label="Cerrar" (click)="close()"></p-button>
-        <p-button class="primary" label="Guardar" (click)="save()"></p-button>
+    <div class="flex justify-content-end pt-3 gap-2">
+        <button pButton class="p-button-secondary p-button-outlined" label="Exportar" (click)="exportar()"></button>
+        <button pButton class="p-button-secondary p-button-outlined" label="Cerrar" (click)="close()"></button>
+        <button pButton class="p-button-primary" label="Guardar" (click)="save()"></button>
     </div>
 </div>

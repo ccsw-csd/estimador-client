@@ -1,71 +1,54 @@
-@import './src/assets/scss/master';
-
-.container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  max-height: 56px;
-  min-height: 56px;
-  overflow:hidden;
-  background-color: #272936;
-
-  a {
-    text-decoration: none;
-  }
-}
+@import "./src/assets/scss/master";
 
 ::ng-deep {
-  .p-toolbar {
-    background-color: #272936;
-    border:none;
-    width: 100%;
-    height: 56px;
-    padding: 0 1rem;
-    box-sizing: border-box;
+    .toolbar-header {
+        height: 56px; 
 
-    .p-toolbar-group-left, .p-toolbar-group-right{
-      height: inherit !important;
+        .p-toolbar {
+            background-color: #272936;
+            border-radius: 0px !important;
+
+            padding-top: 5px;
+            padding-bottom: 6px;;
+        }
     }
 
-    .p-menu{
-      width: 200px;
-      margin-left: 0px;
-      padding-left: 0px;
+    .header-button {
+        height: 45px; 
+
+        .p-button {
+            min-width: 0px;
+            background: transparent;
+
+            .p-avatar{
+                background: transparent;
+            }
+        }
+
+        .p-button:enabled:focus {
+            background: transparent;
+        }
+
+        .p-button:enabled:hover {
+            background: transparent;
+        }
     }
 
-    .p-menuitem-link{
-      border-left: none !important;
+    .p-overlaypanel-content{
+        padding: 0 !important;
     }
 
-    p-menu.logout-menu .p-menu {
-      .p-menuitem-link .p-menuitem-text {
-        color: $darkgrey;
-      }
-
-      .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
-        color: $darkgrey;
-      }
+    .header-icon .pi {
+        font-size: 21px;
+        font-style: normal;
+        color: #dedede;
     }
 
-    .primary-icon {
-      margin-right: 10px;
-      min-width: 0;
+    .item-menu {
+        padding: 12px 0px;
     }
 
-    .primary-icon span, .primary-icon:hover{
-      background-color: transparent !important;
+    .item-menu:hover {
+        background-color: #ededed;
     }
-
-    .primary {
-      .p-button, .p-button:hover {
-        width: fit-content;
-      }
-    }
-  }
-}
-
-h3{
-  color: #ffff;
-  margin: 0;
 }

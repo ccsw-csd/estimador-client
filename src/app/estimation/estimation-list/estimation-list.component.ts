@@ -11,6 +11,7 @@ import { EstimationVersionsComponent } from '../estimation-versions/estimation-v
 import { EstimationCreateCopyComponent } from '../estimation-create-copy/estimation-create-copy.component';
 import { ResponseCredentials } from 'src/app/core/model/ResponseCredentials';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { NavigatorService } from 'src/app/core/services/navigator.service';
 
 @Component({
   selector: 'app-estimation-list',
@@ -18,6 +19,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./estimation-list.component.scss']
 })
 export class EstimationListComponent implements OnInit {
+
+  contentWindowClass: String = "content-menu-close";
 
   adminView: boolean = false;
   roleAdmin: boolean = false;
@@ -31,24 +34,26 @@ export class EstimationListComponent implements OnInit {
   estimations: Estimation[];
   loading: boolean;
   
-  customers: Customer[];
-  filterCustomer: Customer;
-  filterProject: string;
-  filterStartDate: Date;
-  filterEndDate: Date;
-
-  customerId: number;
   projectName: string;
   startDate: Date;
   endDate: Date;
 
   constructor(
     private estimationService: EstimationService,
+    navigatorService : NavigatorService,
     private customerService: CustomerService,
     private router: Router,
     public dialogService: DialogService,
     public authService: AuthService,
-  ) { }
+  ) {
+
+    let me = this;
+
+    navigatorService.getNavivagorChangeEmitter().subscribe(menuVisible => { 
+      if (menuVisible) me.contentWindowClass = 'content-menu-open';
+      else me.contentWindowClass = 'content-menu-close';
+    });
+   }
 
   ngOnInit(): void {
 
@@ -56,65 +61,18 @@ export class EstimationListComponent implements OnInit {
       this.roleAdmin = true;
     }
 
-    this.customerService.getCustomers().subscribe(
-      customers => this.customers = customers
-    );
-
     this.loading = true;
+    this.loadPage();
   }
 
-  loadPage(event?: LazyLoadEvent) {
+  loadPage() {
 
     this.loading = true;
 
-    let pageable : Pageable =  {
-        pageNumber: this.pageNumber,
-        pageSize: this.pageSize,
-        sort: [{
-            property: this.property,
-            direction: this.direction,
-        }]
-    }
-    
-    if (event != null) {
-        pageable.pageSize = event.rows;
-        pageable.pageNumber = event.first/event.rows;
-        if(event.sortField != null)
-          pageable.sort = [{property: event.sortField, direction: event.sortOrder == 1? "asc": "desc"}];
-    }
-
-    this.estimationService.getEstimations(pageable, this.adminView, this.customerId, this.projectName, this.startDate, this.endDate).subscribe(data => {
-        this.estimations = data.content;
-        this.pageNumber = data.pageable.pageNumber;
-        this.pageSize = data.pageable.pageSize;
-        this.totalElements = data.totalElements;
+    this.estimationService.getEstimations(this.adminView).subscribe(data => {
+        this.estimations = data;
         this.loading = false; 
-
-        //TODO Quitar esto
-        //this.copyEstimation(data.content[2]);
     });
-  }
-
-  changeAdminView() : void {
-    this.loadPage();
-  }
-
-  onCleanFilter(): void{
-    this.filterCustomer = null;
-    this.filterProject = null;
-    this.filterStartDate = null;
-    this.filterEndDate = null;
-
-    this.onSearch();
-  }
-
-  onSearch(): void{
-    this.customerId = this.filterCustomer != null ? this.filterCustomer.id: null;
-    this.projectName = this.filterProject;
-    this.startDate = this.filterStartDate;
-    this.endDate = this.filterEndDate;
-
-    this.loadPage();
   }
 
   createEstimation() {
@@ -126,7 +84,7 @@ export class EstimationListComponent implements OnInit {
   }
 
   openVersionDialog(projectId: number) {
-    const ref = this.dialogService.open(EstimationVersionsComponent, {width: '1100px', height: '450px', header:"Listado versiones", closable:true, data: {
+    const ref = this.dialogService.open(EstimationVersionsComponent, {width: '80vw', height: '525px', header:"Listado versiones", closable:false, data: {
       projectId: projectId}
     });
 
@@ -141,7 +99,7 @@ export class EstimationListComponent implements OnInit {
   
 
   copyEstimation(estimation: any) {
-    const ref = this.dialogService.open(EstimationCreateCopyComponent, {width: '550px', height: '450px', header:"Duplicar version", closable:true, data: estimation});
+    const ref = this.dialogService.open(EstimationCreateCopyComponent, {width: '550px', height: '450px', header:"Duplicar version", closable:false, data: estimation});
     
     ref.onClose.subscribe((response: any) => {
       if(response != false && response != null && response.id != null) {

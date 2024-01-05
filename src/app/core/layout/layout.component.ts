@@ -1,9 +1,10 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BlockService } from 'src/app/estimation-edit/services/block/block.service';
 import { EstimationLevelsService } from 'src/app/estimation-edit/services/estimationLevels/estimation-levels.service';
 import { ProfileService } from 'src/app/estimation-edit/services/profile/profile.service';
 import { AuthService } from '../services/auth.service';
+import { NavigatorService } from '../services/navigator.service';
 
 @Component({
   selector: 'app-layout',
@@ -12,11 +13,14 @@ import { AuthService } from '../services/auth.service';
 })
 export class LayoutComponent implements OnInit { 
 
+  @Output() toggleMenuEmitter: EventEmitter<any> = new EventEmitter();
+
   visibleSideBar = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
+    private navigatorService : NavigatorService,
     public router: Router,
     private profileService: ProfileService,
     private blockService: BlockService,
@@ -29,9 +33,9 @@ export class LayoutComponent implements OnInit {
 
     this.activatedRoute.data.subscribe(response => { 
       this.loadDetailedUserInfo(response);
+      this.loadMasterData();    
     }); 
 
-    this.loadMasterData();    
   }
 
 
@@ -68,5 +72,7 @@ export class LayoutComponent implements OnInit {
 
   public toggleMenu() : void {
     this.visibleSideBar = !this.visibleSideBar;
+
+    this.navigatorService.emitNavigatorChangeEvent(this.visibleSideBar);
   }
 }
