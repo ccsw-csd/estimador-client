@@ -1,71 +1,68 @@
-<div class="flex-container">
-    <!--
+<div class="flex flex-row gap-5 p-0 m-0" style="height: calc(100vh - 200px); overflow: auto;">
 
-        <p-confirmPopup></p-confirmPopup>
-    -->
-    <div class="flex-content">
-        <div class="title-button criteria">
-            <h2 class="tabview-title">Criterios globales</h2>
-            <p-button class="secondary" label="Añadir fila" (click)="addCriterion()"></p-button>
+    <div class="flex flex-1 flex-column">
+        <div class="flex flex-row align-items-center gap-5">
+            <h3>Criterios globales</h3>
+            <button pButton class="p-button-primary p-button-outlined" label="Añadir fila" (click)="addCriterion()"></button>
         </div>
         
-        <p-table [value]="estimation.parameters" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 400px)">
+        <p-table [value]="estimation.parameters" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 300px)" styleClass="p-datatable-striped">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Bloque</th>
-                    <th>Concepto</th>
-                    <th>Valor</th>
-                    <th>Tipo</th>
-                    <th></th>
+                    <th class="flex-none w-12rem top-header justify-content-start"><div class="ml-2">Bloque</div></th>
+                    <th class="flex flex-1 top-header justify-content-start"><div class="ml-2">Concepto</div></th>
+                    <th class="flex-none w-4rem top-header justify-content-start"><div class="ml-2">Valor</div></th>
+                    <th class="flex-none w-12rem top-header justify-content-start"><div class="ml-2">Tipo</div></th>
+                    <th class="flex-none w-4rem top-header"></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-criterion>
                 <tr>
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex-none w-12rem" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <p-dropdown [options]="blocks" [(ngModel)]="criterion.block" optionLabel="name" [style]="{'width':'100%'}"></p-dropdown>
+                                <p-dropdown appendTo="body" [options]="blocks" [(ngModel)]="criterion.block" optionLabel="name"  styleClass="w-12rem"></p-dropdown>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{criterion.block.name}}
+                                <div style="padding: 0 0.75rem">{{criterion.block.name}}</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
 
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex flex-1" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <input pInputText type="text" [(ngModel)]="criterion.concept">
+                                <input class="w-full" pInputText type="text" [(ngModel)]="criterion.concept">
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{criterion.concept}}
+                                <div style="padding: 0 0.75rem">{{criterion.concept}}</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
 
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex-none w-4rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="criterion.value" (ngModelChange)="criterion.value = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                                <p-inputNumber inputStyleClass="w-4rem" [(ngModel)]="criterion.value" (ngModelChange)="criterion.value = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{criterion.value | number:'':'es'}}
+                                <div style="padding: 0 0.75rem; text-align: right;">{{criterion.value | number:'':'es'}}</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
 
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex-none w-12rem" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <p-dropdown [options]="types" [(ngModel)]="criterion.type" [style]="{'width':'100%'}"></p-dropdown>
+                                <p-dropdown styleClass="w-12rem" appendTo="body" [options]="types" [(ngModel)]="criterion.type"></p-dropdown>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{criterion.type}}
+                                <div style="padding: 0 0.75rem">{{criterion.type}}</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
 
-                    <td>
+                    <td class="flex-none w-4rem">
                         <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteCriterion(criterion)"></button>
                     </td>
                 </tr>
@@ -73,102 +70,103 @@
         </p-table>
     </div>
 
-    <div class="flex-content">
-        <div class="title">
-            <div class="title-button">
-                <h2 class="tabview-title">Pesos de los componentes</h2>
-                <p-button *ngIf="!estimation.showhours" class="secondary" label="Añadir fila" (click)="addElementWeight()"></p-button>
-            </div>
-            
-            <div class="checkButton">
-                <p-toggleButton [(ngModel)]="estimation.showhours" offIcon="pi pi-unlock" [onIcon]="'pi pi-lock'" iconPos="right"></p-toggleButton>
+    <div class="flex flex-1 flex-column">
+
+        <div class="flex flex-row align-items-center gap-5">
+            <h3>Pesos de los componentes</h3>
+            <button *ngIf="!estimation.showhours" pButton class="p-button-primary p-button-outlined" label="Añadir fila" (click)="addElementWeight()"></button>
+            <span *ngIf="estimation.showhours">- Desactivado -</span>
+
+            <div class="flex-1"></div>
+            <div class="flex flex-row align-items-center gap-2">
+                <p-toggleButton [(ngModel)]="estimation.showhours" offIcon="pi pi-lock-open" [onIcon]="'pi pi-lock'" iconPos="right" class="p-button-secondary p-button-outlined"></p-toggleButton>
                 <p *ngIf="!estimation.showhours">Estimación basada en pesos</p>
                 <p *ngIf="estimation.showhours">Estimación basada en horas</p>
             </div>
         </div>
 
-        <p-table *ngIf="!estimation.showhours" [value]="estimation.elementWeight" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 400px)">
+        <p-table *ngIf="!estimation.showhours" [value]="estimation.elementWeight" responsiveLayout="scroll" [scrollable]="true" scrollHeight="calc(100vh - 300px)" styleClass="p-datatable-striped">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Elemento</th>
-                    <th>Muy fácil</th>
-                    <th>Fácil</th>
-                    <th>Medio</th>
-                    <th>Complejo</th>
-                    <th>Nivel</th>
-                    <th></th>
+                    <th class="flex flex-1 top-header justify-content-start"><div class="ml-2">Elemento</div></th>
+                    <th class="flex-none w-6rem top-header justify-content-start"><div class="ml-2">Muy fácil</div></th>
+                    <th class="flex-none w-6rem top-header justify-content-start"><div class="ml-2">Fácil</div></th>
+                    <th class="flex-none w-6rem top-header justify-content-start"><div class="ml-2">Medio</div></th>
+                    <th class="flex-none w-6rem top-header justify-content-start"><div class="ml-2">Complejo</div></th>
+                    <th class="flex-none w-10rem top-header justify-content-start"><div class="ml-2">Nivel</div></th>
+                    <th class="flex-none w-4rem top-header"></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item>
                 <tr>
 
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex flex-1" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <input pInputText type="text" [(ngModel)]="item.element">
+                                <input pInputText type="text" [(ngModel)]="item.element" class="w-full">
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{item.element}}
+                                <div style="padding: 0 0.75rem">{{item.element}}</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
 
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex-none w-6rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="item.verySimple" (ngModelChange)="item.verySimple = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                                <p-inputNumber inputStyleClass="w-6rem" [(ngModel)]="item.verySimple" (ngModelChange)="item.verySimple = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{item.verySimple | number:'':'es'}}
+                                <div style="padding: 0 0.75rem; text-align: right;">{{item.verySimple | number:'':'es'}}</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
 
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex-none w-6rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="item.simple" (ngModelChange)="item.simple = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                                <p-inputNumber inputStyleClass="w-6rem" [(ngModel)]="item.simple" (ngModelChange)="item.simple = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{item.simple | number:'':'es'}}
+                                <div style="padding: 0 0.75rem; text-align: right;">{{item.simple | number:'':'es'}}</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
                     
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex-none w-6rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="item.medium" (ngModelChange)="item.medium = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                                <p-inputNumber inputStyleClass="w-6rem" [(ngModel)]="item.medium" (ngModelChange)="item.medium = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{item.medium | number:'':'es'}}
+                                <div style="padding: 0 0.75rem; text-align: right;">{{item.medium | number:'':'es'}}</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
 
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex-none w-6rem justify-content-end" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="item.complex" (ngModelChange)="item.complex = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
+                                <p-inputNumber inputStyleClass="w-6rem" [(ngModel)]="item.complex" (ngModelChange)="item.complex = checkNull($event)" locale="de-DE" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="2" (keydown.ArrowRight)="stopPropagation($event)" (keydown.ArrowLeft)="stopPropagation($event)" (keydown.ArrowUp)="stopPropagation($event)" (keydown.ArrowDown)="stopPropagation($event)"></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{item.complex | number:'':'es'}}
+                                <div style="padding: 0 0.75rem; text-align: right;">{{item.complex | number:'':'es'}}</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
 
-                    <td pEditableColumn>
-                        <p-cellEditor>
+                    <td class="flex-none w-10rem" style="padding: 0.75rem 0" pEditableColumn>
+                        <p-cellEditor class="w-full">
                             <ng-template pTemplate="input">
-                                <p-dropdown [options]="levels" [(ngModel)]="item.level" optionLabel="name"></p-dropdown>
+                                <p-dropdown appendTo="body" [options]="levels" [(ngModel)]="item.level" optionLabel="name" styleClass="w-10rem"></p-dropdown>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{item.level.name}}
+                                <div style="padding: 0 0.75rem">{{item.level.name}}</div>
                             </ng-template>
                         </p-cellEditor>
                     </td>
 
-                    <td>
+                    <td class="flex-none w-4rem">
                         <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteElementWeight(item)"></button>
                     </td>
                 </tr>

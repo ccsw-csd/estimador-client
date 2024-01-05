@@ -13,50 +13,14 @@ import { Estimation } from '../core/model/Estimation';
 })
 export class EstimationService {
 
-
   url: string = environment.server+'/estimation';
 
   constructor(
     private http: HttpClient
   ) { }
 
-    private composeFindUrl(customerId? :number, projectName?: string, startDate?: Date, endDate?: Date): string{
-      let params= '';
-
-      if(customerId != null){
-        params += 'idCustomer='+customerId;
-      }
-
-      if(projectName != null){
-        if(params != '') params += "&";
-        params += "nameProject="+projectName;
-      }
-
-      if(startDate != null){
-        if(params != '') params += "&";
-        let formatStartDate = formatDate(startDate, 'dd/MM/yyyy', 'es-ES')
-        params += "startDate="+formatStartDate;
-      }
-
-      if(endDate != null){
-        if(params != '') params += "&";
-        let formatEndDate = formatDate(endDate, 'dd/MM/yyyy', 'es-ES')
-        params += "startDate="+formatEndDate;
-      }
-
-      if(params == '') return this.url;
-      else return this.url + '?'+params;
-    }
-
-  getEstimations(pageable: Pageable, adminView: Boolean, customerId? :number, projectName?: string, startDate?: Date, endDate?: Date): Observable<EstimationPage>{
-    return this.http.post<EstimationPage>(this.composeFindUrl(customerId, projectName, startDate, endDate),{
-        pageable:pageable, 
-        adminView: adminView, 
-        customerId, 
-        projectName, 
-        startDate, 
-        endDate
-      });
+  getEstimations(adminView: Boolean): Observable<Estimation[]>{
+    return this.http.get<Estimation[]>(this.url+"?adminView="+adminView);
   }
 
   getEstimationVersions(projectId?: number): Observable<Estimation[]>{

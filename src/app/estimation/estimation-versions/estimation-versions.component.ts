@@ -58,4 +58,8 @@ export class EstimationVersionsComponent implements OnInit {
   copyEstimation(estimation: any) {
     this.dialogRef.close(estimation);
   }
+
+  close() {
+    this.dialogRef.close(false);
+  }
 }

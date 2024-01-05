@@ -12,7 +12,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
   user: string = "";
   password: string = "";
   isloading : boolean = false;
@@ -65,8 +64,6 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['main']);
   }
 
-
-
   public getEmail() : string {
     let gitWord2 = "pge";
     let gitWord4 = "i";
@@ -81,5 +78,6 @@ export class LoginComponent implements OnInit {
 
   public getEmailRef() : string {
     return "mailto:"+this.getEmail()+"?subject=["+environment.appCode+"] Consulta / Feedback";
-  }  
+  }
+  
 }

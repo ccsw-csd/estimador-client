@@ -1,34 +1,28 @@
-@import "./src/assets/scss/master";
-
-::ng-deep {
-  .filters {
-    display:flex;
-    justify-content: space-between; 
-    margin-bottom: 20px; 
-    margin-top: 30px;
-    height: 40px;
-    .filterButtons {
-      width: 320px;
-      display:flex;
-      justify-content: space-between;
-    }
-    .p-calendar .p-inputtext {
-      min-width: 120px;
-      max-width: 160px;
-    }
-    .p-inputtext {
-      min-width: 260px;
-      max-width: 260px;
-      min-height: 40px;
-    }
-  }
+.icon-center{
+  margin-left: auto;
+  margin-right: auto;
 }
 
-h3 {
-  color: $title;
-  font-size: 16px;
+.content-menu-open {
+  width: calc(100vw - 250px);
 }
 
-p-inputswitch {
-  margin: 13px 0px;
+.content-menu-close {
+  width: calc(100vw - 50px);
+}
+
+.top-header{
+  min-width: 50px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.top-header>span{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.foot-header{
+  min-width: 50px;
 }

@@ -7,8 +7,10 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(public auth: AuthService, public router: Router) {}
-
+  
+  constructor(public auth: AuthService, public router: Router) {
+  }
+  
   canActivate(route: ActivatedRouteSnapshot): boolean {
 
     if (this.auth.isTokenValid() == false) {
@@ -22,4 +24,6 @@ export class AuthGuard implements CanActivate {
       
     return true;
   }
+
+  
 }

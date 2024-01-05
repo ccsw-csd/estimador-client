@@ -1,7 +1,7 @@
 <div class="column-container" style="height: 100%">
     <textarea pInputTextarea [(ngModel)]="comment"></textarea>
-    <div class="big-button-container">
-        <p-button class="secondary" label="Cancelar" (click)="cancel()"></p-button>
-        <p-button class="primary" label="Guardar" (click)="save()"></p-button>
+    <div class="flex justify-content-end pt-3 gap-2">
+        <button pButton class="p-button-secondary p-button-outlined" label="Cerrar" (click)="cancel()"></button>
+        <button pButton class="p-button-primary" label="Guardar" (click)="save()"></button>
     </div>
 </div>
