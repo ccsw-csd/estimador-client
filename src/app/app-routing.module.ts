@@ -12,6 +12,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    resolve: {credentials: RefreshTokenResolverService},
     canActivate: [AuthGuard],
     children: [
       { path: 'main', component: EstimationListComponent,},

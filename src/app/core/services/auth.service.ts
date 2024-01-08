@@ -64,7 +64,7 @@ export class AuthService {
       this.ssoPicture = localStorage.getItem(this.ssoPictureKey);
     }
 
-    if (this.ssoPicture == null) return null;
+    if (this.ssoPicture == null || this.ssoPicture == "null") return null;
     return 'data:image/jpg;base64,'+this.ssoPicture;
   }  
 
